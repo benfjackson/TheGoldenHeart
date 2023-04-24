@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, Image, StyleSheet, PanResponder } from 'react-native';
 
 
-
-export default function Count ({textColour='#fff'}){
+export default function Count ({textColour='#000'}){
   const [count, setCount] = useState(20);
   const [dragNumber, setDragNumber] = useState(0);
   const [showDragNumber, setShowDragNumber] = useState(false);
