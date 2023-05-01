@@ -9,14 +9,12 @@ import HomeScreen from './screens/ScreenStack';
 export default function App() {
   return (
     <View style={styles.container}>
-      
       {/* <StatusBar style="auto" /> */}
       <NavigationContainer>
         {/* <MountainCastle/> */}
-      {/* <MainMenu/> */}
-        <HomeScreen/>
+        {/* <MainMenu/> */}
+        <HomeScreen />
       </NavigationContainer>
-      
     </View>
   );
 }
@@ -26,8 +24,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
 
     width: '100%',
-    height: '100%',
-  },
+    height: '100%'
+  }
 });
 
 // import { Button } from 'react-native';

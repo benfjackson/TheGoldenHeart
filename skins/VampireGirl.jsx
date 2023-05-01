@@ -1,15 +1,7 @@
-
-import { ImageBackground } from 'react-native';
-
-import Counter from '../components/CrossCounter';
+import BasicSkin from './BasicSkin';
 
 export default function VampireGirl() {
-
-    const img = require('../images/upscaled/vampGirl1-transformed.png');
   return (
-    <ImageBackground source={img} style={{width: '100%', height: '100%'}}>
-      <Counter />
-    </ImageBackground>
-    
+    <BasicSkin backGround={require('../images/upscaled/VampireGirl.png')} />
   );
 }
