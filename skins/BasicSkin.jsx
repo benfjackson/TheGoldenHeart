@@ -1,11 +1,13 @@
-import { ImageBackground, Image } from 'react-native';
+import { ImageBackground, Image, Button } from 'react-native';
 
-import Counter from '../components/CrossCounter';
+// import Counter from '../components/CrossCounter';
+import DragFlag from '../components/DragFlag';
 
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import Modal from 'react-native-modal';
 import { BlurView } from '@react-native-community/blur';
+import { useNavigation } from '@react-navigation/native';
 
 export default function BasicSkin({ backGround }) {
   const [isMenuVisible, setMenuVisible] = useState(false);
@@ -15,10 +17,14 @@ export default function BasicSkin({ backGround }) {
 
   const styles = StyleSheet.create({
     button: {
-      backgroundColor: 'blue',
       padding: 10,
+      marginTop: 20,
       borderRadius: 5
+      //size
+      // width: 5,
+      // height: 5
     },
+
     modal: {
       justifyContent: 'center',
       alignItems: 'center'
@@ -34,7 +40,10 @@ export default function BasicSkin({ backGround }) {
     }
   });
 
+  const navigate = useNavigation();
+
   const img = backGround;
+
   return (
     <>
       <Modal
@@ -54,10 +63,16 @@ export default function BasicSkin({ backGround }) {
         </BlurView>
       </Modal>
       <ImageBackground source={img} style={{ width: '100%', height: '100%' }}>
-        {/* <TouchableOpacity onPress={toggleMenu} style={styles.button}>
-          <Text>Show Mini Menu</Text>
-        </TouchableOpacity> */}
-        <Counter />
+        {/** Button with transparent background that navigates back */}
+        <TouchableOpacity
+          onPress={() => navigate.goBack()}
+          style={styles.button}>
+          <Image
+            source={require('../images/UI/BackButton.png')}
+            style={{ width: 50, height: 50 }}
+          />
+        </TouchableOpacity>
+        <DragFlag />
       </ImageBackground>
     </>
   );
