@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { View, Text, Image, StyleSheet, PanResponder } from 'react-native';
 
-export default function Count({ textColour = '#000' }) {
-  const [count, setCount] = useState(20);
+export default function Count({ textColour = '#000', life, setLife }) {
+  // const [count, setCount] = useState(life);
   const [dragNumber, setDragNumber] = useState(0);
   const [showDragNumber, setShowDragNumber] = useState(false);
 
@@ -12,11 +12,14 @@ export default function Count({ textColour = '#000' }) {
   const [countBoxTop, setCountBoxTop] = useState();
   const [countBoxBottom, setCountBoxBottom] = useState(0);
 
+  const counterRef = useRef(null);
+  const [counterHeight, setCounterHeight] = useState(0);
+
   const skullIcon = require('../icons/skullWhite.png');
 
   useEffect(() => {
     if (showDragNumber == false) {
-      setCount((prevCount) =>
+      setLife((prevCount) =>
         prevCount + dragNumber < 0 ? 0 : prevCount + dragNumber
       );
       setDragNumber(0);
@@ -40,7 +43,7 @@ export default function Count({ textColour = '#000' }) {
 
           const centreOfBox = (countBoxTop + countBoxBottom) / 2;
 
-          setCount((prevCount) =>
+          setLife((prevCount) =>
             y < centreOfBox ? prevCount + 1 : prevCount - 1
           );
         }
@@ -78,15 +81,16 @@ export default function Count({ textColour = '#000' }) {
             ? y - countBoxBottom
             : 0;
 
-          if (yDistanceToBox >= 0) {
+          const proportionalDistance = yDistanceToBox / counterHeight;
+          console.log('proportionalDistance', proportionalDistance);
+          if (proportionalDistance >= 0) {
             setShowDragNumber(true);
-
             //should scale these with screen size
 
             const numHealth =
-              yDistanceToBox < 50
+              proportionalDistance < 1
                 ? 0
-                : Math.floor(Math.exp(yDistanceToBox / 90));
+                : Math.floor(Math.exp(proportionalDistance + 1) / 10);
             const dragNumber = aboveBox ? numHealth : -numHealth;
             setDragNumber(dragNumber);
           } else {
@@ -107,7 +111,15 @@ export default function Count({ textColour = '#000' }) {
   // console.log(`height of entire screen ${window.innerHeight}`);
 
   return (
-    <View style={styles.container} {...tapResponder.panHandlers}>
+    <View
+      ref={counterRef}
+      onLayout={() => {
+        countBoxRef.current.measure((x, y, width, height, pageX, pageY) => {
+          setCounterHeight(height);
+        });
+      }}
+      style={styles.container}
+      {...tapResponder.panHandlers}>
       <View
         {...panResponder.panHandlers}
         ref={countBoxRef}
@@ -119,21 +131,13 @@ export default function Count({ textColour = '#000' }) {
             setCountBoxRight(width + pageX);
           });
         }}>
-        {
-          count > 0 ? (
-            <Text style={styles.text}>{count}</Text>
-          ) : (
-            //Same size as text
-            <Image
-              style={{ width: 200, height: 200 }}
-              source={skullIcon}
-              onProgress={() => setCount(20)}
-            />
-          )
-          // <Image source={skullIcon} />
-        }
+        {life > 0 ? (
+          <Text style={styles.text}>{life}</Text>
+        ) : (
+          <Image style={{ width: 200, height: 200 }} source={skullIcon} />
+        )}
       </View>
-      <Text style={[{ opacity: 0 }]}> HI LIVI!!!</Text>
+      <Text style={{ opacity: 0 }}> HI LIVI!!!</Text>
       {
         <Text
           style={[styles.dragNumber, { opacity: showDragNumber ? 100 : 0 }]}>

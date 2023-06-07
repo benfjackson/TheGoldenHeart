@@ -27,7 +27,7 @@ export default function MainMenu() {
           backgroundColor: 'black',
           width: '100%'
         }}>
-        <TouchableOpacity onPress={() => navigation.navigate('PlayScreen')}>
+        <TouchableOpacity onPress={() => navigation.navigate('SelectSkin')}>
           <Image source={playButton} style={{ width: 300, height: 200 }} />
         </TouchableOpacity>
         {/* <Button title="Forest" onPress={() => navigation.navigate('Forest')} />
