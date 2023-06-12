@@ -2,7 +2,7 @@ import BasicSkin from '../../skins/Basic/BasicSkin';
 
 export default function getSkin(skinID) {
   const basic = require('../../skins/Basic/BasicSkin');
-  console.log('getSkin', skinID);
+
   const skinMap = {
     // Devil:
     // VampireGirl: require('../../skins/VampireGirl'),

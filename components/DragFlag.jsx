@@ -82,15 +82,14 @@ export default function Count({ textColour = '#000', life, setLife }) {
             : 0;
 
           const proportionalDistance = yDistanceToBox / counterHeight;
-          console.log('proportionalDistance', proportionalDistance);
           if (proportionalDistance >= 0) {
             setShowDragNumber(true);
             //should scale these with screen size
 
             const numHealth =
-              proportionalDistance < 1
+              yDistanceToBox < 1
                 ? 0
-                : Math.floor(Math.exp(proportionalDistance + 1) / 10);
+                : Math.floor(Math.exp(proportionalDistance + 1) / 2.5);
             const dragNumber = aboveBox ? numHealth : -numHealth;
             setDragNumber(dragNumber);
           } else {
@@ -115,6 +114,7 @@ export default function Count({ textColour = '#000', life, setLife }) {
       ref={counterRef}
       onLayout={() => {
         countBoxRef.current.measure((x, y, width, height, pageX, pageY) => {
+          console.log('setting counter height to be ', height);
           setCounterHeight(height);
         });
       }}

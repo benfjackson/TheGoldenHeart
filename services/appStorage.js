@@ -48,8 +48,7 @@ export async function getFavourites() {
         'Devil',
         'Druid',
         'Kraken',
-        'NobleVampire',
-        'LightningDragon'
+        'NobleVampire'
       ];
       await AsyncStorage.setItem(
         'favourites',

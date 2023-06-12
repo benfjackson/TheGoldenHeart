@@ -3,6 +3,7 @@
 
 import { Pressable } from 'react-native';
 import getSkin from './getSkin';
+import GuestSkin from '../../skins/Guest';
 import { useState, useEffect } from 'react';
 import PopupMenu from './PopupMenu';
 
@@ -18,14 +19,10 @@ export default function InGame({ route }) {
   const [guestLife, setGuestLife] = useState(20);
   const [history, setHistory] = useState([]);
   useEffect(() => {
-    console.log('h');
-    console.log(history);
     setHistory([...history, life]);
   }, [life]);
 
   const Skin = getSkin(skinID).default;
-  console.log('ingame skin');
-  console.log(Skin);
 
   const menuButton = require('../../images/UI/popupButton.png');
 
@@ -70,13 +67,7 @@ export default function InGame({ route }) {
                 height: '30%',
                 width: '100%'
               }}>
-              {guest && (
-                <Skin
-                  skinID={'default'}
-                  life={guestLife}
-                  setLife={setGuestLife}
-                />
-              )}
+              <GuestSkin life={guestLife} setLife={setGuestLife} />
             </View>
           )}
           <View
