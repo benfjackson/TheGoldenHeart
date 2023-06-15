@@ -41,13 +41,13 @@ export default function Count({ textColour = '#000', life, setLife }) {
           );
           const above = gestureState.dy < 0;
 
-          if (normalizedSwipeLength >= 0) {
+          if (normalizedSwipeLength >= 0.05) {
             setShowDragNumber(true);
 
-            const numHealth =
-              normalizedSwipeLength < 0.05
-                ? 0
-                : Math.floor((10 * normalizedSwipeLength) ** 1.3);
+            const numHealth = Math.floor((10 * normalizedSwipeLength) ** 1.3);
+            // normalizedSwipeLength < 0.05
+            //   ? 0
+            //   :
 
             above ? setDragNumber(numHealth) : setDragNumber(-numHealth);
           } else {

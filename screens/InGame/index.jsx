@@ -5,7 +5,7 @@ import { Pressable } from 'react-native';
 import getSkin from './getSkin';
 import GuestSkin from '../../skins/Guest';
 import { useState, useEffect } from 'react';
-import PopupMenu from './PopupMenu';
+import PopupMenu from './popupMenu';
 
 import { View, Image } from 'react-native';
 

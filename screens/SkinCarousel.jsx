@@ -13,7 +13,6 @@ import { useNavigation } from '@react-navigation/native';
 import { getSkinsInfo, getImage, getMiniImage } from '../services/getSkinInfo';
 
 export default function SkinCarousel({ favourites = ['Angel'] }) {
-  const backButton = require('../images/UI/BackButton.png');
   const [entries, setEntries] = useState([]);
 
   useEffect(() => {
@@ -84,39 +83,18 @@ export default function SkinCarousel({ favourites = ['Angel'] }) {
   const itemWidth = 250;
   return (
     //Blue background
-    <View
+
+    <Carousel
+      ref={carouselRef}
+      data={entries}
+      renderItem={renderItem}
+      sliderWidth={sliderWidth}
+      itemWidth={itemWidth}
       style={{
         flex: 1,
-        flexDirection: 'row',
         justifyContent: 'center',
-        backgroundColor: 'black',
         alignItems: 'center'
-      }}>
-      <TouchableOpacity
-        onPress={() => {
-          navigation.navigate('MainMenu');
-        }}
-        style={{
-          position: 'absolute',
-          top: 40,
-          left: 10,
-          width: 50,
-          height: 50
-        }}>
-        <Image source={backButton} style={{ width: 50, height: 50 }} />
-      </TouchableOpacity>
-      <Carousel
-        ref={carouselRef}
-        data={entries}
-        renderItem={renderItem}
-        sliderWidth={sliderWidth}
-        itemWidth={itemWidth}
-        style={{
-          flex: 1,
-          justifyContent: 'center',
-          alignItems: 'center'
-        }}
-      />
-    </View>
+      }}
+    />
   );
 }
