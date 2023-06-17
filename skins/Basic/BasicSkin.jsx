@@ -22,13 +22,28 @@ export default function BasicSkin({
     HallOfSpirits: require(`./HallOfSpirits/HallOfSpirits.png`),
     RedSkullVampire: require(`./RedSkullVampire/RedSkullVampire.png`)
   };
+
+  const textColourMap = {
+    Devil: 'light',
+    NobleVampire: 'light',
+    GloriousElk: 'light',
+    Kraken: 'light',
+    LightningDragon: 'light',
+    Angel: 'dark',
+    GreenVampire: 'light',
+    Druid: 'light',
+    HallOfSpirits: 'light',
+    RedSkullVampire: 'light'
+  };
+
   const img = imgMap[skinID];
+  const textColour = textColourMap[skinID];
 
   return (
     <ImageBackground
       source={img}
       style={{ width: '100%', height: '100%', backgroundColor: 'black' }}>
-      <DragQueen life={life} setLife={setLife} />
+      <DragQueen life={life} setLife={setLife} textColour={textColour} />
     </ImageBackground>
   );
 }

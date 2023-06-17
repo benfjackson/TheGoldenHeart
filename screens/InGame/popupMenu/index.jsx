@@ -18,7 +18,10 @@ export default function PopupMenu({ isOpen, setIsOpen, gameState, ...props }) {
         flex: 1
       }}
       isVisible={isOpen}
-      onBackdropPress={() => setIsOpen(false)}
+      onBackdropPress={() => {
+        setMenuState('main');
+        setIsOpen(false);
+      }}
       {...props}>
       <ImageBackground
         imageStyle={{
@@ -34,6 +37,7 @@ export default function PopupMenu({ isOpen, setIsOpen, gameState, ...props }) {
             width: '70%',
             height: '70%',
             marginLeft: '15%',
+            marginRight: '15%',
             marginTop: '25%'
           }}>
           {menuState === 'main' && (

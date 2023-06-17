@@ -5,10 +5,11 @@ import { Text, View, Pressable, StyleSheet } from 'react-native';
 export default function Main({ setMenuState, gameState, setIsOpen }) {
   const styles = StyleSheet.create({
     button: {
-      color: '#fff',
-      fontSize: 20,
-      fontWeight: 'bold',
-      textAlign: 'center'
+      // color: 'rgb(243, 130, 26)',
+      color: 'rgb(250, 180, 40)',
+      fontSize: 25,
+      textAlign: 'center',
+      fontFamily: 'Endor'
     }
   });
 

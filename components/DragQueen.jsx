@@ -8,7 +8,7 @@ import {
   Dimensions
 } from 'react-native';
 
-export default function Count({ textColour = '#000', life, setLife }) {
+export default function Count({ textColour = 'light', life, setLife }) {
   const [dragNumber, setDragNumber] = useState(0);
   const [showDragNumber, setShowDragNumber] = useState(false);
 
@@ -18,6 +18,28 @@ export default function Count({ textColour = '#000', life, setLife }) {
   const { height: screenHeight } = Dimensions.get('window');
 
   const skullIcon = require('../icons/skullWhite.png');
+  const colour = textColour == 'light' ? '#ffffffa0' : '#000000a0';
+
+  const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center'
+    },
+    text: {
+      fontSize: 100,
+      //white
+      color: colour,
+      //bold
+      fontWeight: 'bold'
+    },
+    dragNumber: {
+      fontSize: 30,
+      fontWeight: 'bold',
+      marginTop: 10,
+      color: colour
+    }
+  });
 
   useEffect(() => {
     if (showDragNumber == false) {
@@ -85,7 +107,7 @@ export default function Count({ textColour = '#000', life, setLife }) {
           });
         }}>
         {life > 0 ? (
-          <Text style={styles.text}>{life}</Text>
+          <Text style={[styles.text]}>{life}</Text>
         ) : (
           <Image style={{ width: 200, height: 200 }} source={skullIcon} />
         )}
@@ -101,24 +123,3 @@ export default function Count({ textColour = '#000', life, setLife }) {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  text: {
-    fontSize: 100,
-    //white
-    color: '#fff',
-    //bold
-    fontWeight: 'bold'
-  },
-  dragNumber: {
-    fontSize: 30,
-    fontWeight: 'bold',
-    marginTop: 10,
-    color: '#fff'
-  }
-});

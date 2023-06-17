@@ -5,25 +5,40 @@ import { ScrollView } from 'react-native-gesture-handler';
 
 export default function History({ setMenuState, gameState }) {
   const backButton = require('../../../images/UI/BackButton.png');
-  const history = gameState.history.reverse();
+  //deep copy history
+
+  const history = [...gameState.history];
+  history.reverse();
   return (
-    <View style={{ flex: 1, width: '100%', alignItems: 'center' }}>
+    <View
+      style={{
+        flex: 1,
+        width: '100%',
+        alignItems: 'center'
+      }}>
       <Pressable
         onPress={() => {
           setMenuState('main');
         }}
         style={{
-          position: 'absolute',
-          top: 10,
-          left: 0
+          alignSelf: 'flex-start'
         }}>
         <Image source={backButton} style={{ width: 50, height: 50 }} />
       </Pressable>
-      <View style={{ flex: 1, flexDirection: 'column', paddingTop: 10 }}>
+      <View
+        style={{
+          flex: 1,
+          flexDirection: 'column',
+          //   alignSelf: 'flex-center',
+          alignItems: 'center',
+          width: '70%'
+        }}>
         <Text
           style={{
-            color: '#fff',
-            fontSize: 40
+            color: 'rgb(250, 180, 40)',
+            fontSize: 40,
+            textAlign: 'center',
+            fontFamily: 'Endor'
           }}>
           History
         </Text>
@@ -37,15 +52,13 @@ export default function History({ setMenuState, gameState }) {
           }}>
           <View style={{ flexDirection: 'column', flex: 1 }}>
             {[...history].map((life, index) => {
-              var prevLife = gameState.history[index + 1] || 20;
-              //   if (index === gameState.history.length - 1) prevLife = 20;
+              var prevLife = history[index + 1] || 20;
               const diff = life - prevLife;
               return (
                 <View
                   style={{
                     flexDirection: 'row',
-                    justifyContent: 'space-between',
-                    width: '50%'
+                    justifyContent: 'space-between'
                   }}
                   key={index}>
                   {/* Difference in life and prev entry */}
