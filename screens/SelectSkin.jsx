@@ -50,7 +50,10 @@ export default function SelectSkin() {
         }}>
         <Image source={backButton} style={{ width: 50, height: 50 }} />
       </TouchableOpacity>
+
+      {/* <View style={{}}> */}
       <SkinCarousel favourites={favourites} />
+      {/* </View> */}
     </View>
   );
 }

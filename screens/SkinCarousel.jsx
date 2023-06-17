@@ -35,12 +35,13 @@ export default function SkinCarousel({ favourites = ['Angel'] }) {
       alignItems: 'center'
     },
     title: {
-      fontSize: 20,
+      fontSize: 35,
       fontWeight: 'bold',
       color: 'white',
       textAlign: 'center',
       marginTop: 40,
-      color: '#FFA500'
+      color: '#FFA500',
+      fontFamily: 'Endor'
     }
   };
 

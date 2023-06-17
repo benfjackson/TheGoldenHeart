@@ -7,7 +7,7 @@ export default function Main({ setMenuState, gameState, setIsOpen }) {
     button: {
       // color: 'rgb(243, 130, 26)',
       color: 'rgb(250, 180, 40)',
-      fontSize: 25,
+      fontSize: 35,
       textAlign: 'center',
       fontFamily: 'Endor'
     }
