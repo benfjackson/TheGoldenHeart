@@ -1,5 +1,6 @@
 import { set } from 'react-native-reanimated';
 import SkinCarousel from './SkinCarousel';
+import StartingHealthPicker from './StartingHealthPicker';
 
 import { getFavourites, addToFavourites } from '../services/appStorage';
 
@@ -7,18 +8,29 @@ import { useNavigation } from '@react-navigation/native';
 
 import { useState } from 'react';
 
-import { View, Image, TouchableOpacity } from 'react-native';
+import { View, Image, TouchableOpacity, Text } from 'react-native';
 
 export default function SelectSkin() {
   //Get favourites from AsyncStorage
   const [favourites, setFavourites] = useState([]);
   const [loaded, setLoaded] = useState(false);
 
+  const [startingHealth, setStartingHealth] = useState(20);
   const navigation = useNavigation();
 
   if (!loaded) {
     getFavourites().then((favourites) => {
-      setFavourites(favourites);
+      // setFavourites(favourites);
+      setFavourites([
+        'NobleVampire',
+        'Kraken',
+        'Angel',
+        'Plains',
+        'Swamp',
+        'Island',
+        'Mountain',
+        'Forest'
+      ]);
 
       //Should put image loading in here
 
@@ -32,7 +44,7 @@ export default function SelectSkin() {
     <View
       style={{
         flex: 1,
-        flexDirection: 'row',
+        flexDirection: 'column',
         justifyContent: 'center',
         backgroundColor: 'black',
         alignItems: 'center'
@@ -46,14 +58,17 @@ export default function SelectSkin() {
           top: 40,
           left: 10,
           width: 50,
-          height: 50
+          height: 50,
+          zIndex: 10
         }}>
         <Image source={backButton} style={{ width: 50, height: 50 }} />
       </TouchableOpacity>
 
-      {/* <View style={{}}> */}
-      <SkinCarousel favourites={favourites} />
-      {/* </View> */}
+      <View style={{ paddingVertical: '25%' }}>
+        {/* paddingVertical: '25%' */}
+        <SkinCarousel favourites={favourites} startingHealth={startingHealth} />
+        <StartingHealthPicker setStartingHealth={setStartingHealth} />
+      </View>
     </View>
   );
 }

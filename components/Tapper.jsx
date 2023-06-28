@@ -1,11 +1,22 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { View, Text, Image, StyleSheet, PanResponder } from 'react-native';
 
-export default function Tapper({ inverse = false, life, setLife }) {
+export default function Tapper({
+  skull = true,
+  inverse = false,
+  life,
+  setLife,
+  size = 'guest'
+}) {
   const countBoxRef = useRef(null);
   const [countBoxTop, setCountBoxTop] = useState();
   const [countBoxBottom, setCountBoxBottom] = useState(0);
   const skullIcon = require('../icons/skullWhite.png');
+
+  const sizeMap = {
+    guest: 100,
+    counter: 60
+  };
 
   const tapResponder = useMemo(
     () =>
@@ -20,10 +31,13 @@ export default function Tapper({ inverse = false, life, setLife }) {
         onPanResponderRelease: (event, gestureState) => {
           const y = event.nativeEvent.pageY;
           const centreOfBox = (countBoxTop + countBoxBottom) / 2;
-          console.log('y', y);
-          console.log('centreOfBox', centreOfBox);
+          // console.log('y', y);
+          // console.log('centreOfBox', centreOfBox);
           setLife((prevCount) => {
-            const newCount = y < centreOfBox ? prevCount - 1 : prevCount + 1;
+            const toAdd = y < centreOfBox ? -1 : 1;
+            const inverseN = inverse ? 1 : -1;
+            const newCount = prevCount + toAdd * inverseN;
+            if (prevCount === 0 && toAdd * inverseN < 0) return 0;
             return newCount;
           });
         }
@@ -45,13 +59,13 @@ export default function Tapper({ inverse = false, life, setLife }) {
         <Image style={{ width: 200, height: 200, transform: [{ rotate: '180deg' }] }} source={skullIcon} />
         */}
 
-        {life > 0 ? (
+        {life > 0 || !skull ? (
           <Text
             style={{
-              fontSize: 100,
-              color: '#fff',
+              fontSize: sizeMap[size],
+              color: '#ffffffd0',
               fontWeight: 'bold',
-              transform: [{ rotate: '180deg' }]
+              transform: [{ rotate: inverse ? '180deg' : '0deg' }]
             }}>
             {life}
           </Text>

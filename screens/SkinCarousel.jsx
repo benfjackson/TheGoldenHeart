@@ -12,7 +12,10 @@ import { useNavigation } from '@react-navigation/native';
 
 import { getSkinsInfo, getImage, getMiniImage } from '../services/getSkinInfo';
 
-export default function SkinCarousel({ favourites = ['Angel'] }) {
+export default function SkinCarousel({
+  favourites = ['Angel'],
+  startingHealth
+}) {
   const [entries, setEntries] = useState([]);
 
   useEffect(() => {
@@ -41,7 +44,8 @@ export default function SkinCarousel({ favourites = ['Angel'] }) {
       textAlign: 'center',
       marginTop: 40,
       color: '#FFA500',
-      fontFamily: 'Endor'
+      fontFamily: 'Endor',
+      height: '50%'
     }
   };
 
@@ -57,7 +61,8 @@ export default function SkinCarousel({ favourites = ['Angel'] }) {
         <TouchableOpacity
           onPress={() => {
             navigation.navigate('InGame', {
-              skinID: data.id
+              skinID: data.id,
+              startingHealth: startingHealth
             });
           }}>
           <ImageBackground

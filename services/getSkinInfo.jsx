@@ -12,7 +12,12 @@ export function getMiniImage(skinID) {
     LightningDragon: require('../skins/Basic/LightningDragon/mini.png'),
     NobleVampire: require('../skins/Basic/NobleVampire/mini.png'),
     RedSkullVampire: require('../skins/Basic/RedSkullVampire/mini.png'),
-    Werewolf: require('../skins/Basic/Werewolf/mini.png')
+    Werewolf: require('../skins/Basic/Werewolf/mini.png'),
+    Swamp: require('../skins/Basic/Swamp/mini.png'),
+    Island: require('../skins/Basic/Island/mini.png'),
+    Plains: require('../skins/Basic/Plains/mini.png'),
+    Mountain: require('../skins/Basic/Mountain/mini.png'),
+    Forest: require('../skins/Basic/Forest/mini.png')
   };
   return imageMap[skinID];
 }
@@ -29,7 +34,12 @@ export function getSkinData(skinID) {
     LightningDragon: require('../skins/Basic/LightningDragon/data.json'),
     NobleVampire: require('../skins/Basic/NobleVampire/data.json'),
     RedSkullVampire: require('../skins/Basic/RedSkullVampire/data.json'),
-    Werewolf: require('../skins/Basic/Werewolf/data.json')
+    Werewolf: require('../skins/Basic/Werewolf/data.json'),
+    Swamp: require('../skins/Basic/Swamp/data.json'),
+    Island: require('../skins/Basic/Island/data.json'),
+    Plains: require('../skins/Basic/Plains/data.json'),
+    Mountain: require('../skins/Basic/Mountain/data.json'),
+    Forest: require('../skins/Basic/Forest/data.json')
   };
   //parse the json into a js object
   const data = dataMap[skinID];

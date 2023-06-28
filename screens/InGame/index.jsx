@@ -6,18 +6,23 @@ import getSkin from './getSkin';
 import GuestSkin from '../../skins/Guest';
 import { useState, useEffect } from 'react';
 import PopupMenu from './popupMenu';
+import Counters from './Counters';
 
 import { View, Image } from 'react-native';
 
 export default function InGame({ route }) {
   const skinID = route.params?.skinID;
+  const startingHealth = route.params?.startingHealth;
 
   const [menuOpen, setMenuOpen] = useState(false);
   const [guest, setGuest] = useState(false);
 
-  const [life, setLife] = useState(20);
-  const [guestLife, setGuestLife] = useState(20);
+  const [life, setLife] = useState(startingHealth);
+  const [guestLife, setGuestLife] = useState(startingHealth);
   const [history, setHistory] = useState([]);
+  const [activeCounters, setActiveCounters] = useState([]);
+  const [reset, setReset] = useState(false);
+
   useEffect(() => {
     setHistory([...history, life]);
   }, [life]);
@@ -34,12 +39,16 @@ export default function InGame({ route }) {
         gameState={{
           life,
           setLife,
+          startingHealth,
           history,
           setHistory,
           guest,
           setGuest,
           guestLife,
-          setGuestLife
+          setGuestLife,
+          activeCounters,
+          setActiveCounters,
+          setReset
         }}
       />
       <View
@@ -72,10 +81,21 @@ export default function InGame({ route }) {
           )}
           <View
             style={{
-              height: guest ? '70%' : '100%',
-              width: '100%'
+              // height: guest ? '70%' : '100%',
+              // width: '100%'
+              flex: 1
             }}>
             <Skin skinID={skinID} life={life} setLife={setLife} />
+          </View>
+          <View
+            style={{
+              position: 'absolute',
+              bottom: 0,
+              height: '25%',
+              width: '100%',
+              marginBottom: '-15%'
+            }}>
+            <Counters counters={activeCounters} reset={reset} />
           </View>
         </View>
       </View>

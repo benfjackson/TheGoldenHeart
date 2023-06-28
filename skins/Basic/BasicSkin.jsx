@@ -20,9 +20,15 @@ export default function BasicSkin({
     GreenVampire: require(`./GreenVampire/GreenVampire.png`),
     Druid: require(`./Druid/Druid.png`),
     HallOfSpirits: require(`./HallOfSpirits/HallOfSpirits.png`),
-    RedSkullVampire: require(`./RedSkullVampire/RedSkullVampire.png`)
+    RedSkullVampire: require(`./RedSkullVampire/RedSkullVampire.png`),
+    Swamp: require(`./Swamp/Swamp.png`),
+    Island: require(`./Island/Island.png`),
+    Plains: require(`./Plains/Plains.png`),
+    Mountain: require(`./Mountain/Mountain.png`),
+    Forest: require(`./Forest/Forest.png`)
   };
 
+  //Put these into data.json
   const textColourMap = {
     Devil: 'light',
     NobleVampire: 'light',
@@ -33,7 +39,10 @@ export default function BasicSkin({
     GreenVampire: 'light',
     Druid: 'light',
     HallOfSpirits: 'light',
-    RedSkullVampire: 'light'
+    RedSkullVampire: 'light',
+    Swamp: 'light',
+    Island: 'dark',
+    Plains: 'dark'
   };
 
   const img = imgMap[skinID];

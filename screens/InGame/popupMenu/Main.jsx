@@ -3,6 +3,8 @@ import { useNavigation } from '@react-navigation/native';
 import { Text, View, Pressable, StyleSheet } from 'react-native';
 
 export default function Main({ setMenuState, gameState, setIsOpen }) {
+  // const { guest, setGuest, setLife, setHistory, setGuestLife } = gameState;
+
   const styles = StyleSheet.create({
     button: {
       // color: 'rgb(243, 130, 26)',
@@ -25,10 +27,23 @@ export default function Main({ setMenuState, gameState, setIsOpen }) {
       }}>
       <Pressable
         onPress={() => {
+          gameState.setHistory([]);
+          gameState.setLife(gameState.startingHealth);
+
+          gameState.setGuestLife(gameState.startingHealth);
+          const tempCounters = gameState.activeCounters.map((item) => item);
+          gameState.setActiveCounters([]);
+          gameState.setActiveCounters(tempCounters);
           setIsOpen(false);
-          navigation.navigate('MainMenu');
+          gameState.setReset((val) => !val);
         }}>
-        <Text style={styles.button}>Home</Text>
+        <Text style={styles.button}>Reset</Text>
+      </Pressable>
+      <Pressable
+        onPress={() => {
+          setMenuState('counters');
+        }}>
+        <Text style={styles.button}>Counters</Text>
       </Pressable>
       <Pressable
         onPress={() => {
@@ -41,13 +56,12 @@ export default function Main({ setMenuState, gameState, setIsOpen }) {
       </Pressable>
       <Pressable
         onPress={() => {
-          gameState.setLife(20);
-          gameState.setHistory([]);
-          gameState.setGuestLife(20);
           setIsOpen(false);
+          navigation.navigate('MainMenu');
         }}>
-        <Text style={styles.button}>Reset</Text>
+        <Text style={styles.button}>Home</Text>
       </Pressable>
+
       <Pressable
         onPress={() => {
           setMenuState('history');

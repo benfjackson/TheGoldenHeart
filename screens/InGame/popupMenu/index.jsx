@@ -2,6 +2,7 @@ import Modal from 'react-native-modal';
 
 import Main from './Main';
 import History from './History';
+import CountersSelection from './CounterSelection';
 
 import { Text, View, Pressable, ImageBackground } from 'react-native';
 
@@ -42,13 +43,19 @@ export default function PopupMenu({ isOpen, setIsOpen, gameState, ...props }) {
           }}>
           {menuState === 'main' && (
             <Main
-              setMenuState={setMenuState}
               gameState={gameState}
+              setMenuState={setMenuState}
               setIsOpen={setIsOpen}
             />
           )}
           {menuState === 'history' && (
             <History setMenuState={setMenuState} gameState={gameState} />
+          )}
+          {menuState === 'counters' && (
+            <CountersSelection
+              setMenuState={setMenuState}
+              gameState={gameState}
+            />
           )}
         </View>
       </ImageBackground>
