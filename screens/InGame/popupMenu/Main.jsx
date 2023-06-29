@@ -29,6 +29,14 @@ export default function Main({ setMenuState, gameState, setIsOpen }) {
       }}>
       <Pressable
         onPress={() => {
+          setIsOpen(false);
+          clearGameState();
+          navigation.navigate('MainMenu');
+        }}>
+        <Text style={styles.button}>Home</Text>
+      </Pressable>
+      <Pressable
+        onPress={() => {
           gameState.setHistory([]);
           gameState.setLife(gameState.startingHealth);
 
@@ -36,7 +44,7 @@ export default function Main({ setMenuState, gameState, setIsOpen }) {
           const tempCounters = gameState.activeCounters.map((item) => item);
           gameState.setActiveCounters([]);
           gameState.setActiveCounters(tempCounters);
-          setIsOpen(false);
+          // setIsOpen(false);
           gameState.setReset((val) => !val);
           clearGameState();
         }}>
@@ -56,14 +64,6 @@ export default function Main({ setMenuState, gameState, setIsOpen }) {
         <Text style={styles.button}>
           {gameState.guest ? 'Remove guest' : 'Add guest'}
         </Text>
-      </Pressable>
-      <Pressable
-        onPress={() => {
-          setIsOpen(false);
-          clearGameState();
-          navigation.navigate('MainMenu');
-        }}>
-        <Text style={styles.button}>Home</Text>
       </Pressable>
 
       <Pressable

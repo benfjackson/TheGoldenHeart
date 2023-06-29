@@ -64,6 +64,7 @@ export default function Tapper({
             style={{
               fontSize: sizeMap[size],
               color: '#ffffffd0',
+              // color: 'rgb(250, 180, 40)',
               fontWeight: 'bold',
               transform: [{ rotate: inverse ? '180deg' : '0deg' }]
             }}>

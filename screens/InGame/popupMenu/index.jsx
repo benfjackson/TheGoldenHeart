@@ -18,6 +18,10 @@ export default function PopupMenu({ isOpen, setIsOpen, gameState, ...props }) {
       style={{
         flex: 1
       }}
+      animationIn={'fadeIn'}
+      animationOut={'fadeOut'}
+      animationInTiming={1000}
+      animationOutTiming={1000}
       isVisible={isOpen}
       onBackdropPress={() => {
         setMenuState('main');

@@ -22,14 +22,14 @@ export default function SelectSkin() {
     getFavourites().then((favourites) => {
       // setFavourites(favourites);
       setFavourites([
-        'NobleVampire',
-        'Kraken',
         'Angel',
         'Plains',
         'Swamp',
         'Island',
         'Mountain',
-        'Forest'
+        'Forest',
+        'NobleVampire',
+        'Kraken'
       ]);
 
       //Should put image loading in here
