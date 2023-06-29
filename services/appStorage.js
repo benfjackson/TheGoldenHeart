@@ -34,6 +34,39 @@ export async function removeToken(tokenName) {
   }
 }
 
+export async function saveGameState(gameState) {
+  try {
+    await AsyncStorage.setItem('gameState', JSON.stringify(gameState));
+    return 'success';
+  } catch (error) {
+    return `error: ${error}`;
+  }
+}
+
+export async function loadGameState() {
+  try {
+    const gameState = await AsyncStorage.getItem('gameState');
+    if (gameState !== null) {
+      console.log('game state found');
+      return JSON.parse(gameState);
+    } else {
+      return null;
+    }
+  } catch (error) {
+    return `error: ${error}`;
+  }
+}
+
+export async function clearGameState() {
+  console.log('clearing game state');
+  try {
+    await AsyncStorage.removeItem('gameState');
+    return 'success';
+  } catch (error) {
+    return `error: ${error}`;
+  }
+}
+
 export async function getFavourites() {
   try {
     const favourites = await AsyncStorage.getItem('favourites');

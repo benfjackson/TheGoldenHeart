@@ -2,6 +2,8 @@ import { useNavigation } from '@react-navigation/native';
 
 import { Text, View, Pressable, StyleSheet } from 'react-native';
 
+import { clearGameState } from '../../../services/appStorage';
+
 export default function Main({ setMenuState, gameState, setIsOpen }) {
   // const { guest, setGuest, setLife, setHistory, setGuestLife } = gameState;
 
@@ -36,6 +38,7 @@ export default function Main({ setMenuState, gameState, setIsOpen }) {
           gameState.setActiveCounters(tempCounters);
           setIsOpen(false);
           gameState.setReset((val) => !val);
+          clearGameState();
         }}>
         <Text style={styles.button}>Reset</Text>
       </Pressable>
@@ -57,6 +60,7 @@ export default function Main({ setMenuState, gameState, setIsOpen }) {
       <Pressable
         onPress={() => {
           setIsOpen(false);
+          clearGameState();
           navigation.navigate('MainMenu');
         }}>
         <Text style={styles.button}>Home</Text>

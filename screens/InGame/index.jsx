@@ -1,31 +1,49 @@
 //Has the menu, manages state for the counters and passes into the skin
 //Manages having the guest
 
-import { Pressable } from 'react-native';
 import getSkin from './getSkin';
 import GuestSkin from '../../skins/Guest';
-import { useState, useEffect } from 'react';
 import PopupMenu from './popupMenu';
 import Counters from './Counters';
 
-import { View, Image } from 'react-native';
+import { useState, useEffect } from 'react';
+import { View, Image, Pressable } from 'react-native';
+import { useKeepAwake } from 'expo-keep-awake';
+
+import { saveGameState } from '../../services/appStorage';
 
 export default function InGame({ route }) {
+  useKeepAwake();
+
   const skinID = route.params?.skinID;
-  const startingHealth = route.params?.startingHealth;
+  const gameState = route.params?.gameState;
+  const startingHealth = route.params?.gameState.startingHealth;
 
   const [menuOpen, setMenuOpen] = useState(false);
-  const [guest, setGuest] = useState(false);
+  const [guest, setGuest] = useState(gameState.guest || false);
 
-  const [life, setLife] = useState(startingHealth);
-  const [guestLife, setGuestLife] = useState(startingHealth);
-  const [history, setHistory] = useState([]);
-  const [activeCounters, setActiveCounters] = useState([]);
+  const [life, setLife] = useState(gameState.life);
+  const [guestLife, setGuestLife] = useState(gameState.guestLife);
+  const [history, setHistory] = useState(gameState.history || []);
+  const [activeCounters, setActiveCounters] = useState(
+    gameState.activeCounters || []
+  );
   const [reset, setReset] = useState(false);
 
   useEffect(() => {
     setHistory([...history, life]);
   }, [life]);
+
+  useEffect(() => {
+    saveGameState({
+      life,
+      history,
+      guest,
+      guestLife,
+      activeCounters,
+      skinID
+    });
+  }, [life, history, guest, guestLife, activeCounters]);
 
   const Skin = getSkin(skinID).default;
 
@@ -91,7 +109,7 @@ export default function InGame({ route }) {
             style={{
               position: 'absolute',
               bottom: 0,
-              height: '25%',
+              height: activeCounters.length > 0 ? '25%' : '0%',
               width: '100%',
               marginBottom: '-15%'
             }}>
