@@ -1,5 +1,6 @@
 {
   "id": "GreenVampire",
   "title": "Grave Stalking",
-  "tags": ["black", "green", "vampire"]
+  "tags": ["black", "green", "vampire"],
+  "textColour": "#ffffffa0"
 }

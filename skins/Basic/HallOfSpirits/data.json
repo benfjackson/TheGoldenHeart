@@ -1,5 +1,6 @@
 {
   "id": "HallOfSpirits",
   "title": "Hall of Spirits",
-  "tags": ["blue", "spirit"]
+  "tags": ["blue", "spirit"],
+  "textColour": "#ffffffa0"
 }

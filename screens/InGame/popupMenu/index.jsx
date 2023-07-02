@@ -8,6 +8,7 @@ import { Text, View, Pressable, ImageBackground } from 'react-native';
 
 import { useNavigation } from '@react-navigation/native';
 import { useState } from 'react';
+import Game from './Game';
 
 export default function PopupMenu({ isOpen, setIsOpen, gameState, ...props }) {
   const bg = require('../../../images/UI/popup.png');
@@ -59,6 +60,13 @@ export default function PopupMenu({ isOpen, setIsOpen, gameState, ...props }) {
             <CountersSelection
               setMenuState={setMenuState}
               gameState={gameState}
+            />
+          )}
+          {menuState === 'game' && (
+            <Game
+              gameState={gameState}
+              setMenuState={setMenuState}
+              setIsOpen={setIsOpen}
             />
           )}
         </View>

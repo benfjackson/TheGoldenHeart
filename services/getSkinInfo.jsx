@@ -1,5 +1,4 @@
 //optimise later
-
 export function getMiniImage(skinID) {
   const imageMap = {
     Angel: require('../skins/Basic/Angel/mini.png'),

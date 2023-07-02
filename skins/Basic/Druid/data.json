@@ -1,5 +1,6 @@
 {
   "id": "Druid",
   "title": "Protector of the Forest",
-  "tags": ["green"]
+  "tags": ["green"],
+  "textColour": "#ffffffa0"
 }

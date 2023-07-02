@@ -43,6 +43,34 @@ export async function saveGameState(gameState) {
   }
 }
 
+export async function saveCounter(counter) {
+  // console.log('saving counter', counter);
+  // try {
+  //   console.log('getting game state');
+  //   AsyncStorage.getItem('gameState').then((gameState) => {
+  //     console.log('game state', gameState);
+  //     //set the counter in gameState.activeCounters with matching counter.name to counter
+  //     //save gameState
+  //     const newActiveCounters = gameState?.activeCounters?.map((c) => {
+  //       if (c.name === counter.name) {
+  //         return counter;
+  //       } else {
+  //         return c;
+  //       }
+  //     });
+  //     console.log('newActiveCounters', newActiveCounters);
+  //     const newGameState = { ...gameState, activeCounters: newActiveCounters };
+  //     console.log('newGameState');
+  //     console.log(newGameState);
+  //     AsyncStorage.setItem('gameState', JSON.stringify(newGameState));
+  //     return 'success';
+  //   });
+  // } catch (error) {
+  //   console.log('errord');
+  //   return `error: ${error}`;
+  // }
+}
+
 export async function loadGameState() {
   try {
     const gameState = await AsyncStorage.getItem('gameState');
@@ -58,7 +86,6 @@ export async function loadGameState() {
 }
 
 export async function clearGameState() {
-  console.log('clearing game state');
   try {
     await AsyncStorage.removeItem('gameState');
     return 'success';

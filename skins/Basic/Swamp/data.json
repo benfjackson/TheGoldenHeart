@@ -1,5 +1,6 @@
 {
   "id": "Swamp",
   "title": "The Swamp where things crawl to die",
-  "tags": ["black"]
+  "tags": ["black"],
+  "textColour": "#ffffffa0"
 }

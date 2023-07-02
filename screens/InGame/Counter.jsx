@@ -4,14 +4,24 @@ import CounterImage from '../../images/UI/Counter.png';
 
 import Tapper from '../../components/Tapper';
 import { useEffect, useState } from 'react';
+import { saveCounter } from '../../services/appStorage';
 
 export default function Counters({ counter, reset }) {
   // const count = counters.find((c) => (c.name = counter.name));
 
-  const [count, setCount] = useState(counter.initialCount);
+  console.log('counter', counter);
+
+  const [count, setCount] = useState(
+    counter.savedCount || counter.initialCount
+  );
   useEffect(() => {
     setCount(counter.initialCount);
   }, [reset]);
+  useEffect(() => {
+    const newCounter = { ...counter, savedCount: count };
+    console.log('saving counter', newCounter);
+    // saveCounter(newCounter);
+  }, [count]);
   return (
     <ImageBackground
       style={{

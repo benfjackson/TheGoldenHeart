@@ -35,14 +35,16 @@ export default function InGame({ route }) {
   }, [life]);
 
   useEffect(() => {
-    saveGameState({
-      life,
-      history,
-      guest,
-      guestLife,
-      activeCounters,
-      skinID
-    });
+    if (history.length > 1 || activeCounters.length > 0) {
+      saveGameState({
+        life,
+        history,
+        guest,
+        guestLife,
+        activeCounters,
+        skinID
+      });
+    }
   }, [life, history, guest, guestLife, activeCounters]);
 
   const Skin = getSkin(skinID).default;

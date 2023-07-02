@@ -2,6 +2,7 @@ import { ImageBackground, Image, Button } from 'react-native';
 
 // import Counter from '../components/CrossCounter';
 import DragQueen from '../../components/DragQueen';
+import { getSkinData } from '../../services/getSkinInfo';
 
 import React, { useState } from 'react';
 
@@ -28,25 +29,9 @@ export default function BasicSkin({
     Forest: require(`./Forest/Forest.png`)
   };
 
-  //Put these into data.json
-  const textColourMap = {
-    Devil: 'light',
-    NobleVampire: 'light',
-    GloriousElk: 'light',
-    Kraken: 'light',
-    LightningDragon: 'light',
-    Angel: 'dark',
-    GreenVampire: 'light',
-    Druid: 'light',
-    HallOfSpirits: 'light',
-    RedSkullVampire: 'light',
-    Swamp: 'light',
-    Island: 'dark',
-    Plains: 'dark'
-  };
-
+  const data = getSkinData(skinID);
   const img = imgMap[skinID];
-  const textColour = textColourMap[skinID];
+  const textColour = data.textColour;
 
   return (
     <ImageBackground

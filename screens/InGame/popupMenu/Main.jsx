@@ -52,6 +52,12 @@ export default function Main({ setMenuState, gameState, setIsOpen }) {
       </Pressable>
       <Pressable
         onPress={() => {
+          setMenuState('game');
+        }}>
+        <Text style={styles.button}>Game</Text>
+      </Pressable>
+      {/* <Pressable
+        onPress={() => {
           setMenuState('counters');
         }}>
         <Text style={styles.button}>Counters</Text>
@@ -71,7 +77,7 @@ export default function Main({ setMenuState, gameState, setIsOpen }) {
           setMenuState('history');
         }}>
         <Text style={styles.button}>Life History</Text>
-      </Pressable>
+      </Pressable> */}
     </View>
   );
 }

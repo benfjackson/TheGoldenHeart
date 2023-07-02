@@ -1,5 +1,6 @@
 {
   "id": "NobleVampire",
   "title": "Royal Blood",
-  "tags": ["black", "vampire"]
+  "tags": ["black", "vampire"],
+  "textColour": "#ffffffa0"
 }

@@ -1,5 +1,6 @@
 {
   "id": "Werewolf",
   "title": "Snarl of Fangs",
-  "tags": ["werewolf"]
+  "tags": ["werewolf"],
+  "textColour": "#ffffffa0"
 }

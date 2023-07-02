@@ -1,5 +1,6 @@
 {
   "id": "Crab",
   "title": "Big Snippah",
-  "tags": ["black", "crab"]
+  "tags": ["black", "crab"],
+  "textColour": "#ffffffa0"
 }

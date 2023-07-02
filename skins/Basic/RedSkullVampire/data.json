@@ -1,5 +1,6 @@
 {
   "id": "RedSkullVampire",
   "title": "Skulls of the Many",
-  "tags": ["red", "black", "vampire"]
+  "tags": ["red", "black", "vampire"],
+  "textColour": "#ffffffa0"
 }

@@ -30,7 +30,7 @@ export default function CountersSelection({ setMenuState, gameState }) {
       }}>
       <Pressable
         onPress={() => {
-          setMenuState('main');
+          setMenuState('game');
         }}
         style={{
           alignSelf: 'flex-start'

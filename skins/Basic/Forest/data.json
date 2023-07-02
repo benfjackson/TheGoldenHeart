@@ -1,5 +1,6 @@
 {
   "id": "Forest",
   "title": "The forest in a sphere",
-  "tags": ["green"]
+  "tags": ["green"],
+  "textColour": "#ffffffa0"
 }

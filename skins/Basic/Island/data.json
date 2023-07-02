@@ -1,5 +1,6 @@
 {
   "id": "Island",
   "title": "The shrouded island",
-  "tags": ["blue"]
+  "tags": ["blue"],
+  "textColour": "#ffffffa0"
 }

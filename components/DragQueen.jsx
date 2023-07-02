@@ -8,7 +8,9 @@ import {
   Dimensions
 } from 'react-native';
 
-export default function Count({ textColour = 'light', life, setLife }) {
+import skullIcon from '../icons/skullWhite.png';
+
+export default function Count({ textColour = '#ffffffa0', life, setLife }) {
   const [dragNumber, setDragNumber] = useState(0);
   const [showDragNumber, setShowDragNumber] = useState(false);
 
@@ -17,8 +19,7 @@ export default function Count({ textColour = 'light', life, setLife }) {
   const [countBoxBottom, setCountBoxBottom] = useState(0);
   const { height: screenHeight } = Dimensions.get('window');
 
-  const skullIcon = require('../icons/skullWhite.png');
-  const colour = textColour == 'light' ? '#ffffffa0' : '#000000a0';
+  // const skullIcon = require('../icons/skullWhite.png');
 
   const styles = StyleSheet.create({
     container: {
@@ -29,7 +30,7 @@ export default function Count({ textColour = 'light', life, setLife }) {
     text: {
       fontSize: 100,
       //white
-      color: colour,
+      color: textColour,
       //bold
       fontWeight: 'bold'
     },
@@ -37,7 +38,7 @@ export default function Count({ textColour = 'light', life, setLife }) {
       fontSize: 30,
       fontWeight: 'bold',
       marginTop: 10,
-      color: colour
+      color: textColour
     }
   });
 

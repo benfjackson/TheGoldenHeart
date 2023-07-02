@@ -1,5 +1,6 @@
 {
   "id": "LightningDragon",
   "title": "Roaring Thunder",
-  "tags": ["red", "dragon"]
+  "tags": ["red", "dragon"],
+  "textColour": "#ffffffa0"
 }

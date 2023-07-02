@@ -1,5 +1,6 @@
 {
   "id": "Kraken",
   "title": "Grul'uth the Tentacled",
-  "tags": ["blue", "kraken", "horror"]
+  "tags": ["blue", "kraken", "horror"],
+  "textColour": "#ffffffa0"
 }
