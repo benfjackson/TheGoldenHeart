@@ -6,21 +6,22 @@ import Tapper from '../../components/Tapper';
 import { useEffect, useState } from 'react';
 import { saveCounter } from '../../services/appStorage';
 
-export default function Counters({ counter, reset }) {
+export default function Counter({ counter, reset }) {
   // const count = counters.find((c) => (c.name = counter.name));
 
-  console.log('counter', counter);
+  console.log('counter in object', counter);
 
   const [count, setCount] = useState(
     counter.savedCount || counter.initialCount
   );
   useEffect(() => {
+    console.log("resetting counter's count", reset);
     setCount(counter.initialCount);
   }, [reset]);
   useEffect(() => {
     const newCounter = { ...counter, savedCount: count };
     console.log('saving counter', newCounter);
-    // saveCounter(newCounter);
+    saveCounter(newCounter);
   }, [count]);
   return (
     <ImageBackground
