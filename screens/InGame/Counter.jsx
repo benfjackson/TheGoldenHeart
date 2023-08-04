@@ -33,12 +33,6 @@ export default function Counter({ counter, reset }) {
         justifyContent: 'center'
       }}
       source={CounterImage}>
-      {/* <Counter
-                counter={counter}
-                counters={counters}
-                setCounters={setCounters}
-              /> */}
-
       <Text
         style={{
           position: 'absolute',
