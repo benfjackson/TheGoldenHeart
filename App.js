@@ -1,6 +1,6 @@
-import { StatusBar } from 'expo-status-bar';
+// import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
-import MainMenu from './screens/MainMenu';
+// import MainMenu from './screens/MainMenu';
 import 'react-native-gesture-handler';
 import { NavigationContainer } from '@react-navigation/native';
 import { useFonts } from '@expo-google-fonts/dev';
@@ -16,7 +16,8 @@ LogBox.ignoreLogs([
 import HomeScreen from './screens/ScreenStack';
 export default function App() {
   const [fontsLoaded] = useFonts({
-    Endor: require('./ENDOR___.ttf')
+    Endor: require('./assets/fonts/endor/ENDOR___.ttf'),
+    Immortal: require('./assets/fonts/immortal/IMMORTAL.ttf')
   });
 
   if (!fontsLoaded) {

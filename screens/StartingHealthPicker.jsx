@@ -44,7 +44,16 @@ export default function StartingHealthPicker({ setStartingHealth }) {
             }}>
             <Text
               // ${index === currIndex ? 'text-blue' : 'text-black'}
-              style={{ color: '#FFA500', fontSize: 30, paddingVertical: 4 }}>
+              //           Endor: require('./assets/fonts/endor/ENDOR___.ttf'),
+              // Immortal: require('./assets/fonts/immortal/IMMORTAL.ttf'),
+              // // TheLastKingdom: require('./assets/fonts/the-last-kingdom/THE LAST KINGDOM.ttf'),
+              // Alamak:
+              style={{
+                color: '#FFA500',
+                fontSize: 30,
+                paddingVertical: 4,
+                fontFamily: 'Immortal'
+              }}>
               {item}
             </Text>
           </View>
