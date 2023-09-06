@@ -1,5 +1,6 @@
-import { View, Text, Pressable } from 'react-native';
+import { View, Text, Pressable, ImageBackground } from 'react-native';
 import Carousel from 'react-native-snap-carousel';
+import CounterImage from '../images/UI/Counter.png';
 
 import {
   ChevronRightIcon,
@@ -73,6 +74,7 @@ export default function StartingHealthPicker({ setStartingHealth }) {
           style={{
             alignSelf: 'center',
             width: '20%',
+            height: '100%',
             position: 'absolute',
             top: 0,
             bottom: 0,
@@ -83,22 +85,18 @@ export default function StartingHealthPicker({ setStartingHealth }) {
               onPress={() => carouselRef.current.snapToPrev()}>
               <ChevronLeftIcon className="w-6 h-6" />
             </Pressable> */}
-          <View
+
+          <ImageBackground
             style={{
-              // flex: 1,
-              height: '100%',
-              borderRadius: 100,
-              borderWidth: 2,
-              backgroundColor: '#00000000',
-              borderColor: '#FFA500'
+              height: '120%',
+              // width: 250, //'100%',
+              width: '100%',
+              alignItems: 'center',
+              justifyContent: 'center',
+              marginTop: -10
             }}
-            //   className="flex-1 h-full rounded-full border-2 border-blue bg-transparent"
+            source={CounterImage}
           />
-          {/* <Pressable
-              onPress={() => carouselRef.current.snapToNext()}
-              className={` ${currIndex === LAST30INDEX + 1 && 'opacity-0'}`}>
-              <ChevronRightIcon className={`w-6 h-6`} />
-            </Pressable> */}
         </View>
         <Carousel
           ref={carouselRef}
