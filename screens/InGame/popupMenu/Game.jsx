@@ -15,7 +15,7 @@ export default function Game({ setMenuState, gameState, setIsOpen }) {
     }
   });
 
-  const backButton = require('../../../images/UI/BackButton.png');
+  const backButton = require('../../../images/UI/BackArrow1.png');
   return (
     <View
       style={{
@@ -33,7 +33,7 @@ export default function Game({ setMenuState, gameState, setIsOpen }) {
           left: 0,
           zIndex: 10
         }}>
-        <Image source={backButton} style={{ width: 50, height: 50 }} />
+        <Image source={backButton} style={{ width: 50, height: 35 }} />
       </Pressable>
       <View
         style={{

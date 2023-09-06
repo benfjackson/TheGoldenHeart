@@ -4,7 +4,7 @@ import { Text, View, Pressable, Image } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 
 export default function History({ setMenuState, gameState }) {
-  const backButton = require('../../../images/UI/BackButton.png');
+  const backButton = require('../../../images/UI/BackArrow1.png');
   //deep copy history
 
   const history = [...gameState.history];
@@ -23,7 +23,7 @@ export default function History({ setMenuState, gameState }) {
         style={{
           alignSelf: 'flex-start'
         }}>
-        <Image source={backButton} style={{ width: 50, height: 50 }} />
+        <Image source={backButton} style={{ width: 50, height: 35 }} />
       </Pressable>
       <View
         style={{

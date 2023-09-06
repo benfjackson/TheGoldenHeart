@@ -39,7 +39,7 @@ export default function SelectSkin() {
     });
   }
 
-  const backButton = require('../images/UI/BackButton.png');
+  const backButton = require('../images/UI/BackArrow1.png');
 
   return (
     <View
@@ -62,7 +62,7 @@ export default function SelectSkin() {
           height: 50,
           zIndex: 10
         }}>
-        <Image source={backButton} style={{ width: 50, height: 50 }} />
+        <Image source={backButton} style={{ width: 50, height: 35 }} />
       </TouchableOpacity>
 
       <View style={{ paddingVertical: '25%' }}>

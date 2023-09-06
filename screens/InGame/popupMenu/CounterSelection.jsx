@@ -4,7 +4,7 @@ import { Text, View, Pressable, Image, StyleSheet } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 
 export default function CountersSelection({ setMenuState, gameState }) {
-  const backButton = require('../../../images/UI/BackButton.png');
+  const backButton = require('../../../images/UI/BackArrow1.png');
 
   const { activeCounters, setActiveCounters } = gameState;
   const allCounters = [{ name: 'Blood' }, { name: 'Poison' }, { name: 'Time' }];
@@ -35,7 +35,7 @@ export default function CountersSelection({ setMenuState, gameState }) {
         style={{
           alignSelf: 'flex-start'
         }}>
-        <Image source={backButton} style={{ width: 50, height: 50 }} />
+        <Image source={backButton} style={{ width: 50, height: 35 }} />
       </Pressable>
       <View
         style={{
