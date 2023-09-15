@@ -114,7 +114,13 @@ export default function StartingHealthPicker({ setStartingHealth }) {
           firstItem={0}
         />
       </View>
-      <Text style={{ color: '#FFA500', fontFamily: 'Endor', fontSize: 30 }}>
+      <Text
+        style={{
+          color: '#FFA500',
+          fontFamily: 'Endor',
+          fontSize: 30,
+          paddingTop: 20
+        }}>
         Starting Health
       </Text>
     </View>

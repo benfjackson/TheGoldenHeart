@@ -4,6 +4,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
 import { loadGameState, clearGameState } from '../services/appStorage';
 import { useState } from 'react';
+import PlayButton from '../components/PlayButton';
 
 export default function MainMenu() {
   const styles = StyleSheet.create({
@@ -68,12 +69,12 @@ export default function MainMenu() {
   // if (savedGame !== null) return;
 
   //image to use as button
-  const playButton = require('../images/UI/PlayButton.png');
+
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={() => navigation.navigate('SelectSkin')}>
-        <Image source={playButton} style={{ width: 300, height: 200 }} />
-      </TouchableOpacity>
+      {/* <TouchableOpacity
+        onPress={() => navigation.navigate('SelectSkin')}></TouchableOpacity> */}
+      <PlayButton />
     </View>
   );
 }

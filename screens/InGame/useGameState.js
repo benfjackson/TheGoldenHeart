@@ -52,3 +52,5 @@ export default function useGameState(numPlayers = 2, startingLife = 20) {
 
   return { loadGameState };
 }
+
+//MAKE another hook for usePlayerLife()
