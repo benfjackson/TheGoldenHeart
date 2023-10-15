@@ -1,11 +1,10 @@
 import { View, Text, Pressable, ImageBackground } from 'react-native';
 import Carousel from 'react-native-snap-carousel';
-import CounterImage from '../../images/UI/Counter.png';
+import CounterImage from '../../images/Counter.png';
 
 import { useRef } from 'react';
 
 export default function StartingHealthPicker({ setStartingHealth }) {
-
   const entries = [20, 25, 30, 40, 60, 100];
 
   const carouselRef = useRef(null);

@@ -10,7 +10,7 @@ import {
 // import Carousel from 'react-native-snap-carousel';
 import Carousel from 'react-native-reanimated-carousel';
 import { useNavigation } from '@react-navigation/native';
-import FrameImage from '../../images/UI/FRAME_TRANSPARENT.png';
+import FrameImage from '../../images/FRAME_TRANSPARENT.png';
 
 import {
   getSkinsInfo,

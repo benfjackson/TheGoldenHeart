@@ -1,6 +1,6 @@
 import { Text, View, Image, ImageBackground } from 'react-native';
 
-import CounterImage from '../../../images/UI/Counter.png';
+import CounterImage from '../../../images/Counter.png';
 
 import Tapper from '../../../components/Tapper';
 import { useEffect, useState } from 'react';
