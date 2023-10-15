@@ -25,10 +25,11 @@ export default function Count({ textColour = '#ffffffa0', life, setLife }) {
     container: {
       flex: 1,
       justifyContent: 'center',
-      alignItems: 'center'
+      alignItems: 'center',
+      width: '100%'
     },
     text: {
-      fontSize: 100,
+      fontSize: 120,
       //white
       color: textColour,
       //bold
@@ -36,7 +37,7 @@ export default function Count({ textColour = '#ffffffa0', life, setLife }) {
       fontFamily: 'Immortal'
     },
     dragNumber: {
-      fontSize: 30,
+      fontSize: 60,
       fontWeight: 'bold',
       marginTop: 10,
       color: textColour
@@ -83,10 +84,11 @@ export default function Count({ textColour = '#ffffffa0', life, setLife }) {
             const y = gestureState.y0;
 
             const centreOfBox = (countBoxTop + countBoxBottom) / 2;
-
-            setLife((prevCount) =>
-              y < centreOfBox ? prevCount + 1 : prevCount - 1
-            );
+            setLife((prevCount) => {
+              const toAdd =
+                y !== 0 ? (y < centreOfBox ? 1 : -1) : y < centreOfBox ? 1 : 0;
+              return prevCount + toAdd;
+            });
           }
 
           setShowDragNumber(false);
@@ -101,6 +103,7 @@ export default function Count({ textColour = '#ffffffa0', life, setLife }) {
   return (
     <View style={styles.container} {...swipeResponder.panHandlers}>
       <View
+        // style={styles.container}
         ref={countBoxRef}
         onLayout={() => {
           countBoxRef.current.measure((x, y, width, height, pageX, pageY) => {
@@ -114,13 +117,16 @@ export default function Count({ textColour = '#ffffffa0', life, setLife }) {
           <Image style={{ width: 200, height: 200 }} source={skullIcon} />
         )}
       </View>
-      <Text style={{ opacity: 0 }}> HI LIVI!!!</Text>
+      {/* <Text style={{ opacity: 0 }}> HI LIVI!!!</Text> */}
+
       {
-        <Text
-          style={[styles.dragNumber, { opacity: showDragNumber ? 100 : 0 }]}>
-          {dragNumber > 0 ? '+' : ''}
-          {dragNumber}
-        </Text>
+        <View
+          style={{ flexDirection: 'row', opacity: showDragNumber ? 100 : 0 }}>
+          <Text style={[styles.dragNumber]}>{dragNumber > 0 ? '+' : ''}</Text>
+          <Text style={[styles.dragNumber, { fontFamily: 'Immortal' }]}>
+            {dragNumber}
+          </Text>
+        </View>
       }
     </View>
   );

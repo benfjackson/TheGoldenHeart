@@ -13,9 +13,24 @@ export default function Tapper({
   const [countBoxBottom, setCountBoxBottom] = useState(0);
   const skullIcon = require('../icons/skullWhite.png');
 
-  const sizeMap = {
-    guest: 100,
-    counter: 60
+  // const sizeMap = {
+  //   guest: 100,
+  //   counter: 60
+  // };
+
+  const calcNewCount = (y) => {
+    const centreOfBox = (countBoxTop + countBoxBottom) / 2;
+    // console.log('y', y);
+    // console.log('centreOfBox', centreOfBox);
+
+    var toAdd = y < centreOfBox ? -1 : 1;
+    var inverseN = inverse ? 1 : -1;
+    var newCount = life + toAdd * inverseN;
+    if (life === 0 && toAdd * inverseN < 0) {
+      return 0;
+    } else {
+      return newCount;
+    }
   };
 
   const tapResponder = useMemo(
@@ -23,26 +38,13 @@ export default function Tapper({
       PanResponder.create({
         onStartShouldSetPanResponder: (event) => {
           return true;
-          // return (
-          //   event.nativeEvent.pageY < countBoxTop ||
-          //   event.nativeEvent.pageY > countBoxBottom
-          // );
         },
         onPanResponderRelease: (event, gestureState) => {
           const y = event.nativeEvent.pageY;
-          const centreOfBox = (countBoxTop + countBoxBottom) / 2;
-          // console.log('y', y);
-          // console.log('centreOfBox', centreOfBox);
-          setLife((prevCount) => {
-            const toAdd = y < centreOfBox ? -1 : 1;
-            const inverseN = inverse ? 1 : -1;
-            const newCount = prevCount + toAdd * inverseN;
-            if (prevCount === 0 && toAdd * inverseN < 0) return 0;
-            return newCount;
-          });
+          setLife(calcNewCount(y));
         }
       }),
-    [countBoxTop, countBoxBottom]
+    [countBoxTop, countBoxBottom, life]
   );
 
   return (
@@ -62,11 +64,11 @@ export default function Tapper({
         {life > 0 || !skull ? (
           <Text
             style={{
-              fontSize: sizeMap[size],
-              color: '#ffffffd0',
-              // color: 'rgb(250, 180, 40)',
+              fontSize: 80,
+              color: '#ffffffa0',
               fontWeight: 'bold',
-              transform: [{ rotate: inverse ? '180deg' : '0deg' }]
+              transform: [{ rotate: inverse ? '180deg' : '0deg' }],
+              fontFamily: 'Immortal'
             }}>
             {life}
           </Text>

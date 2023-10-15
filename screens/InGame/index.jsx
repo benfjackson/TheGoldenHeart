@@ -1,80 +1,79 @@
 //Has the menu, manages state for the counters and passes into the skin
 //Manages having the guest
 
-import getSkin from './getSkin';
-import GuestSkin from '../../skins/Guest';
 import PopupMenu from './popupMenu';
 import Counters from './Counters';
 
 import { useState, useEffect } from 'react';
-import { View, Image, Pressable } from 'react-native';
+import { View, Image, Pressable, Text } from 'react-native';
 import { useKeepAwake } from 'expo-keep-awake';
 
-import { saveGameState } from '../../services/appStorage';
+import Skin from './Skin';
+
+import useGameState from './useGameState';
 
 export default function InGame({ route }) {
   useKeepAwake();
 
-  const skinID = route.params?.skinID;
-  const gameState = route.params?.gameState;
-  const startingHealth = route.params?.gameState.startingHealth;
+  const loadGameState = route.params?.loadGameState;
+  const initialiseGameState = route.params?.initialiseGameState;
+
+  // console.log('received params:');
+  // console.log(loadGameState);
+  // console.log(initialiseGameState);
+  // console.log(route.params);
+
+  const {
+    lives,
+    setLives,
+    histories,
+    counterControl,
+    loadGame,
+    // saveGame,
+    resetGame,
+    initialiseGame,
+
+    numPlayers,
+    skinID
+  } = useGameState();
 
   const [menuOpen, setMenuOpen] = useState(false);
-  const [guest, setGuest] = useState(gameState.guest || false);
-
-  const [life, setLife] = useState(gameState.life);
-  const [guestLife, setGuestLife] = useState(gameState.guestLife);
-  const [history, setHistory] = useState(gameState.history || []);
-  const [activeCounters, setActiveCounters] = useState(
-    gameState.activeCounters || []
-  );
-  const [reset, setReset] = useState(false);
-
-  useEffect(() => {
-    setHistory([...history, life]);
-  }, [life]);
-
-  useEffect(() => {
-    if (history.length > 1 || activeCounters.length > 0) {
-      saveGameState({
-        life,
-        history,
-        guest,
-        guestLife,
-        activeCounters,
-        skinID
-      });
+  const [loaded, setLoaded] = useState(false);
+  if (!loaded) {
+    if (loadGameState) {
+      console.log('LOADGAMESTATE received as');
+      console.log(loadGameState);
+      loadGame(loadGameState);
+      setLoaded(true);
+    } else if (initialiseGameState) {
+      console.log('initialising game as');
+      console.log(initialiseGameState);
+      const { numPlayers, skinID, startingLife } = initialiseGameState;
+      initialiseGame(numPlayers, skinID, startingLife);
+      setLoaded(true);
     }
-  }, [life, history, guest, guestLife, activeCounters]);
-
-  const Skin = getSkin(skinID).default;
-
-  const menuButton = require('../../images/UI/popupButton.png');
+  }
+  if (!loaded) return <></>;
+  const menuButton = require('../../images/popupButton.png');
 
   return (
     <>
       <PopupMenu
         isOpen={menuOpen}
         setIsOpen={setMenuOpen}
-        gameState={{
-          life,
-          setLife,
-          startingHealth,
-          history,
-          setHistory,
-          guest,
-          setGuest,
-          guestLife,
-          setGuestLife,
-          activeCounters,
-          setActiveCounters,
-          setReset
-        }}
+        numPlayers={numPlayers}
+        histories={histories}
+        counterControl={counterControl}
+        resetGame={resetGame}
       />
       <View
         style={{
-          flex: 1
+          flex: 1,
+          // width: '100%',
+          // height: '10%'
+          backgroundColor: 'white'
         }}>
+        {/* INSIDE */}
         <Pressable
           style={{
             position: 'absolute',
@@ -85,40 +84,25 @@ export default function InGame({ route }) {
           onPress={() => setMenuOpen(true)}>
           <Image source={menuButton} style={{ width: 80, height: 80 }} />
         </Pressable>
+        <Text
+          style={{
+            width: '100%',
+            height: '100%'
+          }}>
+          <Skin skinID={skinID} lives={lives} setLives={setLives} />;
+        </Text>
         <View
           style={{
-            flex: 1,
-            flexDirection: 'column'
+            position: 'absolute',
+            bottom: 0,
+            height: counterControl.counters.length > 0 ? '25%' : '0%',
+            width: '100%',
+            marginBottom: '-15%'
           }}>
-          {guest && (
-            <View
-              style={{
-                height: '30%',
-                width: '100%'
-              }}>
-              <GuestSkin life={guestLife} setLife={setGuestLife} />
-            </View>
-          )}
-          <View
-            style={{
-              // height: guest ? '70%' : '100%',
-              // width: '100%'
-              flex: 1
-            }}>
-            <Skin skinID={skinID} life={life} setLife={setLife} />
-          </View>
-          <View
-            style={{
-              position: 'absolute',
-              bottom: 0,
-              height: activeCounters.length > 0 ? '25%' : '0%',
-              width: '100%',
-              marginBottom: '-15%'
-            }}>
-            <Counters counters={activeCounters} reset={reset} />
-          </View>
+          <Counters counterControl={counterControl} />
         </View>
       </View>
+      {/* </View> */}
     </>
   );
 }

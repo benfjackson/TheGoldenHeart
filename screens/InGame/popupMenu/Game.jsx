@@ -2,7 +2,7 @@ import { useNavigation } from '@react-navigation/native';
 
 import { Text, View, Pressable, StyleSheet, Image } from 'react-native';
 
-export default function Game({ setMenuState, gameState, setIsOpen }) {
+export default function Game({ setMenuState }) {
   // const { guest, setGuest, setLife, setHistory, setGuestLife } = gameState;
 
   const styles = StyleSheet.create({
@@ -15,7 +15,7 @@ export default function Game({ setMenuState, gameState, setIsOpen }) {
     }
   });
 
-  const backButton = require('../../../images/UI/BackArrow1.png');
+  const backButton = require('../../../images/BackArrow1.png');
   return (
     <View
       style={{
@@ -24,7 +24,6 @@ export default function Game({ setMenuState, gameState, setIsOpen }) {
       }}>
       <Pressable
         onPress={() => {
-          console.log('pressed');
           setMenuState('main');
         }}
         style={{
@@ -48,16 +47,6 @@ export default function Game({ setMenuState, gameState, setIsOpen }) {
             setMenuState('counters');
           }}>
           <Text style={styles.button}>Counters</Text>
-        </Pressable>
-        <Pressable
-          onPress={() => {
-            gameState.setGuest(!gameState.guest);
-            setIsOpen(false);
-            setMenuState('main');
-          }}>
-          <Text style={styles.button}>
-            {gameState.guest ? 'Remove guest' : 'Add guest'}
-          </Text>
         </Pressable>
         <Pressable
           onPress={() => {

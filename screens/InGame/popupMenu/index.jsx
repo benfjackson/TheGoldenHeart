@@ -10,8 +10,16 @@ import { useNavigation } from '@react-navigation/native';
 import { useState } from 'react';
 import Game from './Game';
 
-export default function PopupMenu({ isOpen, setIsOpen, gameState, ...props }) {
-  const bg = require('../../../images/UI/popup.png');
+export default function PopupMenu({
+  isOpen,
+  setIsOpen,
+  numPlayers,
+  histories,
+  counterControl,
+  resetGame,
+  ...props
+}) {
+  const bg = require('./popup.png');
   const [menuState, setMenuState] = useState('main');
 
   return (
@@ -31,7 +39,7 @@ export default function PopupMenu({ isOpen, setIsOpen, gameState, ...props }) {
       {...props}>
       <ImageBackground
         imageStyle={{
-          resizeMode: 'cover',
+          resizeMode: 'contain',
           // width: '100%',
           height: '100%'
         }}
@@ -48,27 +56,25 @@ export default function PopupMenu({ isOpen, setIsOpen, gameState, ...props }) {
           }}>
           {menuState === 'main' && (
             <Main
-              gameState={gameState}
               setMenuState={setMenuState}
-              setIsOpen={setIsOpen}
+              setPopupMenuIsOpen={setIsOpen}
+              resetGame={resetGame}
             />
           )}
           {menuState === 'history' && (
-            <History setMenuState={setMenuState} gameState={gameState} />
+            <History
+              histories={histories}
+              numPlayers={numPlayers}
+              setMenuState={setMenuState}
+            />
           )}
           {menuState === 'counters' && (
             <CountersSelection
               setMenuState={setMenuState}
-              gameState={gameState}
+              counterControl={counterControl}
             />
           )}
-          {menuState === 'game' && (
-            <Game
-              gameState={gameState}
-              setMenuState={setMenuState}
-              setIsOpen={setIsOpen}
-            />
-          )}
+          {menuState === 'game' && <Game setMenuState={setMenuState} />}
         </View>
       </ImageBackground>
     </Modal>

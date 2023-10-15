@@ -17,5 +17,5 @@ web-build/
 .metro-health-check*
 
 #  images folder
-images/
+unusedImages/
 ```

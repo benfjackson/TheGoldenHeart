@@ -6,13 +6,9 @@ import { getSkinData } from '../../services/getSkinInfo';
 
 import React, { useState } from 'react';
 
-export default function BasicSkin({
-  skinID = 'Default',
-  life = 20,
-  setLife = () => console.log('setLife not defined')
-}) {
+export default function BasicSkin({ skinID = 'Default', lives, setLives }) {
   const imgMap = {
-    Devil: require(`./Devil/Devil.png`),
+    Devil: require(`./Devil/Devil.png`), //Devil,
     NobleVampire: require(`./NobleVampire/NobleVampire.png`),
     GloriousElk: require(`./Elk/Elk.png`),
     Kraken: require(`./Kraken/Kraken.png`),
@@ -29,6 +25,9 @@ export default function BasicSkin({
     Forest: require(`./Forest/Forest.png`)
   };
 
+  const { player1Life } = lives;
+  const { setPlayer1Life } = setLives;
+
   const data = getSkinData(skinID);
   const img = imgMap[skinID];
   const textColour = data.textColour;
@@ -36,8 +35,22 @@ export default function BasicSkin({
   return (
     <ImageBackground
       source={img}
-      style={{ width: '100%', height: '100%', backgroundColor: 'black' }}>
-      <DragQueen life={life} setLife={setLife} textColour={textColour} />
+      style={{
+        // width: '100%',
+        // height: '100%',
+        //ITS THIS
+        // width: 650,
+        width: '100%',
+        height: '100%'
+        // flex: 'auto'
+        // resizeMode: 'cover'
+        // resizeMode: 'cover' // Adjust this as needed
+      }}>
+      <DragQueen
+        life={player1Life}
+        setLife={setPlayer1Life}
+        textColour={textColour}
+      />
     </ImageBackground>
   );
 }

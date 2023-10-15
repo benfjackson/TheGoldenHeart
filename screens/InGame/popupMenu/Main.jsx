@@ -4,7 +4,7 @@ import { Text, View, Pressable, StyleSheet } from 'react-native';
 
 import { clearGameState } from '../../../services/appStorage';
 
-export default function Main({ setMenuState, gameState, setIsOpen }) {
+export default function Main({ setMenuState, setPopupMenuIsOpen, resetGame }) {
   // const { guest, setGuest, setLife, setHistory, setGuestLife } = gameState;
 
   const styles = StyleSheet.create({
@@ -28,56 +28,26 @@ export default function Main({ setMenuState, gameState, setIsOpen }) {
         justifyContent: 'space-evenly'
       }}>
       <Pressable
-        onPress={() => {
-          setIsOpen(false);
-          clearGameState();
-          navigation.navigate('MainMenu');
+        onPress={async () => {
+          setPopupMenuIsOpen(false);
+          clearGameState().then(() => navigation.navigate('MainMenu'));
+          // console.log('clearresult', clearResult);
         }}>
         <Text style={styles.button}>Home</Text>
       </Pressable>
       <Pressable
         onPress={() => {
-          gameState.setHistory([]);
-          gameState.setLife(gameState.startingHealth);
-
-          gameState.setGuestLife(gameState.startingHealth);
-          const tempCounters = gameState.activeCounters.map((item) => item);
-          gameState.setActiveCounters([]);
-          gameState.setActiveCounters(tempCounters);
-          // setIsOpen(false);
-          gameState.setReset((val) => !val);
-          clearGameState();
+          resetGame();
+          setPopupMenuIsOpen(false);
         }}>
         <Text style={styles.button}>Reset</Text>
       </Pressable>
       <Pressable
         onPress={() => {
-          setMenuState('game');
-        }}>
-        <Text style={styles.button}>Game</Text>
-      </Pressable>
-      {/* <Pressable
-        onPress={() => {
           setMenuState('counters');
         }}>
         <Text style={styles.button}>Counters</Text>
       </Pressable>
-      <Pressable
-        onPress={() => {
-          gameState.setGuest(!gameState.guest);
-          setIsOpen(false);
-        }}>
-        <Text style={styles.button}>
-          {gameState.guest ? 'Remove guest' : 'Add guest'}
-        </Text>
-      </Pressable>
-
-      <Pressable
-        onPress={() => {
-          setMenuState('history');
-        }}>
-        <Text style={styles.button}>Life History</Text>
-      </Pressable> */}
     </View>
   );
 }

@@ -3,12 +3,25 @@ import { useNavigation } from '@react-navigation/native';
 import { Text, View, Pressable, Image } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 
-export default function History({ setMenuState, gameState }) {
-  const backButton = require('../../../images/UI/BackArrow1.png');
+export default function History({ setMenuState, histories, numPlayers }) {
+  const backButton = require('../../../images/BackArrow1.png');
   //deep copy history
-
-  const history = [...gameState.history];
-  history.reverse();
+  const { player1History, player2History, player3History, player4History } =
+    histories;
+  console.log(histories);
+  const historyList = [
+    player1History,
+    player2History,
+    player3History,
+    player4History
+  ];
+  console.log('historyList');
+  console.log(historyList);
+  const historiesToUse = historyList
+    .slice(0, numPlayers)
+    .map((history) => [...history].reverse());
+  console.log('historiesToUse');
+  console.log(historiesToUse);
   return (
     <View
       style={{
@@ -50,37 +63,41 @@ export default function History({ setMenuState, gameState }) {
             marginTop: 10,
             overflow: 'scroll'
           }}>
-          <View style={{ flexDirection: 'column', flex: 1 }}>
-            {[...history].map((life, index) => {
+          {historiesToUse.map((history, hIndex) => {
+            [...history].map((life, index) => {
               var prevLife = history[index + 1] || 20;
               const diff = life - prevLife;
               return (
                 <View
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-between'
-                  }}
-                  key={index}>
-                  {/* Difference in life and prev entry */}
-                  <Text
+                  style={{ flexDirection: 'column', flex: 1 }}
+                  key={`${hIndex} ${index}`}>
+                  <View
                     style={{
-                      fontSize: 20,
-                      color: diff > 0 ? '#0f0' : '#f00'
-                    }}>
-                    {diff > 0 ? '+' : ''}
-                    {prevLife && (diff === 0 ? '' : diff)}
-                  </Text>
-                  <Text
-                    style={{
-                      color: '#fff',
-                      fontSize: 20
-                    }}>
-                    {life}
-                  </Text>
+                      flexDirection: 'row',
+                      justifyContent: 'space-between'
+                    }}
+                    key={index}>
+                    {/* Difference in life and prev entry */}
+                    <Text
+                      style={{
+                        fontSize: 20,
+                        color: diff > 0 ? '#0f0' : '#f00'
+                      }}>
+                      {diff > 0 ? '+' : ''}
+                      {prevLife && (diff === 0 ? '' : diff)}
+                    </Text>
+                    <Text
+                      style={{
+                        color: '#fff',
+                        fontSize: 20
+                      }}>
+                      {life}
+                    </Text>
+                  </View>
                 </View>
               );
-            })}
-          </View>
+            });
+          })}
         </ScrollView>
       </View>
     </View>

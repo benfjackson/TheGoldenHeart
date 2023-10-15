@@ -1,13 +1,13 @@
 import { useNavigation } from '@react-navigation/native';
+import allCounters from './allCounters';
 
 import { Text, View, Pressable, Image, StyleSheet } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 
-export default function CountersSelection({ setMenuState, gameState }) {
-  const backButton = require('../../../images/UI/BackArrow1.png');
+export default function CountersSelection({ setMenuState, counterControl }) {
+  const { counters, addCounter, removeCounter, clearCounters } = counterControl;
 
-  const { activeCounters, setActiveCounters } = gameState;
-  const allCounters = [{ name: 'Blood' }, { name: 'Poison' }, { name: 'Time' }];
+  const backButton = require('../../../images/BackArrow1.png');
 
   const styles = StyleSheet.create({
     counterButton: {
@@ -24,13 +24,15 @@ export default function CountersSelection({ setMenuState, gameState }) {
   return (
     <View
       style={{
-        flex: 1,
+        // flex: 1,
+        marginTop: '20%',
         width: '100%',
+        height: '80%',
         alignItems: 'center'
       }}>
       <Pressable
         onPress={() => {
-          setMenuState('game');
+          setMenuState('main');
         }}
         style={{
           alignSelf: 'flex-start'
@@ -41,8 +43,6 @@ export default function CountersSelection({ setMenuState, gameState }) {
         style={{
           flex: 1,
           flexDirection: 'column',
-
-          //   alignSelf: 'flex-center',
           alignItems: 'center',
           width: '70%'
         }}>
@@ -65,27 +65,12 @@ export default function CountersSelection({ setMenuState, gameState }) {
           }}>
           <View style={{ flexDirection: 'column', flex: 1 }}>
             {allCounters.map((counter, index) => {
-              const active =
-                activeCounters.filter((c) => {
-                  return counter.name === c.name;
-                }).length !== 0;
+              const active = false;
 
               return (
                 <Pressable
                   onPress={() => {
-                    setActiveCounters((counters) => {
-                      if (active) {
-                        //remove counter
-                        return counters.filter((c) => {
-                          return c.name !== counter.name;
-                        });
-                      } else {
-                        return [
-                          ...activeCounters,
-                          { name: counter.name, initialCount: 0 }
-                        ];
-                      }
-                    });
+                    addCounter(counter);
                   }}
                   style={[
                     styles.counterButton,
@@ -93,7 +78,7 @@ export default function CountersSelection({ setMenuState, gameState }) {
                       backgroundColor: active ? 'rgb(250, 180, 40)' : '#000'
                     }
                   ]}
-                  key={index}>
+                  key={'counterOption' + index}>
                   <Text
                     style={{
                       color: active ? '#000' : 'rgb(250, 180, 40)',
@@ -101,7 +86,7 @@ export default function CountersSelection({ setMenuState, gameState }) {
                       fontFamily: 'Endor',
                       fontSize: 20
                     }}>
-                    {counter.name}
+                    {counter.counterName}
                   </Text>
                 </Pressable>
               );
@@ -111,13 +96,9 @@ export default function CountersSelection({ setMenuState, gameState }) {
 
         <Pressable
           onPress={() => {
-            setActiveCounters([]);
+            clearCounters();
           }}
-          style={[
-            {
-              // backgroundColor: active ? 'rgb(250, 180, 40)' : '#000'
-            }
-          ]}>
+          style={[{}]}>
           <Text
             style={{
               textAlign: 'center',
