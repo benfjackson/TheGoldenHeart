@@ -1,4 +1,5 @@
 import BasicSkin from '../../skins/Basic/BasicSkin';
+import Basic4Player from '../../skins/four_player/basic/Basic4Player';
 import { View, Image, Pressable, Text, Dimensions } from 'react-native';
 
 export default function Skin({ skinID, lives, setLives }) {
@@ -13,20 +14,8 @@ export default function Skin({ skinID, lives, setLives }) {
 }
 export function GetSkin({ skinID, lives, setLives }) {
   switch (skinID) {
-    case 'kDevil':
-      return (
-        <Text
-          style={{
-            color: '#FFA500',
-            fontSize: 50,
-            textAlign: 'center',
-            fontFamily: 'Endor',
-            // flex: 1
-            height: 5000
-          }}>
-          Peen
-        </Text>
-      );
+    case 'peen':
+      return <Basic4Player skinID={skinID} lives={lives} setLives={setLives} />;
     default:
       return <BasicSkin skinID={skinID} lives={lives} setLives={setLives} />;
     // return (, width: windowWidth

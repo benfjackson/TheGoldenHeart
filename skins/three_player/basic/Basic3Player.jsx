@@ -6,23 +6,9 @@ import { getSkinData } from '../../services/getSkinInfo';
 
 import React from 'react';
 
-export default function BasicSkin({ skinID = 'Default', lives, setLives }) {
+export default function Basic3Player({ skinID = 'Default', lives, setLives }) {
   const imgMap = {
-    Devil: require(`./Devil/Devil.png`), //Devil,
-    NobleVampire: require(`./NobleVampire/NobleVampire.png`),
-    GloriousElk: require(`./Elk/Elk.png`),
-    Kraken: require(`./Kraken/Kraken.png`),
-    LightningDragon: require(`./LightningDragon/LightningDragon.png`),
-    Angel: require(`./Angel/Angel.png`),
-    GreenVampire: require(`./GreenVampire/GreenVampire.png`),
-    Druid: require(`./Druid/Druid.png`),
-    HallOfSpirits: require(`./HallOfSpirits/HallOfSpirits.png`),
-    RedSkullVampire: require(`./RedSkullVampire/RedSkullVampire.png`),
-    Swamp: require(`./Swamp/Swamp.png`),
-    Island: require(`./Island/Island.png`),
-    Plains: require(`./Plains/Plains.png`),
-    Mountain: require(`./Mountain/Mountain.png`),
-    Forest: require(`./Forest/Forest.png`)
+    ThreePortals: require(`./ThreePortals/ThreePortals.png`)
   };
 
   const { player1Life } = lives;

@@ -5,23 +5,15 @@ export default function Tapper({
   skull = true,
   inverse = false,
   life,
-  setLife,
-  size = 'guest'
+  setLife
 }) {
   const countBoxRef = useRef(null);
   const [countBoxTop, setCountBoxTop] = useState();
   const [countBoxBottom, setCountBoxBottom] = useState(0);
   const skullIcon = require('../icons/skullWhite.png');
 
-  // const sizeMap = {
-  //   guest: 100,
-  //   counter: 60
-  // };
-
   const calcNewCount = (y) => {
     const centreOfBox = (countBoxTop + countBoxBottom) / 2;
-    // console.log('y', y);
-    // console.log('centreOfBox', centreOfBox);
 
     var toAdd = y < centreOfBox ? -1 : 1;
     var inverseN = inverse ? 1 : -1;

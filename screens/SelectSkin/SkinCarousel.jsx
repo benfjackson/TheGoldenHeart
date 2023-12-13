@@ -42,16 +42,6 @@ export default function SkinCarousel({
       justifyContent: 'center',
       alignItems: 'center',
       textAlign: 'center'
-    },
-    title: {
-      fontSize: 35,
-      fontWeight: 'bold',
-      color: 'white',
-      textAlign: 'center',
-      marginTop: 40,
-      color: '#FFA500',
-      fontFamily: 'Endor',
-      height: '50%'
     }
   };
 
@@ -89,7 +79,18 @@ export default function SkinCarousel({
             />
           </ImageBackground>
 
-          <Text style={styles.title}>{data.title}</Text>
+          <Text
+            style={{
+              color: '#FFA500',
+              fontFamily: 'Endor',
+              fontSize: 35,
+              fontWeight: 'bold',
+              textAlign: 'center',
+              marginTop: 40,
+              height: '50%'
+            }}>
+            {data.title}
+          </Text>
         </TouchableOpacity>
       </View>
     );
