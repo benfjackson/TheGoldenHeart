@@ -5,6 +5,11 @@ import 'react-native-gesture-handler';
 import { NavigationContainer } from '@react-navigation/native';
 import { useFonts } from '@expo-google-fonts/dev';
 
+import {
+  SafeAreaProvider,
+} from 'react-native-safe-area-context';
+
+
 // Ignore this error from the carousel package. Its within their library so beyond our reach
 //It doesnt actually affect anything, so happy to ignore it
 import { LogBox } from 'react-native';
@@ -25,22 +30,23 @@ export default function App() {
   }
 
   return (
-    <View style={styles.container}>
-      {/* <StatusBar style="auto" /> */}
-      <NavigationContainer>
-        {/* <MountainCastle/> */}
-        {/* <MainMenu/> */}
-        <HomeScreen />
-      </NavigationContainer>
-    </View>
+    <SafeAreaProvider>
+      <View style={styles.container}>
+        {/* <StatusBar style="auto" /> */}
+        <NavigationContainer>
+          <HomeScreen />
+        </NavigationContainer>
+      </View>
+    </SafeAreaProvider>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#fff',
+    backgroundColor: '#000',
 
     width: '100%',
-    height: '100%'
+    height: '100%',
+    flex: 1
   }
 });
