@@ -16,7 +16,8 @@ export function getMiniImage(skinID) {
     Island: require('../skins/Basic/Island/mini.png'),
     Plains: require('../skins/Basic/Plains/mini.png'),
     Mountain: require('../skins/Basic/Mountain/mini.png'),
-    Forest: require('../skins/Basic/Forest/mini.png')
+    Forest: require('../skins/Basic/Forest/mini.png'),
+    Waves: require('../skins/two_player/basic/Waves/mini.png')
   };
   return imageMap[skinID];
 }
@@ -38,7 +39,8 @@ export function getSkinData(skinID) {
     Island: require('../skins/Basic/Island/data.json'),
     Plains: require('../skins/Basic/Plains/data.json'),
     Mountain: require('../skins/Basic/Mountain/data.json'),
-    Forest: require('../skins/Basic/Forest/data.json')
+    Forest: require('../skins/Basic/Forest/data.json'),
+    Waves: require('../skins/two_player/basic/Waves/data.json')
   };
   //parse the json into a js object
   const data = dataMap[skinID];

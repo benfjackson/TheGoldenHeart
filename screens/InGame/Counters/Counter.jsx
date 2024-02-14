@@ -4,7 +4,6 @@ import CounterImage from '../../../images/Counter.png';
 
 import Tapper from '../../../components/Tapper';
 import { useEffect, useState } from 'react';
-import { saveCounter } from '../../../services/appStorage';
 
 export default function Counter({ counter }) {
   const { count, counterName, setCount } = counter;

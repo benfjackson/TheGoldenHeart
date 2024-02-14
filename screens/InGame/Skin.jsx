@@ -1,5 +1,6 @@
 import BasicSkin from '../../skins/Basic/BasicSkin';
 import { View, Image, Pressable, Text, Dimensions } from 'react-native';
+import BasicTwoPlayer from '../../skins/two_player/basic/BasicTwoPlayer';
 
 export default function Skin({ skinID, lives, setLives }) {
   const windowWidth = Dimensions.get('window').width;
@@ -27,6 +28,11 @@ export function GetSkin({ skinID, lives, setLives }) {
           Peen
         </Text>
       );
+    case 'Waves':
+      return (
+        <BasicTwoPlayer skinID={skinID} lives={lives} setLives={setLives} />
+      );
+
     default:
       return <BasicSkin skinID={skinID} lives={lives} setLives={setLives} />;
     // return (, width: windowWidth

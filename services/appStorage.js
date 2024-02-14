@@ -36,7 +36,9 @@ export async function removeToken(tokenName) {
 
 export async function saveGameState(gameState) {
   try {
-    await AsyncStorage.setItem('gameState', JSON.stringify(gameState));
+    const timestamp = new Date();
+    const stampedState = { timestamp: timestamp, ...gameState };
+    await AsyncStorage.setItem('gameState', JSON.stringify(stampedState));
     return 'success';
   } catch (error) {
     return `error: ${error}`;
@@ -45,11 +47,23 @@ export async function saveGameState(gameState) {
 
 export async function loadGameState() {
   try {
-    const gameState = await AsyncStorage.getItem('gameState');
-    if (gameState !== null) {
+    const loadedState = await AsyncStorage.getItem('gameState');
+    if (loadedState !== null) {
       console.log('game state found');
-      console.log(gameState);
-      return JSON.parse(gameState);
+      console.log(loadedState);
+      const gameState = JSON.parse(loadedState);
+      const timestamp = new Date(gameState.timestamp);
+      const now = new Date();
+      // Calculate the difference in milliseconds between the current date and the date to check
+      var differenceInMilliseconds = now.getTime() - timestamp.getTime();
+
+      // Convert milliseconds to days
+      var differenceInDays = differenceInMilliseconds / (1000 * 60 * 60 * 24);
+
+      if (differenceInDays > 1) {
+        return null;
+      }
+      return gameState;
     } else {
       return null;
     }

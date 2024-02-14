@@ -31,9 +31,10 @@ export default function MainMenu() {
   const [checkExistingGame, setCheckExistingGame] = useState(false);
   const [gameState, setGameState] = useState(null);
   if (!checkExistingGame) {
-    console.log('checking for a gamestate');
     loadGameState().then((state) => {
       setGameState(state);
+      console.log('received state in main menu:');
+      console.log(state);
       setCheckExistingGame(true);
     });
   }

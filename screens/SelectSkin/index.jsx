@@ -23,15 +23,16 @@ export default function SelectSkin() {
     getFavourites().then((favourites) => {
       // setFavourites(favourites);
       setFavourites([
-        'Devil',
-        'Angel',
-        'Plains',
-        'Swamp',
-        'Island',
-        'Mountain',
-        'Forest',
-        'NobleVampire',
-        'Kraken'
+        'Waves',
+        'Devil'
+        // 'Angel',
+        // 'Plains',
+        // 'Swamp',
+        // 'Island',
+        // 'Mountain',
+        // 'Forest',
+        // 'NobleVampire',
+        // 'Kraken'
       ]);
 
       //Should put image loading in here
@@ -66,7 +67,7 @@ export default function SelectSkin() {
 
       <View style={{ paddingVertical: '25%' }}>
         {/* paddingVertical: '25%' */}
-        <SkinCarousel favourites={favourites} startingHealth={startingHealth} />
+        <SkinCarousel startingHealth={startingHealth} favourites={favourites} />
         <StartingHealthPicker setStartingHealth={setStartingHealth} />
       </View>
     </View>
