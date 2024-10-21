@@ -2,7 +2,7 @@
 
 This is my bespoke life tracker with gorgeous art and over-engineered user experience.
 
-# Installation
+## Installation
 
 ### Android:
 
@@ -14,7 +14,7 @@ https://expo.dev/artifacts/eas/uFjaXNxvX3rBRvQqc5EVoo.apk
 
 sry costs $100USD to publish on iOS so nothing 4 u lmao
 
-# Features
+## Features
 
 - Dynamic and intuitive touch design
 - Full featured tracking of counters etc
