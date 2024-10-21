@@ -7,8 +7,8 @@ import {
   TouchableOpacity,
   ImageBackground
 } from 'react-native';
-// import Carousel from 'react-native-snap-carousel';
-import Carousel from 'react-native-reanimated-carousel';
+import Carousel from 'react-native-snap-carousel';
+// import Carousel from 'react-native-reanimated-carousel';
 import { useNavigation } from '@react-navigation/native';
 import FrameImage from '../../images/FRAME_TRANSPARENT.png';
 
@@ -100,28 +100,28 @@ export default function SkinCarousel({
   return (
     //Blue background
 
-    // <Carousel
-    //   ref={carouselRef}
-    //   data={entries}
-    //   renderItem={renderItem}
-    //   sliderWidth={sliderWidth}
-    //   itemWidth={itemWidth}
-    //   style={{
-    //     flex: 1,
-    //     justifyContent: 'center',
-    //     alignItems: 'center'
-    //   }}
-    // />
     <Carousel
-      mode="parallax"
       ref={carouselRef}
-      // defaultIndex={LAST30INDEX}
-      loop={false}
-      width={400}
-      height={400}
       data={entries}
-      // onSnapToItem={(index) => console.log('current index:', index)}
       renderItem={renderItem}
+      sliderWidth={sliderWidth}
+      itemWidth={itemWidth}
+      style={{
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center'
+      }}
     />
+    // <Carousel
+    //   mode="parallax"
+    //   ref={carouselRef}
+    //   // defaultIndex={LAST30INDEX}
+    //   loop={false}
+    //   width={400}
+    //   height={400}
+    //   data={entries}
+    //   // onSnapToItem={(index) => console.log('current index:', index)}
+    //   renderItem={renderItem}
+    // />
   );
 }

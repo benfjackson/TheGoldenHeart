@@ -23,16 +23,17 @@ export default function SelectSkin() {
     getFavourites().then((favourites) => {
       // setFavourites(favourites);
       setFavourites([
+        'Island',
+        'Mountain',
+        'Plains',
+        'Swamp',
+        'Forest',
+        'Devil',
+        'Angel',
+        'Kraken',
+        'NobleVampire',
         'Waves',
-        'Devil'
-        // 'Angel',
-        // 'Plains',
-        // 'Swamp',
-        // 'Island',
-        // 'Mountain',
-        // 'Forest',
-        // 'NobleVampire',
-        // 'Kraken'
+        'Waves4player'
       ]);
 
       //Should put image loading in here
@@ -46,9 +47,10 @@ export default function SelectSkin() {
       style={{
         flex: 1,
         flexDirection: 'column',
-        justifyContent: 'center',
-        backgroundColor: 'black',
-        alignItems: 'center'
+        // justifyContent: 'between',
+        backgroundColor: 'black'
+        // alignItems: 'center',
+        // paddingTop: '10%'
       }}>
       <TouchableOpacity
         onPress={() => {
@@ -65,7 +67,17 @@ export default function SelectSkin() {
         <Image source={BackButton} style={{ width: 50, height: 35 }} />
       </TouchableOpacity>
 
-      <View style={{ paddingVertical: '25%' }}>
+      <View
+        // style={{ paddingVertical: '35%' }}
+        style={{
+          flex: 1,
+          // flexDirection: 'column',
+          // justifyContent: 'center',
+          // backgroundColor: 'black',
+          alignItems: 'center',
+          paddingTop: '40%',
+          paddingBottom: '20%'
+        }}>
         {/* paddingVertical: '25%' */}
         <SkinCarousel startingHealth={startingHealth} favourites={favourites} />
         <StartingHealthPicker setStartingHealth={setStartingHealth} />

@@ -61,19 +61,19 @@ export default function PopupMenu({
               resetGame={resetGame}
             />
           )}
-          {menuState === 'history' && (
+          {/* {menuState === 'history' && (
             <History
               histories={histories}
               numPlayers={numPlayers}
               setMenuState={setMenuState}
             />
-          )}
-          {menuState === 'counters' && (
+          )} */}
+          {/* {menuState === 'counters' && (
             <CountersSelection
               setMenuState={setMenuState}
               counterControl={counterControl}
             />
-          )}
+          )} */}
           {menuState === 'game' && <Game setMenuState={setMenuState} />}
         </View>
       </ImageBackground>

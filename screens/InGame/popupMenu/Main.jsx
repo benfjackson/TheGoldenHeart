@@ -42,12 +42,12 @@ export default function Main({ setMenuState, setPopupMenuIsOpen, resetGame }) {
         }}>
         <Text style={styles.button}>Reset</Text>
       </Pressable>
-      <Pressable
+      {/* <Pressable
         onPress={() => {
           setMenuState('counters');
         }}>
         <Text style={styles.button}>Counters</Text>
-      </Pressable>
+      </Pressable> */}
     </View>
   );
 }

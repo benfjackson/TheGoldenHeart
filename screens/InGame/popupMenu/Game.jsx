@@ -42,12 +42,12 @@ export default function Game({ setMenuState }) {
           flexDirection: 'column',
           justifyContent: 'space-evenly'
         }}>
-        <Pressable
+        {/* <Pressable
           onPress={() => {
             setMenuState('counters');
           }}>
           <Text style={styles.button}>Counters</Text>
-        </Pressable>
+        </Pressable> */}
         <Pressable
           onPress={() => {
             setMenuState('history');
