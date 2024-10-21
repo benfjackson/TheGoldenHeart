@@ -2,6 +2,15 @@
 
 This is my bespoke life tracker with gorgeous art and over-engineered user experience.
 
+# Installation
+
+Android:
+Download and install on your phone at:
+https://expo.dev/artifacts/eas/uFjaXNxvX3rBRvQqc5EVoo.apk
+
+iPhone:
+sry costs $100USD to support u so no cigar
+
 # Features
 
 Dynamic and intuitive touch design
