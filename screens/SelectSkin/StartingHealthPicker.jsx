@@ -4,6 +4,8 @@ import CounterImage from '../../images/Counter.png';
 
 import { useRef } from 'react';
 
+import { Dimensions, Platform, PixelRatio } from 'react-native';
+
 export default function StartingHealthPicker({ setStartingHealth }) {
   const entries = [20, 25, 30, 40, 60, 100];
 
@@ -29,9 +31,9 @@ export default function StartingHealthPicker({ setStartingHealth }) {
           }}>
           <View
             style={{
-              borderRadius: 100,
-              padding: 2,
-              paddingHorizontal: 4,
+              // borderRadius: 100,
+              // padding: 2,
+              // paddingHorizontal: 4,
               backgroundColor: 'transparent',
               alignItems: 'center',
               justifyContent: 'center'
@@ -45,7 +47,7 @@ export default function StartingHealthPicker({ setStartingHealth }) {
               style={{
                 color: '#FFA500',
                 fontSize: 30,
-                paddingVertical: 4,
+                paddingVertical: '5%',
                 fontFamily: 'Immortal'
               }}>
               {item}
@@ -56,8 +58,11 @@ export default function StartingHealthPicker({ setStartingHealth }) {
     );
   };
 
-  const sliderWidth = 400;
-  const itemWidth = 100;
+  const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } =
+    Dimensions.get('window');
+
+  const sliderWidth = SCREEN_WIDTH;
+  const itemWidth = 0.25 * SCREEN_WIDTH;
 
   return (
     <View
@@ -106,7 +111,7 @@ export default function StartingHealthPicker({ setStartingHealth }) {
           color: '#FFA500',
           fontFamily: 'Endor',
           fontSize: 30,
-          paddingTop: 20
+          paddingTop: '5%'
         }}>
         Starting Health
       </Text>

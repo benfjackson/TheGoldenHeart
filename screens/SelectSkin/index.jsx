@@ -48,7 +48,7 @@ export default function SelectSkin() {
         flex: 1,
         flexDirection: 'column',
         // justifyContent: 'between',
-        backgroundColor: 'black'
+        backgroundColor: '#000'
         // alignItems: 'center',
         // paddingTop: '10%'
       }}>
@@ -57,14 +57,14 @@ export default function SelectSkin() {
           navigation.navigate('MainMenu');
         }}
         style={{
+          backgroundColor: '#000',
           position: 'absolute',
-          top: 40,
-          left: 10,
-          width: 50,
-          height: 50,
+          top: '10%',
+          left: '2%',
+          width: '12%',
           zIndex: 10
         }}>
-        <Image source={BackButton} style={{ width: 50, height: 35 }} />
+        <Image source={BackButton} style={{ width: '100%', height: 35 }} />
       </TouchableOpacity>
 
       <View
@@ -72,14 +72,19 @@ export default function SelectSkin() {
         style={{
           flex: 1,
           // flexDirection: 'column',
-          // justifyContent: 'center',
-          // backgroundColor: 'black',
+          justifyContent: 'space-evenly',
+          backgroundColor: 'black',
           alignItems: 'center',
           paddingTop: '40%',
           paddingBottom: '20%'
         }}>
         {/* paddingVertical: '25%' */}
-        <SkinCarousel startingHealth={startingHealth} favourites={favourites} />
+        <View style={{ paddingTop: '10%' }}>
+          <SkinCarousel
+            startingHealth={startingHealth}
+            favourites={favourites}
+          />
+        </View>
         <StartingHealthPicker setStartingHealth={setStartingHealth} />
       </View>
     </View>

@@ -18,6 +18,8 @@ import {
   getMiniImage
 } from '../../services/getSkinInfo';
 
+import { Dimensions, Platform, PixelRatio } from 'react-native';
+
 export default function SkinCarousel({
   favourites = ['Angel'],
   startingHealth
@@ -37,8 +39,8 @@ export default function SkinCarousel({
     slide: {
       flex: 1,
       flexDirection: 'column',
-      borderRadius: 5,
-      padding: 50,
+      // borderRadius: 5,
+      // padding: 50,
       justifyContent: 'center',
       alignItems: 'center',
       textAlign: 'center'
@@ -48,7 +50,7 @@ export default function SkinCarousel({
       fontWeight: 'bold',
       color: 'white',
       textAlign: 'center',
-      marginTop: 40,
+      marginTop: '10%',
       color: '#FFA500',
       fontFamily: 'Endor',
       height: '50%'
@@ -57,7 +59,12 @@ export default function SkinCarousel({
 
   const navigation = useNavigation();
 
-  const artSize = 200;
+  const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } =
+    Dimensions.get('window');
+
+  const artSize = 0.5 * SCREEN_WIDTH;
+  //1.5 * artSize
+  const frameSize = 0.75 * SCREEN_WIDTH;
 
   const renderItem = ({ item, index }) => {
     const data = item.data;
@@ -85,7 +92,7 @@ export default function SkinCarousel({
             }}>
             <Image
               source={FrameImage}
-              style={{ width: artSize * 1.5, height: artSize * 1.5 }}
+              style={{ width: frameSize, height: frameSize }}
             />
           </ImageBackground>
 
@@ -95,8 +102,8 @@ export default function SkinCarousel({
     );
   };
 
-  const sliderWidth = 400;
-  const itemWidth = 250;
+  const sliderWidth = SCREEN_WIDTH;
+  const itemWidth = 0.7 * SCREEN_WIDTH;
   return (
     //Blue background
 
