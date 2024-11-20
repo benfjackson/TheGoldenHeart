@@ -9,7 +9,6 @@ export default function Main({ setMenuState, setPopupMenuIsOpen, resetGame }) {
 
   const styles = StyleSheet.create({
     button: {
-      // color: 'rgb(243, 130, 26)',
       color: 'rgb(250, 180, 40)',
       fontSize: 35,
       textAlign: 'center',

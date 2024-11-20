@@ -31,12 +31,10 @@ export default function Count({ textColour = '#ffffffa0', life, setLife }) {
     text: {
       fontSize: 120,
       color: textColour,
-      fontWeight: 'bold',
       fontFamily: 'Immortal'
     },
     dragNumber: {
       fontSize: 60,
-      fontWeight: 'bold',
       marginTop: 10,
       color: textColour
     }
