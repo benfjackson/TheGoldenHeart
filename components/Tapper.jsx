@@ -66,7 +66,6 @@ export default function Tapper({
             style={{
               fontSize: 80,
               color: '#ffffffa0',
-              fontWeight: 'bold',
               transform: [{ rotate: inverse ? '180deg' : '0deg' }],
               fontFamily: 'Immortal'
             }}>
@@ -96,7 +95,6 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 100,
-    color: '#fff',
-    fontWeight: 'bold'
+    color: '#fff'
   }
 });
