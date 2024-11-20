@@ -1,14 +1,11 @@
 // import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, StatusBar } from 'react-native';
 // import MainMenu from './screens/MainMenu';
 import 'react-native-gesture-handler';
 import { NavigationContainer } from '@react-navigation/native';
 import { useFonts } from '@expo-google-fonts/dev';
 
-import {
-  SafeAreaProvider,
-} from 'react-native-safe-area-context';
-
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 // Ignore this error from the carousel package. Its within their library so beyond our reach
 //It doesnt actually affect anything, so happy to ignore it
@@ -30,14 +27,21 @@ export default function App() {
   }
 
   return (
-    <SafeAreaProvider>
-      <View style={styles.container}>
-        {/* <StatusBar style="auto" /> */}
-        <NavigationContainer>
-          <HomeScreen />
-        </NavigationContainer>
-      </View>
-    </SafeAreaProvider>
+    <>
+      <StatusBar
+        barStyle="light-content"
+        translucent
+        backgroundColor="transparent"
+      />
+      <SafeAreaProvider>
+        <View style={styles.container}>
+          {/* <StatusBar style="auto" /> */}
+          <NavigationContainer>
+            <HomeScreen />
+          </NavigationContainer>
+        </View>
+      </SafeAreaProvider>
+    </>
   );
 }
 
