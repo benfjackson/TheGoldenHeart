@@ -38,13 +38,10 @@ export default function Count({
       fontSize: 120,
       //white
       color: textColour,
-      //bold
-      fontWeight: 'bold',
       fontFamily: 'Immortal'
     },
     dragNumber: {
       fontSize: 60,
-      fontWeight: 'bold',
       marginTop: 10,
       color: textColour
     }
