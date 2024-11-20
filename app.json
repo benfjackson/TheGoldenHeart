@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "LIFE",
-    "slug": "LIFE",
+    "name": "TheGoldenHeart",
+    "slug": "TheGoldenHeart",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -20,7 +20,7 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#000"
       },
-      "package": "com.bfjackson.LIFE"
+      "package": "com.bfjackson.TheGoldenHeart"
     },
     "web": {
       "favicon": "./assets/favicon.png"
