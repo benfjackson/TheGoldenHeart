@@ -48,7 +48,6 @@ export default function SkinCarousel({
     title: {
       fontSize: 35,
       fontWeight: 'bold',
-      color: 'white',
       textAlign: 'center',
       marginTop: '10%',
       color: '#FFA500',

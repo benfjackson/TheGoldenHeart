@@ -30,9 +30,7 @@ export default function Count({ textColour = '#ffffffa0', life, setLife }) {
     },
     text: {
       fontSize: 120,
-      //white
       color: textColour,
-      //bold
       fontWeight: 'bold',
       fontFamily: 'Immortal'
     },
@@ -123,7 +121,7 @@ export default function Count({ textColour = '#ffffffa0', life, setLife }) {
         <View
           style={{ flexDirection: 'row', opacity: showDragNumber ? 100 : 0 }}>
           <Text style={[styles.dragNumber]}>{dragNumber > 0 ? '+' : ''}</Text>
-          <Text style={[styles.dragNumber, { fontFamily: 'Immortal' }]}>
+          <Text style={[{ fontFamily: 'Immortal' }, styles.dragNumber]}>
             {dragNumber}
           </Text>
         </View>
