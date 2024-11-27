@@ -89,7 +89,7 @@ export default function InGame({ route }) {
             width: '100%',
             height: '100%'
           }}>
-          <Skin skinID={skinID} lives={lives} setLives={setLives} />;
+          <Skin skinID={skinID} lives={lives} setLives={setLives} />
         </Text>
         <View
           style={{
