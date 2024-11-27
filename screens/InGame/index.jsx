@@ -71,9 +71,8 @@ export default function InGame({ route }) {
           flex: 1,
           // width: '100%',
           // height: '10%'
-          backgroundColor: 'white'
+          backgroundColor: 'black'
         }}>
-        {/* INSIDE */}
         <Pressable
           style={{
             position: 'absolute',
@@ -86,8 +85,9 @@ export default function InGame({ route }) {
         </Pressable>
         <Text
           style={{
-            width: '100%',
-            height: '100%'
+            flex: 1
+            // width: '100%',
+            // height: '100%'
           }}>
           <Skin skinID={skinID} lives={lives} setLives={setLives} />
         </Text>
