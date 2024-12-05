@@ -14,12 +14,16 @@ export default function Count({ textColour = '#ffffffa0', life, setLife }) {
   const [dragNumber, setDragNumber] = useState(0);
   const [showDragNumber, setShowDragNumber] = useState(false);
 
+  const [adjustmentNumber, setAdjustmentNumber] = useState(0);
+  const [showAdjustmentNumber, setShowAdjustmentNumber] = useState(false);
+  const adjustmentOpacity = useRef(new Animated.Value(1)).current;
+
+  const adjustmentTimeoutRef = useRef(null);
+
   const countBoxRef = useRef(null);
   const [countBoxTop, setCountBoxTop] = useState();
   const [countBoxBottom, setCountBoxBottom] = useState(0);
   const { height: screenHeight } = Dimensions.get('window');
-
-  // const skullIcon = require('../icons/skullWhite.png');
 
   const styles = StyleSheet.create({
     container: {
@@ -40,11 +44,30 @@ export default function Count({ textColour = '#ffffffa0', life, setLife }) {
     }
   });
 
+  const updateLife = (amount) => {
+    setLife((prevLife) => {
+      const newLife = Math.max(prevLife + amount, 0); // Prevent negative life
+
+      // Add the change to the current adjustment number
+      setAdjustmentNumber((prevAdjustment) => prevAdjustment + amount);
+      setShowAdjustmentNumber(true);
+
+      // Reset adjustment number after 3 seconds
+      if (adjustmentTimeoutRef.current) {
+        clearTimeout(adjustmentTimeoutRef.current);
+      }
+      adjustmentTimeoutRef.current = setTimeout(() => {
+        setShowAdjustmentNumber(false);
+        setAdjustmentNumber(0);
+      }, 3000);
+
+      return newLife;
+    });
+  };
+
   useEffect(() => {
-    if (showDragNumber == false) {
-      setLife((prevCount) =>
-        prevCount + dragNumber < 0 ? 0 : prevCount + dragNumber
-      );
+    if (!showDragNumber) {
+      updateLife(dragNumber); // Apply the drag number to life
       setDragNumber(0);
     }
   }, [showDragNumber]);
@@ -53,9 +76,7 @@ export default function Count({ textColour = '#ffffffa0', life, setLife }) {
     () =>
       PanResponder.create({
         onStartShouldSetPanResponder: () => true,
-        onMoveShouldSetPanResponder: (event, gestureState) => {
-          return true;
-        },
+        onMoveShouldSetPanResponder: () => true,
         onPanResponderMove: (event, gestureState) => {
           const normalizedSwipeLength = Math.abs(
             gestureState.dy / screenHeight
@@ -64,11 +85,16 @@ export default function Count({ textColour = '#ffffffa0', life, setLife }) {
 
           if (normalizedSwipeLength >= 0.05) {
             setShowDragNumber(true);
-
             const numHealth = Math.floor((10 * normalizedSwipeLength) ** 1.3);
-            // normalizedSwipeLength < 0.05
-            //   ? 0
-            //   :
+
+            // Reset adjustment number after 3 seconds
+            if (adjustmentTimeoutRef.current) {
+              clearTimeout(adjustmentTimeoutRef.current);
+            }
+            adjustmentTimeoutRef.current = setTimeout(() => {
+              setShowAdjustmentNumber(false);
+              setAdjustmentNumber(0);
+            }, 3000);
 
             above ? setDragNumber(numHealth) : setDragNumber(-numHealth);
           } else {
@@ -76,17 +102,11 @@ export default function Count({ textColour = '#ffffffa0', life, setLife }) {
           }
         },
         onPanResponderRelease: (evt, gestureState) => {
-          if (gestureState.dy == 0 && showDragNumber == false) {
+          if (gestureState.dy === 0 && !showDragNumber) {
             const y = gestureState.y0;
-
-            const centreOfBox = (countBoxTop + countBoxBottom) / 2;
-            setLife((prevCount) => {
-              const toAdd =
-                y !== 0 ? (y < centreOfBox ? 1 : -1) : y < centreOfBox ? 1 : 0;
-              return prevCount + toAdd;
-            });
+            const centerOfBox = (countBoxTop + countBoxBottom) / 2;
+            updateLife(y < centerOfBox ? 1 : -1);
           }
-
           setShowDragNumber(false);
         },
         onPanResponderTerminate: () => {
@@ -99,7 +119,6 @@ export default function Count({ textColour = '#ffffffa0', life, setLife }) {
   return (
     <View style={styles.container} {...swipeResponder.panHandlers}>
       <View
-        // style={styles.container}
         ref={countBoxRef}
         onLayout={() => {
           countBoxRef.current.measure((x, y, width, height, pageX, pageY) => {
@@ -113,17 +132,31 @@ export default function Count({ textColour = '#ffffffa0', life, setLife }) {
           <Image style={{ width: 200, height: 200 }} source={skullIcon} />
         )}
       </View>
-      {/* <Text style={{ opacity: 0 }}> HI LIVI!!!</Text> */}
 
-      {
-        <View
-          style={{ flexDirection: 'row', opacity: showDragNumber ? 100 : 0 }}>
-          <Text style={[styles.dragNumber]}>{dragNumber > 0 ? '+' : ''}</Text>
-          <Text style={[{ fontFamily: 'Immortal' }, styles.dragNumber]}>
-            {dragNumber}
-          </Text>
-        </View>
-      }
+      {/* Drag Number Display */}
+      {/* <View style={{ flexDirection: 'row', opacity: showDragNumber ? 1 : 0 }}>
+        <Text style={[styles.dragNumber]}>{dragNumber > 0 ? '+' : ''}</Text>
+        <Text style={[{ fontFamily: 'Immortal' }, styles.dragNumber]}>
+          {dragNumber}
+        </Text>
+      </View> */}
+
+      {/* Adjustment Number Display */}
+      <View
+        style={{
+          flexDirection: 'row',
+          opacity:
+            (showAdjustmentNumber && adjustmentNumber !== 0) || showDragNumber
+              ? 1
+              : 0
+        }}>
+        <Text style={[styles.dragNumber]}>
+          {adjustmentNumber + dragNumber > 0 ? '+' : ''}
+        </Text>
+        <Text style={[{ fontFamily: 'Immortal' }, styles.dragNumber]}>
+          {adjustmentNumber + dragNumber}
+        </Text>
+      </View>
     </View>
   );
 }
