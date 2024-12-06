@@ -5,7 +5,8 @@ import {
   Image,
   StyleSheet,
   PanResponder,
-  Dimensions
+  Dimensions,
+  Animated
 } from 'react-native';
 
 import skullIcon from '../icons/skullWhite.png';
@@ -15,8 +16,7 @@ export default function Count({ textColour = '#ffffffa0', life, setLife }) {
   const [showDragNumber, setShowDragNumber] = useState(false);
 
   const [adjustmentNumber, setAdjustmentNumber] = useState(0);
-  const [showAdjustmentNumber, setShowAdjustmentNumber] = useState(false);
-  const adjustmentOpacity = useRef(new Animated.Value(1)).current;
+  const fadeAnim = useRef(new Animated.Value(0)).current; // Animated value for opacity
 
   const adjustmentTimeoutRef = useRef(null);
 
@@ -44,21 +44,35 @@ export default function Count({ textColour = '#ffffffa0', life, setLife }) {
     }
   });
 
+  let fadeOutAnimation;
   const updateLife = (amount) => {
     setLife((prevLife) => {
       const newLife = Math.max(prevLife + amount, 0); // Prevent negative life
 
       // Add the change to the current adjustment number
       setAdjustmentNumber((prevAdjustment) => prevAdjustment + amount);
-      setShowAdjustmentNumber(true);
 
-      // Reset adjustment number after 3 seconds
+      // Show adjustment number with fade-in effect
+      Animated.timing(fadeAnim, {
+        toValue: 1,
+        duration: 200,
+        useNativeDriver: true
+      }).start();
+
+      // Reset adjustment number after 3 seconds with fade-out
       if (adjustmentTimeoutRef.current) {
         clearTimeout(adjustmentTimeoutRef.current);
       }
       adjustmentTimeoutRef.current = setTimeout(() => {
-        setShowAdjustmentNumber(false);
-        setAdjustmentNumber(0);
+        fadeOutAnimation = Animated.timing(fadeAnim, {
+          toValue: 0,
+          duration: 1000,
+          useNativeDriver: true
+        }).start(({ finished }) => {
+          if (finished) {
+            setAdjustmentNumber(0);
+          }
+        }); // Reset adjustment number to 0
       }, 3000);
 
       return newLife;
@@ -67,8 +81,10 @@ export default function Count({ textColour = '#ffffffa0', life, setLife }) {
 
   useEffect(() => {
     if (!showDragNumber) {
-      updateLife(dragNumber); // Apply the drag number to life
-      setDragNumber(0);
+      if (dragNumber !== 0) {
+        updateLife(dragNumber); // Apply the drag number to life
+        setDragNumber(0);
+      }
     }
   }, [showDragNumber]);
 
@@ -85,17 +101,18 @@ export default function Count({ textColour = '#ffffffa0', life, setLife }) {
 
           if (normalizedSwipeLength >= 0.05) {
             setShowDragNumber(true);
-            const numHealth = Math.floor((10 * normalizedSwipeLength) ** 1.3);
 
-            // Reset adjustment number after 3 seconds
+            // Cancel any fades that may be happening
             if (adjustmentTimeoutRef.current) {
               clearTimeout(adjustmentTimeoutRef.current);
+              adjustmentTimeoutRef.current = null; // Clean up the reference
+              // To cancel the animation before it completes:
             }
-            adjustmentTimeoutRef.current = setTimeout(() => {
-              setShowAdjustmentNumber(false);
-              setAdjustmentNumber(0);
-            }, 3000);
-
+            if (fadeOutAnimation) {
+              fadeOutAnimation.stop(); // Cancels the animation
+            }
+            fadeAnim.setValue(1);
+            const numHealth = Math.floor((10 * normalizedSwipeLength) ** 1.3);
             above ? setDragNumber(numHealth) : setDragNumber(-numHealth);
           } else {
             setShowDragNumber(false);
@@ -133,22 +150,11 @@ export default function Count({ textColour = '#ffffffa0', life, setLife }) {
         )}
       </View>
 
-      {/* Drag Number Display */}
-      {/* <View style={{ flexDirection: 'row', opacity: showDragNumber ? 1 : 0 }}>
-        <Text style={[styles.dragNumber]}>{dragNumber > 0 ? '+' : ''}</Text>
-        <Text style={[{ fontFamily: 'Immortal' }, styles.dragNumber]}>
-          {dragNumber}
-        </Text>
-      </View> */}
-
       {/* Adjustment Number Display */}
-      <View
+      <Animated.View
         style={{
           flexDirection: 'row',
-          opacity:
-            (showAdjustmentNumber && adjustmentNumber !== 0) || showDragNumber
-              ? 1
-              : 0
+          opacity: fadeAnim // Bind opacity to Animated.Value
         }}>
         <Text style={[styles.dragNumber]}>
           {adjustmentNumber + dragNumber > 0 ? '+' : ''}
@@ -156,7 +162,7 @@ export default function Count({ textColour = '#ffffffa0', life, setLife }) {
         <Text style={[{ fontFamily: 'Immortal' }, styles.dragNumber]}>
           {adjustmentNumber + dragNumber}
         </Text>
-      </View>
+      </Animated.View>
     </View>
   );
 }
