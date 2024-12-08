@@ -23,6 +23,7 @@ export default function SelectSkin() {
     getFavourites().then((favourites) => {
       // setFavourites(favourites);
       setFavourites([
+        'DeathAngel',
         'Island',
         'Mountain',
         'Plains',
