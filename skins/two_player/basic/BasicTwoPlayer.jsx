@@ -1,7 +1,7 @@
 import { ImageBackground, Image, Button, View } from 'react-native';
 
 // import Counter from '../components/CrossCounter';
-import DragHold from '../../../components/DragHold';
+import DragQueen from '../../../components/DragQueen';
 import { getSkinData } from '../../../services/getSkinInfo';
 
 import React from 'react';
@@ -35,7 +35,7 @@ export default function BasicTwoPlayer({
         // resizeMode: 'cover' // Adjust this as needed
       }}>
       <View style={{ flex: 1 }}>
-        <DragHold
+        <DragQueen
           life={player1Life}
           setLife={setPlayer1Life}
           textColour={textColour}
@@ -43,7 +43,7 @@ export default function BasicTwoPlayer({
         />
       </View>
       <View style={{ flex: 1 }}>
-        <DragHold
+        <DragQueen
           life={player2Life}
           setLife={setPlayer2Life}
           textColour={textColour}

@@ -1,7 +1,7 @@
 import { ImageBackground, Image, Button, View, Text } from 'react-native';
 
 // import Counter from '../components/CrossCounter';
-import DragHold from '../../../components/DragHold';
+import DragQueen from '../../../components/DragQueen';
 import { getSkinData } from '../../../services/getSkinInfo';
 
 import React from 'react';
@@ -37,7 +37,7 @@ export default function BasicFourPlayer({
       }}>
       <View style={{ flex: 1, flexDirection: 'row' }}>
         <View style={{ flex: 1 }}>
-          <DragHold
+          <DragQueen
             life={player1Life}
             setLife={setPlayer1Life}
             textColour={textColour}
@@ -45,7 +45,7 @@ export default function BasicFourPlayer({
           />
         </View>
         <View style={{ flex: 1 }}>
-          <DragHold
+          <DragQueen
             life={player2Life}
             setLife={setPlayer2Life}
             textColour={textColour}
@@ -55,14 +55,14 @@ export default function BasicFourPlayer({
       </View>
       <View style={{ flex: 1, flexDirection: 'row' }}>
         <View style={{ flex: 1 }}>
-          <DragHold
+          <DragQueen
             life={player3Life}
             setLife={setPlayer3Life}
             textColour={textColour}
           />
         </View>
         <View style={{ flex: 1 }}>
-          <DragHold
+          <DragQueen
             life={player4Life}
             setLife={setPlayer4Life}
             textColour={textColour}

@@ -11,7 +11,12 @@ import {
 
 import skullIcon from '../icons/skullWhite.png';
 
-export default function Count({ textColour = '#ffffffa0', life, setLife }) {
+export default function Count({
+  textColour = '#ffffffa0',
+  life,
+  setLife,
+  rotation = '0deg'
+}) {
   const [dragNumber, setDragNumber] = useState(0);
   const [showDragNumber, setShowDragNumber] = useState(false);
 
@@ -30,7 +35,8 @@ export default function Count({ textColour = '#ffffffa0', life, setLife }) {
       flex: 1,
       justifyContent: 'center',
       alignItems: 'center',
-      width: '100%'
+      width: '100%',
+      transform: [{ rotate: rotation }]
     },
     text: {
       fontSize: 120,
@@ -45,9 +51,10 @@ export default function Count({ textColour = '#ffffffa0', life, setLife }) {
   });
 
   let fadeOutAnimation;
+
   const updateLife = (amount) => {
     setLife((prevLife) => {
-      const newLife = Math.max(prevLife + amount, 0); // Prevent negative life
+      // const newLife = Math.max(prevLife + amount, 0); // Prevent negative life
 
       // Add the change to the current adjustment number
       setAdjustmentNumber((prevAdjustment) => prevAdjustment + amount);
@@ -75,7 +82,7 @@ export default function Count({ textColour = '#ffffffa0', life, setLife }) {
         }); // Reset adjustment number to 0
       }, 3000);
 
-      return newLife;
+      return prevLife + amount;
     });
   };
 
@@ -112,8 +119,15 @@ export default function Count({ textColour = '#ffffffa0', life, setLife }) {
               fadeOutAnimation.stop(); // Cancels the animation
             }
             fadeAnim.setValue(1);
-            const numHealth = Math.floor((10 * normalizedSwipeLength) ** 1.3);
-            above ? setDragNumber(numHealth) : setDragNumber(-numHealth);
+            var numHealth = Math.floor((10 * normalizedSwipeLength) ** 1.3);
+            if (!above) {
+              numHealth = numHealth * -1;
+            }
+            if (rotation !== '0deg') {
+              numHealth = numHealth * -1;
+            }
+
+            setDragNumber(numHealth);
           } else {
             setShowDragNumber(false);
           }
@@ -122,7 +136,11 @@ export default function Count({ textColour = '#ffffffa0', life, setLife }) {
           if (gestureState.dy === 0 && !showDragNumber) {
             const y = gestureState.y0;
             const centerOfBox = (countBoxTop + countBoxBottom) / 2;
-            updateLife(y < centerOfBox ? 1 : -1);
+            var toAdd = y < centerOfBox ? 1 : -1;
+            if (rotation !== '0deg') {
+              toAdd = toAdd * -1;
+            }
+            updateLife(toAdd);
           }
           setShowDragNumber(false);
         },
@@ -146,7 +164,10 @@ export default function Count({ textColour = '#ffffffa0', life, setLife }) {
         {life > 0 ? (
           <Text style={[styles.text]}>{life}</Text>
         ) : (
-          <Image style={{ width: 200, height: 200 }} source={skullIcon} />
+          <Image
+            style={{ width: 200, height: 200, opacity: 0.7 }}
+            source={skullIcon}
+          />
         )}
       </View>
 
