@@ -1,6 +1,7 @@
 {
   "id": "Swamp",
   "title": "The Swamp where things crawl to die",
+  "numPlayers": 1,
   "tags": ["black"],
   "textColour": "#ffffffa0"
 }

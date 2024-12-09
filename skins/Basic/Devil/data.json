@@ -1,6 +1,7 @@
 {
   "id": "Devil",
   "title": "Gawn the Furious",
+  "numPlayers": 1,
   "tags": ["red", "devil", "demon"],
   "textColour": "#ffffffa0"
 }

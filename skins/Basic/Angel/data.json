@@ -1,6 +1,7 @@
 {
   "id": "Angel",
   "title": "Heavenly Guardian",
+  "numPlayers": 1,
   "tags": ["white", "angel"],
   "textColour": "#000000a0"
 }

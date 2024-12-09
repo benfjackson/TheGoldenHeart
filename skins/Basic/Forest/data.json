@@ -1,6 +1,7 @@
 {
   "id": "Forest",
   "title": "Forest in a Sphere",
+  "numPlayers": 1,
   "tags": ["green"],
   "textColour": "#ffffffa0"
 }

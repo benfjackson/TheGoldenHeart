@@ -1,6 +1,7 @@
 {
   "id": "RedSkullVampire",
   "title": "Skulls of the Many",
+  "numPlayers": 1,
   "tags": ["red", "black", "vampire"],
   "textColour": "#ffffffa0"
 }

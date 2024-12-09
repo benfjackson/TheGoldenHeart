@@ -2,6 +2,7 @@ import BasicSkin from '../../skins/Basic/BasicSkin';
 import { View, Image, Pressable, Text, Dimensions } from 'react-native';
 import BasicTwoPlayer from '../../skins/two_player/basic/BasicTwoPlayer';
 import BasicFourPlayer from '../../skins/four_player/basic/BasicFourPlayer';
+import { getSkinData } from '../../services/getSkinInfo';
 
 export default function Skin({ skinID, lives, setLives }) {
   const windowWidth = Dimensions.get('window').width;
@@ -14,43 +15,28 @@ export default function Skin({ skinID, lives, setLives }) {
   );
 }
 export function GetSkin({ skinID, lives, setLives }) {
-  switch (skinID) {
-    case 'kDevil':
-      return (
-        <Text
-          style={{
-            color: '#FFA500',
-            fontSize: 50,
-            textAlign: 'center',
-            fontFamily: 'Endor',
-            // flex: 1
-            height: 5000
-          }}>
-          Peen
-        </Text>
-      );
-    case 'Waves':
+  const skinData = getSkinData(skinID);
+  const numPlayers = skinData.numPlayers;
+
+  switch (numPlayers) {
+    case 1:
+      return <BasicSkin skinID={skinID} lives={lives} setLives={setLives} />;
+
+    case 2:
       return (
         <BasicTwoPlayer skinID={skinID} lives={lives} setLives={setLives} />
       );
 
-    case 'Waves4player':
+    case 4:
       return (
         <BasicFourPlayer skinID={skinID} lives={lives} setLives={setLives} />
       );
 
     default:
-      return <BasicSkin skinID={skinID} lives={lives} setLives={setLives} />;
-    // return (, width: windowWidth
-    //   <Text
-    //     style={{
-    //       color: '#FFA500',
-    //       fontSize: 50,
-    //       textAlign: 'center',
-    //       fontFamily: 'Endor'
-    //     }}>
-    //     Peen
-    //   </Text>
-    // );
+      return (
+        <Text style={{ color: 'white' }}>
+          No skin loaded (no num players given)
+        </Text>
+      );
   }
 }

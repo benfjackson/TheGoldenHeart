@@ -1,6 +1,7 @@
 {
   "id": "NobleVampire",
   "title": "Royal Blood",
+  "numPlayers": 1,
   "tags": ["black", "vampire"],
   "textColour": "#ffffffa0"
 }

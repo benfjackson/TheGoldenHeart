@@ -1,6 +1,7 @@
 {
   "id": "Elk",
   "title": "The Glory of Sunrise",
+  "numPlayers": 1,
   "tags": ["green"],
   "textColour": "#ffffffa0"
 }

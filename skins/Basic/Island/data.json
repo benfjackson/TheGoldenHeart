@@ -1,6 +1,7 @@
 {
   "id": "Island",
   "title": "Shrouded Island",
+  "numPlayers": 1,
   "tags": ["blue"],
   "textColour": "#ffffffa0"
 }

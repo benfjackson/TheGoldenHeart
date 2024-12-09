@@ -1,6 +1,7 @@
 {
   "id": "Druid",
   "title": "Protector of the Forest",
+  "numPlayers": 1,
   "tags": ["green"],
   "textColour": "#ffffffa0"
 }

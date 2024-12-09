@@ -1,6 +1,7 @@
 {
   "id": "Waves",
   "title": "Waves",
+  "numPlayers": 2,
   "tags": ["2player"],
   "textColour": "#ffffffa0"
 }

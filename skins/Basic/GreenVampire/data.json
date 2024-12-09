@@ -1,6 +1,7 @@
 {
   "id": "GreenVampire",
   "title": "Grave Stalking",
+  "numPlayers": 1,
   "tags": ["black", "green", "vampire"],
   "textColour": "#ffffffa0"
 }

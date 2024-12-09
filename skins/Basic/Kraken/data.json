@@ -1,6 +1,7 @@
 {
   "id": "Kraken",
   "title": "Ententacled One",
+  "numPlayers": 1,
   "tags": ["blue", "kraken", "horror"],
   "textColour": "#ffffffa0"
 }

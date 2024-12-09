@@ -1,6 +1,7 @@
 {
   "id": "DeathAngel",
   "title": "Winged Death",
+  "numPlayers": 1,
   "tags": ["white", "angel", "black"],
   "textColour": "#ffffffa0"
 }

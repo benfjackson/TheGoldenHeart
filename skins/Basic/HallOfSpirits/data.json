@@ -1,6 +1,7 @@
 {
   "id": "HallOfSpirits",
   "title": "Hall of Spirits",
+  "numPlayers": 1,
   "tags": ["blue", "spirit"],
   "textColour": "#ffffffa0"
 }

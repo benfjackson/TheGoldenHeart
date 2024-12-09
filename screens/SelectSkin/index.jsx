@@ -23,6 +23,7 @@ export default function SelectSkin() {
     getFavourites().then((favourites) => {
       // setFavourites(favourites);
       setFavourites([
+        'Quadrants',
         'DeathAngel',
         'Island',
         'Mountain',
@@ -33,8 +34,7 @@ export default function SelectSkin() {
         'Angel',
         'Kraken',
         'NobleVampire',
-        'Waves',
-        'Waves4player'
+        'Waves'
       ]);
 
       //Should put image loading in here

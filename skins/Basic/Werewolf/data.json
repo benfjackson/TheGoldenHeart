@@ -1,6 +1,7 @@
 {
   "id": "Werewolf",
   "title": "Snarl of Fangs",
+  "numPlayers": 1,
   "tags": ["werewolf"],
   "textColour": "#ffffffa0"
 }

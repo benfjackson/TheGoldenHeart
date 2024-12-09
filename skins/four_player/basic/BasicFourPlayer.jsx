@@ -13,6 +13,7 @@ export default function BasicFourPlayer({
 }) {
   const imgMap = {
     Waves4player: require(`./Waves/Waves.png`),
+    Quadrants: require(`./Quadrants/Quadrants.png`),
     Default: require(`./Waves/Waves.png`)
   };
 

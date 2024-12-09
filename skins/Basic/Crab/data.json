@@ -1,6 +1,7 @@
 {
   "id": "Crab",
   "title": "Big Snippah",
+  "numPlayers": 1,
   "tags": ["black", "crab"],
   "textColour": "#ffffffa0"
 }

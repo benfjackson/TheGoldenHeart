@@ -1,6 +1,7 @@
 {
   "id": "LightningDragon",
   "title": "Roaring Thunder",
+  "numPlayers": 1,
   "tags": ["red", "dragon"],
   "textColour": "#ffffffa0"
 }
