@@ -1,42 +1,59 @@
-import { Text, View, Image, ImageBackground } from 'react-native';
+import { Text, View, Image, ImageBackground, Dimensions } from 'react-native';
 
 import CounterImage from '../../../images/Counter.png';
 
 import Tapper from '../../../components/Tapper';
 import { useEffect, useState } from 'react';
+import DragAndDrop from './DragAndDrop';
+
+function Label({ counterName }) {
+  switch (counterName) {
+    case 'Commander damage':
+      return <></>;
+
+    default:
+      return (
+        <Text
+          style={{
+            position: 'absolute',
+            top: '40%',
+            left: '20%',
+            textAlign: 'center',
+            textAlignVertical: 'center',
+            color: '#FFA500',
+            fontFamily: 'Endor'
+          }}>
+          {counterName}
+        </Text>
+      );
+  }
+}
 
 export default function Counter({ counter }) {
   const { count, counterName, setCount } = counter;
 
+  const windowWidth = Dimensions.get('window').width;
+  const size = windowWidth * 0.4;
+
   return (
-    <ImageBackground
-      style={{
-        height: '100%',
-        // width: 250, //'100%',
-        width: '100%',
-        alignItems: 'center',
-        justifyContent: 'center'
-      }}
-      source={CounterImage}>
-      <Text
+    <DragAndDrop>
+      <ImageBackground
         style={{
-          position: 'absolute',
-          top: '40%',
-          left: '20%',
-          textAlign: 'center',
-          textAlignVertical: 'center',
-          color: '#FFA500',
-          fontFamily: 'Endor'
-        }}>
-        {counterName}
-      </Text>
-      <Tapper
-        skull={false}
-        inverse={false}
-        life={count}
-        setLife={setCount}
-        size="counter"
-      />
-    </ImageBackground>
+          height: size,
+          width: size,
+          alignItems: 'center',
+          justifyContent: 'center'
+        }}
+        source={CounterImage}>
+        <Label counterName={counterName} />
+        <Tapper
+          skull={false}
+          inverse={false}
+          life={count}
+          setLife={setCount}
+          size="counter"
+        />
+      </ImageBackground>
+    </DragAndDrop>
   );
 }

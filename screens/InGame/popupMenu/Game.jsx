@@ -7,7 +7,6 @@ export default function Game({ setMenuState }) {
 
   const styles = StyleSheet.create({
     button: {
-      // color: 'rgb(243, 130, 26)',
       color: 'rgb(250, 180, 40)',
       fontSize: 35,
       textAlign: 'center',
@@ -42,12 +41,12 @@ export default function Game({ setMenuState }) {
           flexDirection: 'column',
           justifyContent: 'space-evenly'
         }}>
-        {/* <Pressable
+        <Pressable
           onPress={() => {
             setMenuState('counters');
           }}>
           <Text style={styles.button}>Counters</Text>
-        </Pressable> */}
+        </Pressable>
         <Pressable
           onPress={() => {
             setMenuState('history');

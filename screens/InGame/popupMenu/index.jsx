@@ -68,12 +68,12 @@ export default function PopupMenu({
               setMenuState={setMenuState}
             />
           )} */}
-          {/* {menuState === 'counters' && (
+          {menuState === 'counters' && (
             <CountersSelection
               setMenuState={setMenuState}
               counterControl={counterControl}
             />
-          )} */}
+          )}
           {menuState === 'game' && <Game setMenuState={setMenuState} />}
         </View>
       </ImageBackground>

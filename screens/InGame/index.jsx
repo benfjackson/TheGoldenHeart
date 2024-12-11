@@ -18,11 +18,6 @@ export default function InGame({ route }) {
   const loadGameState = route.params?.loadGameState;
   const initialiseGameState = route.params?.initialiseGameState;
 
-  // console.log('received params:');
-  // console.log(loadGameState);
-  // console.log(initialiseGameState);
-  // console.log(route.params);
-
   const {
     lives,
     setLives,
@@ -85,22 +80,24 @@ export default function InGame({ route }) {
         </Pressable>
         <Text
           style={{
-            flex: 1
-            // width: '100%',
-            // height: '100%'
+            flex: 1,
+            width: '100%',
+            height: '100%'
           }}>
           <Skin skinID={skinID} lives={lives} setLives={setLives} />
         </Text>
-        <View
+
+        <Counters counterControl={counterControl} />
+
+        {/* <View
           style={{
             position: 'absolute',
             bottom: 0,
             height: counterControl.counters.length > 0 ? '25%' : '0%',
             width: '100%',
             marginBottom: '-15%'
-          }}>
-          <Counters counterControl={counterControl} />
-        </View>
+          }}> */}
+        {/* </View> */}
       </View>
       {/* </View> */}
     </>

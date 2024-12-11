@@ -1,40 +1,7 @@
 // counterName, count, initialCount
 const allCounters = [
   { counterName: 'Poison', count: 0, initialCount: 0 },
-  { counterName: 'Energy', count: 0, initialCount: 0 },
-  { counterName: 'Experience', count: 0, initialCount: 0 },
-  { counterName: 'Loyalty', count: 0, initialCount: 0 },
-  { counterName: 'Charge', count: 0, initialCount: 0 },
-  { counterName: 'Time', count: 0, initialCount: 0 },
-  { counterName: 'Blood', count: 0, initialCount: 0 },
-  { counterName: 'Treasure', count: 0, initialCount: 0 },
-  { counterName: 'Clue', count: 0, initialCount: 0 },
-  { counterName: 'Gold', count: 0, initialCount: 0 },
-  { counterName: 'Food', count: 0, initialCount: 0 },
-  { counterName: 'Brick', count: 0, initialCount: 0 },
-  { counterName: 'Proliferate', count: 0, initialCount: 0 },
-  { counterName: 'Feather', count: 0, initialCount: 0 },
-  { counterName: 'Quest', count: 0, initialCount: 0 },
-  { counterName: 'Level', count: 0, initialCount: 0 },
-  { counterName: 'Verse', count: 0, initialCount: 0 },
-  { counterName: 'Age', count: 0, initialCount: 0 },
-  { counterName: 'Ice', count: 0, initialCount: 0 },
-  { counterName: 'Ki', count: 0, initialCount: 0 },
-  { counterName: 'Storage', count: 0, initialCount: 0 },
-  { counterName: 'Page', count: 0, initialCount: 0 },
-  { counterName: 'Study', count: 0, initialCount: 0 },
-  { counterName: 'Hoofprint', count: 0, initialCount: 0 },
-  { counterName: 'Doom', count: 0, initialCount: 0 },
-  { counterName: 'Fate', count: 0, initialCount: 0 },
-  { counterName: 'Shell', count: 0, initialCount: 0 },
-  { counterName: 'Spore', count: 0, initialCount: 0 },
-  { counterName: 'Soot', count: 0, initialCount: 0 },
-  { counterName: 'Velocity', count: 0, initialCount: 0 },
-  { counterName: 'Filibuster', count: 0, initialCount: 0 },
-  { counterName: 'Ore', count: 0, initialCount: 0 },
-  { counterName: 'Depletion', count: 0, initialCount: 0 },
-  { counterName: 'Petition', count: 0, initialCount: 0 },
-  { counterName: 'Pressure', count: 0, initialCount: 0 }
+  { counterName: 'Commander damage', count: 0, initialCount: 0 }
 ];
 
 export default allCounters;

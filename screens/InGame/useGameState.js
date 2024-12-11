@@ -102,7 +102,6 @@ export default function useGameState() {
     const { counterName, count, initialCount } = counter;
 
     const setCount = (newCount) => {
-      console.log('setting count in gamestate');
       setCountersState((prevState) => {
         // Create a copy of the previous state
         const newState = [...prevState];

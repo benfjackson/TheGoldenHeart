@@ -5,8 +5,6 @@ import { Text, View, Pressable, StyleSheet } from 'react-native';
 import { clearGameState } from '../../../services/appStorage';
 
 export default function Main({ setMenuState, setPopupMenuIsOpen, resetGame }) {
-  // const { guest, setGuest, setLife, setHistory, setGuestLife } = gameState;
-
   const styles = StyleSheet.create({
     button: {
       color: 'rgb(250, 180, 40)',
@@ -30,7 +28,6 @@ export default function Main({ setMenuState, setPopupMenuIsOpen, resetGame }) {
         onPress={async () => {
           setPopupMenuIsOpen(false);
           clearGameState().then(() => navigation.navigate('MainMenu'));
-          // console.log('clearresult', clearResult);
         }}>
         <Text style={styles.button}>Home</Text>
       </Pressable>
@@ -41,12 +38,12 @@ export default function Main({ setMenuState, setPopupMenuIsOpen, resetGame }) {
         }}>
         <Text style={styles.button}>Reset</Text>
       </Pressable>
-      {/* <Pressable
+      <Pressable
         onPress={() => {
           setMenuState('counters');
         }}>
         <Text style={styles.button}>Counters</Text>
-      </Pressable> */}
+      </Pressable>
     </View>
   );
 }
