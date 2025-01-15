@@ -1,7 +1,6 @@
 import { Button, View, Text, Image, StyleSheet } from 'react-native';
-
+import { useState, useEffect } from 'react';
 import { loadGameState } from '../../services/appStorage';
-import { useState } from 'react';
 import PlayButton from '../../components/PlayButton';
 import ResumeGame from './ResumeGame';
 
@@ -30,14 +29,24 @@ export default function MainMenu() {
 
   const [checkExistingGame, setCheckExistingGame] = useState(false);
   const [gameState, setGameState] = useState(null);
-  if (!checkExistingGame) {
-    loadGameState().then((state) => {
-      setGameState(state);
-      console.log('received state in main menu:');
-      console.log(state);
-      setCheckExistingGame(true);
-    });
-  }
+
+  useEffect(() => {
+    const fetchGameState = async () => {
+      try {
+        const state = await loadGameState();
+        setGameState(state);
+        // console.log('Received state in main menu:', state);
+      } catch (error) {
+        // console.error('Failed to load game state:', error);
+      } finally {
+        setCheckExistingGame(true);
+      }
+    };
+
+    if (!checkExistingGame) {
+      fetchGameState();
+    }
+  }, [checkExistingGame]);
 
   if (gameState) {
     return (

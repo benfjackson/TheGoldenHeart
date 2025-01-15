@@ -73,10 +73,30 @@ export async function loadGameState() {
 }
 
 export async function clearGameState() {
-  console.log('clearing');
   try {
-    await AsyncStorage.setItem('gameState', null);
+    await AsyncStorage.removeItem('gameState');
+    return 'success';
+  } catch (error) {
+    return `error: ${error}`;
+  }
+}
 
+export async function checkHasCompletedTutorial() {
+  try {
+    const token = await AsyncStorage.getItem('completedTutorial');
+    if (token !== null) {
+      return token;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    return `error: ${error}`;
+  }
+}
+
+export async function completeTutorial() {
+  try {
+    await AsyncStorage.setItem('completedTutorial', true);
     return 'success';
   } catch (error) {
     return `error: ${error}`;

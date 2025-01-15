@@ -41,8 +41,8 @@ export default function ResumeGame({ gameState, onClose }) {
       </TouchableOpacity>
       <TouchableOpacity
         onPress={() => {
-          onClose();
           clearGameState();
+          onClose();
         }}>
         <Text style={styles.button}>No</Text>
       </TouchableOpacity>
