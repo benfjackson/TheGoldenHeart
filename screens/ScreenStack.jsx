@@ -3,15 +3,21 @@ import {
   createStackNavigator,
   TransitionPresets
 } from '@react-navigation/stack';
-import { Easing, Animated } from 'react-native';
+import { Easing, Animated, View, Text } from 'react-native';
 
-import MainMenu from './MainMenu';
 import SelectSkin from './SelectSkin';
 import InGame from './InGame';
+import Tutorial from './Tutorial';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import ResumeGame from './ResumeGame';
+import HomeScreen from './HomeScreen';
+import {
+  checkHasCompletedTutorial,
+  loadGameState
+} from '../services/appStorage';
 
-export default function HomeScreen() {
+export default function ScreenStack() {
   const Stack = createStackNavigator();
 
   useEffect(() => {
@@ -37,21 +43,7 @@ export default function HomeScreen() {
         }
       }
     },
-    // cardStyleInterpolator: ({ current, layouts }) => {
-    //   return {
-    //     cardStyle: {
-    //       opacity: current.progress, // Apply opacity animation to the card
-    //       transform: [
-    //         {
-    //           translateX: 0 // Maintain the screen's current position
-    //         },
-    //         {
-    //           translateY: 0 // Maintain the screen's current position
-    //         }
-    //       ]
-    //     }
-    //   };
-    // }
+
     cardStyleInterpolator: ({ current, layouts }) => {
       return {
         cardStyle: {
@@ -72,33 +64,53 @@ export default function HomeScreen() {
     }
   };
 
+  const [initialRoute, setInitialRoute] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [gameState, tutorialCompleted] = await Promise.all([
+          loadGameState(),
+          checkHasCompletedTutorial()
+        ]);
+
+        if (!tutorialCompleted) {
+          setInitialRoute('Tutorial');
+        } else if (gameState) {
+          setInitialRoute('ResumeGame');
+        } else {
+          setInitialRoute('HomeScreen'); // Default route
+        }
+      } catch (error) {
+        console.error('Error loading app state:', error);
+        setInitialRoute('Home'); // Fallback route
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  if (!initialRoute)
+    return (
+      <View>
+        <Text>Beans</Text>
+      </View>
+    );
+
   return (
     <Stack.Navigator
-      initialRouteName="MainMenu"
+      initialRouteName={initialRoute}
       screenOptions={{
         headerShown: false,
         cardStyle: { backgroundColor: 'transparent' },
         cardStyleInterpolator: transitionConfig.cardStyleInterpolator,
         transitionSpec: transitionConfig.transitionSpec
-        // ...TransitionPresets.FadeFromBottomAndroid,
-        // transitionSpec: {
-        //   open: {
-        //     animation: 'timing',
-        //     config: {
-        //       duration: 500, // Animation duration in milliseconds
-        //       easing: Easing.inOut(Easing.ease) // Easing function
-        //     }
-        //   },
-        //   close: {
-        //     animation: 'timing',
-        //     config: {
-        //       duration: 300,
-        //       easing: Easing.inOut(Easing.ease)
-        //     }
-        //   }
-        // }
       }}>
-      <Stack.Screen name="MainMenu" component={MainMenu} />
+      {/* <Stack.Screen name="MainMenu" component={MainMenu} /> */}
+      <Stack.Screen name="HomeScreen" component={HomeScreen} />
+      <Stack.Screen name="Tutorial" component={Tutorial} />
+      <Stack.Screen name="ResumeGame" component={ResumeGame} />
+
       <Stack.Screen name="SelectSkin" component={SelectSkin} />
       <Stack.Screen name="InGame" component={InGame} />
     </Stack.Navigator>

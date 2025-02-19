@@ -9,13 +9,16 @@ import {
   Animated
 } from 'react-native';
 
-import skullIcon from '../icons/skullWhite.png';
+import Sparkles from '../../components/Sparkle/Sparkles';
+import skullIcon from '../../icons/skullWhite.png';
 
-export default function DragQueen({
+export default function Count({
   textColour = '#ffffffa0',
   life,
   setLife,
-  rotation = '0deg'
+  rotation = '0deg',
+  tutorialState,
+  setTutorialState
 }) {
   const [dragNumber, setDragNumber] = useState(0);
   const [showDragNumber, setShowDragNumber] = useState(false);
@@ -52,6 +55,17 @@ export default function DragQueen({
 
   let fadeOutAnimation;
 
+  useEffect(() => {
+    // Show adjustment number with fade-in effect
+    if (tutorialState === 'trackingNumber') {
+      Animated.timing(fadeAnim, {
+        toValue: 1,
+        duration: 200,
+        useNativeDriver: true
+      }).start();
+    }
+  }, [tutorialState]);
+
   const updateLife = (amount) => {
     setLife((prevLife) => {
       // const newLife = Math.max(prevLife + amount, 0); // Prevent negative life
@@ -59,7 +73,6 @@ export default function DragQueen({
       // Add the change to the current adjustment number
       setAdjustmentNumber((prevAdjustment) => prevAdjustment + amount);
 
-      // Show adjustment number with fade-in effect
       Animated.timing(fadeAnim, {
         toValue: 1,
         duration: 200,
@@ -70,17 +83,21 @@ export default function DragQueen({
       if (adjustmentTimeoutRef.current) {
         clearTimeout(adjustmentTimeoutRef.current);
       }
-      adjustmentTimeoutRef.current = setTimeout(() => {
-        fadeOutAnimation = Animated.timing(fadeAnim, {
-          toValue: 0,
-          duration: 1000,
-          useNativeDriver: true
-        }).start(({ finished }) => {
-          if (finished) {
-            setAdjustmentNumber(0);
-          }
-        }); // Reset adjustment number to 0
-      }, 3000);
+
+      if (!['trackingNumber', 'swipeUp'].includes(tutorialState)) {
+        adjustmentTimeoutRef.current = setTimeout(() => {
+          fadeOutAnimation = Animated.timing(fadeAnim, {
+            toValue: 0,
+            duration: 1000,
+            useNativeDriver: true
+          }).start(({ finished }) => {
+            if (finished) {
+              console.log('erasure State', tutorialState);
+              setAdjustmentNumber(0);
+            }
+          }); // Reset adjustment number to 0
+        }, 3000);
+      }
 
       return prevLife + amount;
     });
@@ -89,6 +106,16 @@ export default function DragQueen({
   useEffect(() => {
     if (!showDragNumber) {
       if (dragNumber !== 0) {
+        if (
+          dragNumber > 2 &&
+          (tutorialState == 'swipeUp' || tutorialState == 'again')
+        ) {
+          setTutorialState();
+        }
+        if (dragNumber < -2 && tutorialState == 'swipeDown') {
+          setTutorialState();
+        }
+
         updateLife(dragNumber); // Apply the drag number to life
         setDragNumber(0);
       }
@@ -140,6 +167,15 @@ export default function DragQueen({
             if (rotation !== '0deg') {
               toAdd = toAdd * -1;
             }
+            console.log(tutorialState, ' tutorial state in dragqueen');
+            // TUTORIAL
+            if (toAdd === 1 && tutorialState == 'tapUp') {
+              setTutorialState();
+            }
+            if (toAdd === -1 && tutorialState == 'tapDown') {
+              setTutorialState();
+            }
+
             updateLife(toAdd);
           }
           setShowDragNumber(false);
@@ -148,7 +184,7 @@ export default function DragQueen({
           setShowDragNumber(false);
         }
       }),
-    [countBoxTop, countBoxBottom]
+    [countBoxTop, countBoxBottom, tutorialState]
   );
 
   return (
@@ -162,7 +198,9 @@ export default function DragQueen({
           });
         }}>
         {life > 0 ? (
-          <Text style={[styles.text]}>{life}</Text>
+          <Sparkles on={tutorialState === 'lifeTotal'}>
+            <Text style={[styles.text]}>{life}</Text>
+          </Sparkles>
         ) : (
           <Image
             style={{ width: 200, height: 200, opacity: 0.7 }}
@@ -177,12 +215,20 @@ export default function DragQueen({
           flexDirection: 'row',
           opacity: fadeAnim // Bind opacity to Animated.Value
         }}>
-        <Text style={[styles.dragNumber]}>
-          {adjustmentNumber + dragNumber > 0 ? '+' : ''}
-        </Text>
-        <Text style={[{ fontFamily: 'Immortal' }, styles.dragNumber]}>
-          {adjustmentNumber + dragNumber}
-        </Text>
+        <Sparkles
+          on={['trackingNumber', 'again', 'swipeUp'].includes(tutorialState)}>
+          <View
+            style={{
+              flexDirection: 'row'
+            }}>
+            <Text style={[styles.dragNumber]}>
+              {adjustmentNumber + dragNumber > 0 ? '+' : ''}
+            </Text>
+            <Text style={[{ fontFamily: 'Immortal' }, styles.dragNumber]}>
+              {adjustmentNumber + dragNumber}
+            </Text>
+          </View>
+        </Sparkles>
       </Animated.View>
     </View>
   );

@@ -85,7 +85,7 @@ export async function checkHasCompletedTutorial() {
   try {
     const token = await AsyncStorage.getItem('completedTutorial');
     if (token !== null) {
-      return token;
+      return token === 'true';
     } else {
       return false;
     }
@@ -94,9 +94,10 @@ export async function checkHasCompletedTutorial() {
   }
 }
 
+// Is JSONification needed?
 export async function completeTutorial() {
   try {
-    await AsyncStorage.setItem('completedTutorial', true);
+    await AsyncStorage.setItem('completedTutorial', 'true');
     return 'success';
   } catch (error) {
     return `error: ${error}`;

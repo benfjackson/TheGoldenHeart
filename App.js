@@ -15,7 +15,7 @@ LogBox.ignoreLogs([
   "ViewPropTypes will be removed from React Native, along with all other PropTypes. We recommend that you migrate away from PropTypes and switch to a type system like TypeScript. If you need to continue using ViewPropTypes, migrate to the 'deprecated-react-native-prop-types' package."
 ]); // Ignore log notification by message
 
-import HomeScreen from './screens/ScreenStack';
+import ScreenStack from './screens/ScreenStack';
 export default function App() {
   const [fontsLoaded] = useFonts({
     Endor: require('./assets/fonts/endor/ENDOR___.ttf'),
@@ -37,7 +37,7 @@ export default function App() {
         <View style={styles.container}>
           {/* <StatusBar style="auto" /> */}
           <NavigationContainer>
-            <HomeScreen />
+            <ScreenStack />
           </NavigationContainer>
         </View>
       </SafeAreaProvider>

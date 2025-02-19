@@ -1,9 +1,11 @@
 import { useNavigation } from '@react-navigation/native';
 import { Button, View, Text, Image, StyleSheet } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { clearGameState } from '../../services/appStorage';
+import { clearGameState, loadGameState } from '../../services/appStorage';
 
-export default function ResumeGame({ gameState, onClose }) {
+import { useEffect, useState } from 'react';
+
+export default function ResumeGame({}) {
   const styles = StyleSheet.create({
     container: {
       flex: 1,
@@ -27,6 +29,24 @@ export default function ResumeGame({ gameState, onClose }) {
   });
 
   const navigation = useNavigation();
+
+  const [gameState, setGameState] = useState(null);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const loadedGameState = await loadGameState();
+
+        if (loadedGameState) {
+          setGameState(loadedGameState);
+        }
+      } catch (error) {
+        console.error('Error loading app state:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Continue saved game?</Text>
@@ -35,14 +55,14 @@ export default function ResumeGame({ gameState, onClose }) {
           navigation.navigate('InGame', {
             loadGameState: gameState
           });
-          onClose();
         }}>
         <Text style={styles.button}>Yes</Text>
       </TouchableOpacity>
+
       <TouchableOpacity
         onPress={() => {
           clearGameState();
-          onClose();
+          navigation.navigate('HomeScreen');
         }}>
         <Text style={styles.button}>No</Text>
       </TouchableOpacity>
