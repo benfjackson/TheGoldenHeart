@@ -162,7 +162,7 @@ export default function DragQueen({
           });
         }}>
         {life > 0 ? (
-          <Text style={[styles.text]}>{life}</Text>
+          <Text style={[styles.text]}>{life + dragNumber}</Text>
         ) : (
           <Image
             style={{ width: 200, height: 200, opacity: 0.7 }}

@@ -199,7 +199,7 @@ export default function Count({
         }}>
         {life > 0 ? (
           <Sparkles on={tutorialState === 'lifeTotal'}>
-            <Text style={[styles.text]}>{life}</Text>
+            <Text style={[styles.text]}>{life + dragNumber}</Text>
           </Sparkles>
         ) : (
           <Image
