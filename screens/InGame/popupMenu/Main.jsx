@@ -27,7 +27,7 @@ export default function Main({ setMenuState, setPopupMenuIsOpen, resetGame }) {
       <Pressable
         onPress={async () => {
           setPopupMenuIsOpen(false);
-          clearGameState().then(() => navigation.navigate('MainMenu'));
+          clearGameState().then(() => navigation.navigate('HomeScreen'));
         }}>
         <Text style={styles.button}>Home</Text>
       </Pressable>
