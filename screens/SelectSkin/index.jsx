@@ -1,6 +1,7 @@
 import { set } from 'react-native-reanimated';
 import SkinCarousel from './SkinCarousel';
 import StartingHealthPicker from './StartingHealthPicker';
+import NumPlayersPicker from './NumPlayersPicker';
 
 import { getFavourites, addToFavourites } from '../../services/appStorage';
 
@@ -17,10 +18,13 @@ export default function SelectSkin() {
   const [loaded, setLoaded] = useState(false);
 
   const [startingHealth, setStartingHealth] = useState(20);
+  const [numPlayers, setNumPlayers] = useState(1);
+
   const navigation = useNavigation();
 
   if (!loaded) {
     getFavourites().then((favourites) => {
+      console.log(favourites);
       // setFavourites(favourites);
       setFavourites([
         'Quadrants',
@@ -48,14 +52,14 @@ export default function SelectSkin() {
       style={{
         flex: 1,
         flexDirection: 'column',
-        // justifyContent: 'between',
+        // justifyContent: 'flex-start',
         backgroundColor: '#000'
         // alignItems: 'center',
         // paddingTop: '10%'
       }}>
       <TouchableOpacity
         onPress={() => {
-          navigation.navigate('MainMenu');
+          navigation.navigate('HomeScreen');
         }}
         style={{
           backgroundColor: '#000',
@@ -74,19 +78,22 @@ export default function SelectSkin() {
           flex: 1,
           // flexDirection: 'column',
           justifyContent: 'space-evenly',
-          backgroundColor: 'black',
           alignItems: 'center',
           paddingTop: '40%',
           paddingBottom: '20%'
         }}>
         {/* paddingVertical: '25%' */}
-        <View style={{ paddingTop: '10%' }}>
+        <View style={{ paddingTop: '10%', marginBottom: '-60%' }}>
           <SkinCarousel
             startingHealth={startingHealth}
             favourites={favourites}
+            numPlayers={numPlayers}
           />
         </View>
-        <StartingHealthPicker setStartingHealth={setStartingHealth} />
+        <View style={{ alignItems: 'center', gap: 50, paddingBottom: '30%' }}>
+          <NumPlayersPicker setNumPlayers={setNumPlayers} />
+          <StartingHealthPicker setStartingHealth={setStartingHealth} />
+        </View>
       </View>
     </View>
   );
