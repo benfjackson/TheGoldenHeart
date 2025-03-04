@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { saveGameState, clearGameState } from '../../services/appStorage';
+import { saveGameState, clearGameState } from '../services/appStorage';
 
 export default function useGameState() {
   //Game info: num players, skinID, starting life

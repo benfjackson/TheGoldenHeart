@@ -10,7 +10,7 @@ import { useKeepAwake } from 'expo-keep-awake';
 
 import Skin from './Skin';
 
-import useGameState from './useGameState';
+import useGameState from '../../hooks/useGameState';
 
 export default function InGame({ route }) {
   useKeepAwake();
