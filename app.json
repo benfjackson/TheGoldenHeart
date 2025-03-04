@@ -29,6 +29,21 @@
       "eas": {
         "projectId": "51ffab37-5f56-48b7-b4e0-bc59e2825118"
       }
-    }
+    },
+    "plugins": [
+      [
+        "expo-audio",
+        {
+          "microphonePermission": "Allow $(PRODUCT_NAME) to access your microphone."
+        }
+      ],
+      [
+        "expo-av",
+        {
+          "microphonePermission": "Allow $(PRODUCT_NAME) to access your microphone."
+        }
+      ],
+      "expo-audio"
+    ]
   }
 }

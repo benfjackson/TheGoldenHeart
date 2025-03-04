@@ -1,6 +1,7 @@
 import { Button, View, Text, Image, StyleSheet } from 'react-native';
 
 import PlayButton from '../../components/PlayButton';
+import { PlayAudioButton } from '../../components/PlayAudioButton';
 
 export default function HomeScreen() {
   const styles = StyleSheet.create({
@@ -28,6 +29,7 @@ export default function HomeScreen() {
   return (
     <View style={styles.container}>
       <PlayButton />
+      <PlayAudioButton audioSource={require('../../assets/audio/stab.mp3')} />
     </View>
   );
 }
