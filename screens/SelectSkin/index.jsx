@@ -90,9 +90,21 @@ export default function SelectSkin() {
             numPlayers={numPlayers}
           />
         </View>
-        <View style={{ alignItems: 'center', gap: 50, paddingBottom: '30%' }}>
-          <NumPlayersPicker setNumPlayers={setNumPlayers} />
-          <StartingHealthPicker setStartingHealth={setStartingHealth} />
+        <View
+          style={{
+            alignItems: 'center',
+            // gap: 20,
+            paddingBottom: '30%',
+            flexDirection: 'row'
+          }}>
+          <NumPlayersPicker
+            numPlayers={numPlayers}
+            setNumPlayers={setNumPlayers}
+          />
+          <StartingHealthPicker
+            startingHealth={startingHealth}
+            setStartingHealth={setStartingHealth}
+          />
         </View>
       </View>
     </View>

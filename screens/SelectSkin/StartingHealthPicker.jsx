@@ -1,111 +1,106 @@
-import { View, Text, Pressable, ImageBackground } from 'react-native';
-import Carousel from 'react-native-snap-carousel';
+import { View, Text, TouchableOpacity, ImageBackground } from 'react-native';
 import CounterImage from '../../images/Counter.png';
 
-import { useRef } from 'react';
+export default function NumPlayersStepper({
+  startingHealth,
+  setStartingHealth
+}) {
+  const playerOptions = [20, 25, 30, 40];
+  const currentIndex = playerOptions.indexOf(startingHealth);
 
-import { Dimensions, Platform, PixelRatio } from 'react-native';
-
-export default function StartingHealthPicker({ setStartingHealth }) {
-  const entries = [20, 25, 30, 40, 60, 100];
-
-  const carouselRef = useRef(null);
-
-  const renderItem = ({ item, index }) => {
-    return (
-      <Pressable
-        style={{
-          alignItems: 'center',
-          justifyContent: 'center',
-          flexDirection: 'row'
-        }}
-        onPress={() => {
-          carouselRef.current.snapToItem(index);
-        }}>
-        <View
-          style={{
-            alignItems: 'center',
-            justifyContent: 'center',
-            flexDirection: 'row',
-            zIndex: 100
-          }}>
-          <View
-            style={{
-              // borderRadius: 100,
-              // padding: 2,
-              // paddingHorizontal: 4,
-              backgroundColor: 'transparent',
-              alignItems: 'center',
-              justifyContent: 'center'
-            }}>
-            <Text
-              // ${index === currIndex ? 'text-blue' : 'text-black'}
-              //           Endor: require('./assets/fonts/endor/ENDOR___.ttf'),
-              // Immortal: require('./assets/fonts/immortal/IMMORTAL.ttf'),
-              // // TheLastKingdom: require('./assets/fonts/the-last-kingdom/THE LAST KINGDOM.ttf'),
-              // Alamak:
-              style={{
-                color: '#FFA500',
-                fontSize: 30,
-                paddingVertical: '5%',
-                fontFamily: 'Immortal'
-              }}>
-              {item}
-            </Text>
-          </View>
-        </View>
-      </Pressable>
-    );
+  const increment = () => {
+    if (currentIndex < playerOptions.length - 1) {
+      setStartingHealth(playerOptions[currentIndex + 1]);
+    }
   };
 
-  const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } =
-    Dimensions.get('window');
-
-  const sliderWidth = SCREEN_WIDTH;
-  const itemWidth = 0.25 * SCREEN_WIDTH;
+  const decrement = () => {
+    if (currentIndex > 0) {
+      setStartingHealth(playerOptions[currentIndex - 1]);
+    }
+  };
 
   return (
     <View
-      style={{ width: '100%', alignItems: 'center', flexDirection: 'column' }}>
-      <View style={{ width: '100%', alignItems: 'center' }}>
+      style={{
+        alignItems: 'center',
+        flexDirection: 'column',
+        justifyContent: 'center'
+      }}>
+      <View
+        style={{
+          alignItems: 'center',
+          flexDirection: 'row',
+          justifyContent: 'center'
+        }}>
+        <ImageBackground
+          source={CounterImage}
+          style={{
+            position: 'absolute',
+            top: -10,
+            bottom: 0,
+            height: 80,
+            width: 80,
+            marginLeft: '3%'
+          }}
+        />
+
         <View
           style={{
-            alignSelf: 'center',
-            width: '20%',
-            height: '100%',
-            position: 'absolute',
-            top: 0,
-            bottom: 0,
-            flex: 1
-          }}>
-          <ImageBackground
-            style={{
-              height: '130%',
-              // width: 250, //'100%',
-              width: '100%',
-              alignItems: 'center',
-              justifyContent: 'center',
-              marginTop: '-20%'
-            }}
-            source={CounterImage}
-          />
-        </View>
-        <Carousel
-          ref={carouselRef}
-          data={entries}
-          renderItem={renderItem}
-          sliderWidth={sliderWidth}
-          itemWidth={itemWidth}
-          style={{
-            flex: 1,
-            justifyContent: 'center',
+            flexDirection: 'row',
             alignItems: 'center',
-            zIndex: 10
-          }}
-          onSnapToItem={(index) => setStartingHealth(entries[index])}
-          firstItem={0}
-        />
+
+            justifyContent: 'center'
+          }}>
+          {/* Decrement Button */}
+          <TouchableOpacity
+            onPress={decrement}
+            style={{
+              paddingHorizontal: 20,
+              paddingVertical: 10,
+              marginHorizontal: 10
+            }}>
+            <Text
+              style={{
+                color: '#FFA500',
+                fontSize: 30,
+                fontFamily: 'Immortal'
+              }}>
+              {currentIndex > 0 ? '-' : ' '}
+            </Text>
+          </TouchableOpacity>
+
+          <Text
+            style={{
+              color: '#FFA500',
+              fontSize: 30,
+              fontFamily: 'Immortal',
+              paddingHorizontal: 20
+            }}>
+            {startingHealth}
+          </Text>
+
+          {/* Increment Button */}
+          <TouchableOpacity
+            onPress={increment}
+            style={{
+              paddingHorizontal: 20,
+              paddingVertical: 10,
+              marginHorizontal: 10
+            }}>
+            <Text
+              style={{
+                color: '#FFA500',
+                fontSize: 30,
+                fontFamily: 'Immortal'
+              }}>
+              {currentIndex < playerOptions.length - 1 ? '+' : ' '}
+            </Text>
+          </TouchableOpacity>
+        </View>
       </View>
+
+      {/* Label */}
       <Text
         style={{
           color: '#FFA500',
@@ -113,7 +108,7 @@ export default function StartingHealthPicker({ setStartingHealth }) {
           fontSize: 30,
           paddingTop: '5%'
         }}>
-        Starting Health
+        Health
       </Text>
     </View>
   );
