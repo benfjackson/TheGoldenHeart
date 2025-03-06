@@ -80,7 +80,7 @@ export default function DragQueen({
             setAdjustmentNumber(0);
           }
         }); // Reset adjustment number to 0
-      }, 3000);
+      }, 5000);
 
       return prevLife + amount;
     });
