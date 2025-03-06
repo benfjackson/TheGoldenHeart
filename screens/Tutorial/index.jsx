@@ -11,6 +11,7 @@ import { useState, useRef, useEffect } from 'react';
 import DragQueen from './TutorialDragQueen';
 import Sparkles from '../../components/Sparkle/Sparkles';
 import PopupMenu from './TutorialMenu';
+import ScreenFrame from '../../components/ScreenFrame';
 
 export default function Tutorial() {
   const [life, setLife] = useState(20);
@@ -23,42 +24,42 @@ export default function Tutorial() {
   const tutorialStages = {
     lifeTotal: {
       text: 'This is your life total',
-      padding: { paddingTop: '10%', paddingBottom: '80%' },
+      styling: { justifyContent: 'flex-end' },
       next: 'tapUp'
     },
     tapUp: {
       text: 'Tap above for +1 health',
-      padding: { paddingTop: '-20%', paddingBottom: '100%' },
+      styling: { justifyContent: 'flex-start' },
       next: 'tapDown'
     },
     tapDown: {
       text: 'Tap below for -1 health',
-      padding: { paddingTop: '100%', paddingBottom: '-20%' },
+      styling: { justifyContent: 'flex-end' },
       next: 'trackingNumber'
     },
     trackingNumber: {
       text: 'This tracks how much your health has just changed',
-      padding: { paddingTop: '100%', paddingBottom: '-20%' },
+      styling: { justifyContent: 'flex-end' },
       next: 'swipeUp'
     },
     swipeUp: {
       text: 'Swipe up from anywhere for large life gain',
-      padding: { paddingTop: '100%', paddingBottom: '-20%' },
+      styling: { justifyContent: 'flex-start' },
       next: 'again'
     },
     again: {
       text: 'Do it again, it will keep getting tracked...',
-      padding: { paddingTop: '100%', paddingBottom: '-20%' },
+      styling: { justifyContent: 'flex-start' },
       next: 'swipeDown'
     },
     swipeDown: {
       text: 'Swipe down to reduce your health',
-      padding: { paddingTop: '100%', paddingBottom: '-20%' },
+      styling: { justifyContent: 'flex-end' },
       next: 'menu'
     },
     menu: {
       text: 'Tap up here for the menu',
-      padding: { paddingTop: '-20%', paddingBottom: '130%' },
+      styling: { justifyContent: 'flex-start', paddingTop: '10%' },
       next: null // No next step; tutorial ends
     }
   };
@@ -99,35 +100,37 @@ export default function Tutorial() {
     <>
       <PopupMenu isOpen={menuOpen} setIsOpen={setMenuOpen} />
       <View style={{ flex: 1, width: '100%', height: '100%' }}>
-        <View
-          style={[styles.textContainer, tutorialStages[currentStep].padding]}>
-          <Animated.Text style={[styles.text, { opacity: fadeAnim }]}>
-            {tutorialStages[currentStep].text}
-          </Animated.Text>
-        </View>
-        <Pressable
-          style={{
-            position: 'absolute',
-            top: 40,
-            left: 5,
-            zIndex: 10,
-            opacity: currentStep === 'menu' ? 1 : 0
-          }}
-          onPress={() => setMenuOpen(true)}>
-          <Sparkles on={currentStep === 'menu'}>
-            <ImageBackground
-              source={menuButton}
-              style={{ width: 80, height: 80 }}
-            />
-          </Sparkles>
-        </Pressable>
-        <DragQueen
-          life={life}
-          setLife={setLife}
-          textColour={'#FFA500a0'}
-          tutorialState={currentStep}
-          setTutorialState={nextStep}
-        />
+        <ScreenFrame>
+          <View
+            style={[styles.textContainer, tutorialStages[currentStep].styling]}>
+            <Animated.Text style={[styles.text, { opacity: fadeAnim }]}>
+              {tutorialStages[currentStep].text}
+            </Animated.Text>
+          </View>
+          <Pressable
+            style={{
+              position: 'absolute',
+              top: 40,
+              left: 40,
+              zIndex: 10,
+              opacity: currentStep === 'menu' ? 1 : 0
+            }}
+            onPress={() => setMenuOpen(true)}>
+            <Sparkles on={currentStep === 'menu'}>
+              <ImageBackground
+                source={menuButton}
+                style={{ width: 80, height: 80 }}
+              />
+            </Sparkles>
+          </Pressable>
+          <DragQueen
+            life={life}
+            setLife={setLife}
+            textColour={'#FFA500a0'}
+            tutorialState={currentStep}
+            setTutorialState={nextStep}
+          />
+        </ScreenFrame>
       </View>
     </>
   );
@@ -138,15 +141,16 @@ const styles = StyleSheet.create({
     color: '#FFA500a0',
     fontSize: 40,
     textAlign: 'center',
-    fontFamily: 'Endor'
+    fontFamily: 'Endor',
+    width: '80%'
   },
   textContainer: {
     flex: 1,
     width: '100%',
-    height: '100%',
+    height: '80%',
     position: 'absolute',
     alignItems: 'center',
-    justifyContent: 'center',
     zIndex: -1
+    // alignSelf: 'center'
   }
 });

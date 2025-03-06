@@ -72,7 +72,7 @@ export default function InGame({ route }) {
           style={{
             position: 'absolute',
             top: 40,
-            left: 5,
+            left: 30,
             zIndex: 10
           }}
           onPress={() => setMenuOpen(true)}>
