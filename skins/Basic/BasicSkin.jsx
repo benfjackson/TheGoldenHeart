@@ -5,6 +5,7 @@ import DragQueen from '../../components/DragQueen';
 import { getSkinData } from '../../services/getSkinInfo';
 
 import React, { useState } from 'react';
+import ScreenFrame from '../../components/ScreenFrame';
 
 export default function BasicSkin({ skinID = 'Default', lives, setLives }) {
   const imgMap = {
@@ -47,11 +48,13 @@ export default function BasicSkin({ skinID = 'Default', lives, setLives }) {
         // resizeMode: 'cover'
         // resizeMode: 'cover' // Adjust this as needed
       }}>
-      <DragQueen
-        life={player1Life}
-        setLife={setPlayer1Life}
-        textColour={textColour}
-      />
+      <ScreenFrame>
+        <DragQueen
+          life={player1Life}
+          setLife={setPlayer1Life}
+          textColour={textColour}
+        />
+      </ScreenFrame>
     </ImageBackground>
   );
 }

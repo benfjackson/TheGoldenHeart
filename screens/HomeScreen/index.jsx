@@ -1,6 +1,15 @@
-import { Button, View, Text, Image, StyleSheet } from 'react-native';
+import {
+  Button,
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  ImageBackground,
+  Dimensions
+} from 'react-native';
 
 import PlayButton from '../../components/PlayButton';
+import ScreenFrame from '../../components/ScreenFrame';
 
 export default function HomeScreen() {
   const styles = StyleSheet.create({
@@ -8,7 +17,7 @@ export default function HomeScreen() {
       flex: 1,
       alignItems: 'center',
       justifyContent: 'center',
-      width: '100%',
+      // width: '100%',
       backgroundColor: 'black'
     },
     button: {
@@ -24,10 +33,14 @@ export default function HomeScreen() {
       fontFamily: 'Endor'
     }
   });
+  // const { width, height } = Dimensions.get('window');
+  // const screenRatio = width / height;
 
   return (
     <View style={styles.container}>
-      <PlayButton />
+      <ScreenFrame>
+        <PlayButton />
+      </ScreenFrame>
     </View>
   );
 }
