@@ -106,7 +106,6 @@ export default function ScreenStack() {
         cardStyleInterpolator: transitionConfig.cardStyleInterpolator,
         transitionSpec: transitionConfig.transitionSpec
       }}>
-      {/* <Stack.Screen name="MainMenu" component={MainMenu} /> */}
       <Stack.Screen name="HomeScreen" component={HomeScreen} />
       <Stack.Screen name="Tutorial" component={Tutorial} />
       <Stack.Screen name="ResumeGame" component={ResumeGame} />
