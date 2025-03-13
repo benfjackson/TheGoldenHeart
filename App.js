@@ -16,6 +16,7 @@ LogBox.ignoreLogs([
 ]); // Ignore log notification by message
 
 import ScreenStack from './screens/ScreenStack';
+import { AuthProvider } from './auth/AuthContext';
 export default function App() {
   const [fontsLoaded] = useFonts({
     Endor: require('./assets/fonts/endor/ENDOR___.ttf'),
@@ -36,9 +37,11 @@ export default function App() {
       <SafeAreaProvider>
         <View style={styles.container}>
           {/* <StatusBar style="auto" /> */}
-          <NavigationContainer>
-            <ScreenStack />
-          </NavigationContainer>
+          <AuthProvider>
+            <NavigationContainer>
+              <ScreenStack />
+            </NavigationContainer>
+          </AuthProvider>
         </View>
       </SafeAreaProvider>
     </>

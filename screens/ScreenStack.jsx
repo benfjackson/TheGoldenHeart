@@ -12,13 +12,19 @@ import Tutorial from './Tutorial';
 import { useEffect, useState } from 'react';
 import ResumeGame from './ResumeGame';
 import HomeScreen from './HomeScreen';
+import Login from './Login';
 import {
   checkHasCompletedTutorial,
   loadGameState
 } from '../services/appStorage';
+import Gallery from './Gallery';
+import RequiresAccount from './RequiresAccount';
+
+import { useAuth } from '../auth/AuthContext';
 
 export default function ScreenStack() {
   const Stack = createStackNavigator();
+  const { session, loading } = useAuth();
 
   useEffect(() => {
     setTimeout(() => {
@@ -83,7 +89,7 @@ export default function ScreenStack() {
         }
       } catch (error) {
         console.error('Error loading app state:', error);
-        setInitialRoute('Home'); // Fallback route
+        setInitialRoute('HomeScreen'); // Fallback route
       }
     };
 
@@ -109,6 +115,15 @@ export default function ScreenStack() {
       <Stack.Screen name="HomeScreen" component={HomeScreen} />
       <Stack.Screen name="Tutorial" component={Tutorial} />
       <Stack.Screen name="ResumeGame" component={ResumeGame} />
+
+      <Stack.Screen name="Login" component={Login} />
+      <Stack.Screen name="Gallery">
+        {() => (
+          <RequiresAccount>
+            <Gallery />
+          </RequiresAccount>
+        )}
+      </Stack.Screen>
 
       <Stack.Screen name="SelectSkin" component={SelectSkin} />
       <Stack.Screen name="InGame" component={InGame} />
