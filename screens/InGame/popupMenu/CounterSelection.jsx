@@ -1,4 +1,3 @@
-import { useNavigation } from '@react-navigation/native';
 import allCounters from './allCounters';
 
 import { Text, View, Pressable, Image, StyleSheet } from 'react-native';

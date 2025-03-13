@@ -34,6 +34,10 @@ export async function removeToken(tokenName) {
   }
 }
 
+////////////////////////////////////
+/////////// GAME STATE /////////////
+////////////////////////////////////
+
 export async function saveGameState(gameState) {
   try {
     const timestamp = new Date();
@@ -81,6 +85,10 @@ export async function clearGameState() {
   }
 }
 
+//////////////////////////////////
+/////////// TUTORIAL /////////////
+//////////////////////////////////
+
 export async function checkHasCompletedTutorial() {
   try {
     const token = await AsyncStorage.getItem('completedTutorial');
@@ -103,6 +111,10 @@ export async function completeTutorial() {
     return `error: ${error}`;
   }
 }
+
+////////////////////////////////////
+/////////// FAVOURITES /////////////
+////////////////////////////////////
 
 export async function getFavourites() {
   try {
