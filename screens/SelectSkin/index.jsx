@@ -1,4 +1,3 @@
-import { set } from 'react-native-reanimated';
 import SkinCarousel from './SkinCarousel';
 import StartingHealthPicker from './StartingHealthPicker';
 import NumPlayersPicker from './NumPlayersPicker';
@@ -9,8 +8,8 @@ import { useNavigation } from '@react-navigation/native';
 
 import { useState } from 'react';
 
-import { View, Image, TouchableOpacity, Text } from 'react-native';
-import BackButton from '../../images/BackArrow1.png';
+import { View } from 'react-native';
+import BackButton from '../../components/BackButton';
 
 export default function SelectSkin() {
   //Get favourites from AsyncStorage
@@ -57,20 +56,7 @@ export default function SelectSkin() {
         // alignItems: 'center',
         // paddingTop: '10%'
       }}>
-      <TouchableOpacity
-        onPress={() => {
-          navigation.navigate('HomeScreen');
-        }}
-        style={{
-          backgroundColor: '#000',
-          position: 'absolute',
-          top: '10%',
-          left: '2%',
-          width: '12%',
-          zIndex: 10
-        }}>
-        <Image source={BackButton} style={{ width: '100%', height: 35 }} />
-      </TouchableOpacity>
+      <BackButton />
 
       <View
         // style={{ paddingVertical: '35%' }}
