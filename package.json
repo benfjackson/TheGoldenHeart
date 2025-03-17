@@ -11,6 +11,7 @@
     "@react-navigation/native-stack": "^6.9.12",
     "@react-navigation/stack": "^6.3.16",
     "@react-navigation/tabs": "^0.0.0-alpha.12",
+    "@rneui/themed": "^4.0.0-rc.8",
     "@supabase/supabase-js": "^2.49.1",
     "deprecated-react-native-prop-types": "^2.2.0",
     "expo": "~48.0.9",

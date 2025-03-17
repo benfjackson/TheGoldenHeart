@@ -4,6 +4,7 @@ import {
   TransitionPresets
 } from '@react-navigation/stack';
 import { Easing, Animated, View, Text } from 'react-native';
+import Login from './Login';
 
 import SelectSkin from './SelectSkin';
 import InGame from './InGame';
@@ -109,6 +110,7 @@ export default function ScreenStack() {
       <Stack.Screen name="HomeScreen" component={HomeScreen} />
       <Stack.Screen name="Tutorial" component={Tutorial} />
       <Stack.Screen name="ResumeGame" component={ResumeGame} />
+      <Stack.Screen name="Login" component={Login} />
 
       <Stack.Screen name="SelectSkin" component={SelectSkin} />
       <Stack.Screen name="InGame" component={InGame} />
