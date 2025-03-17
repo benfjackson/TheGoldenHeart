@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "The Golden Heart",
+    "name": "Golden Heart",
     "slug": "LIFE",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -29,6 +29,18 @@
       "eas": {
         "projectId": "51ffab37-5f56-48b7-b4e0-bc59e2825118"
       }
-    }
+    },
+    "plugins": [
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "compileSdkVersion": 34,
+            "targetSdkVersion": 34,
+            "kotlinVersion": "1.8.10"
+          }
+        }
+      ]
+    ]
   }
 }
