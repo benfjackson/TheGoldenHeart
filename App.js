@@ -4,6 +4,7 @@ import { StyleSheet, Text, View, StatusBar } from 'react-native';
 import 'react-native-gesture-handler';
 import { NavigationContainer } from '@react-navigation/native';
 import { useFonts } from '@expo-google-fonts/dev';
+import { AuthProvider } from './auth/AuthContext';
 
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
@@ -34,12 +35,14 @@ export default function App() {
         backgroundColor="transparent"
       />
       <SafeAreaProvider>
-        <View style={styles.container}>
-          {/* <StatusBar style="auto" /> */}
-          <NavigationContainer>
-            <ScreenStack />
-          </NavigationContainer>
-        </View>
+        <AuthProvider>
+          <View style={styles.container}>
+            {/* <StatusBar style="auto" /> */}
+            <NavigationContainer>
+              <ScreenStack />
+            </NavigationContainer>
+          </View>
+        </AuthProvider>
       </SafeAreaProvider>
     </>
   );
