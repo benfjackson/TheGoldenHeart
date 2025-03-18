@@ -11,6 +11,9 @@ export default function RequiresAccount({ children }) {
     if (!loading && !session) {
       navigation.navigate('Login');
     }
+    //  else {
+    //   console.log('using session', session);
+    // }
   }, [session, loading, navigation]);
 
   if (loading) {

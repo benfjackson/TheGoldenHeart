@@ -26,7 +26,7 @@ export function AuthProvider({ children }) {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ session, loading }}>
+    <AuthContext.Provider value={{ session, loading, supabase }}>
       {children}
     </AuthContext.Provider>
   );

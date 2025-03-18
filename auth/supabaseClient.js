@@ -12,7 +12,6 @@ const supabaseUrl = 'https://eixiuqvoidxhxlnjnkfg.supabase.co';
 const supabaseAnonKey =
   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVpeGl1cXZvaWR4aHhsbmpua2ZnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDEzMTc3MTMsImV4cCI6MjA1Njg5MzcxM30.SPeM3XKvDnZvgvg-YjhqAIyb1ffr-YPJjD5YdyVnENw'; // process.env.SUPABASE_KEY;
 
-import { saveSession } from '../services/appStorage';
 export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
   auth: {
     storage: AsyncStorage,
@@ -51,11 +50,6 @@ export async function signInWithEmail(email, password) {
     console.error('No session:', e);
   }
 
-  try {
-    saveSession(session);
-  } catch (e) {
-    console.error('Failed to save session:', e);
-  }
   return session;
 }
 
