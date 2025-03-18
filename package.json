@@ -20,6 +20,8 @@
     "expo-splash-screen": "~0.18.2",
     "expo-status-bar": "~1.4.4",
     "nativewind": "^2.0.11",
+    "patch-package": "^8.0.0",
+    "postinstall-postinstall": "^2.1.0",
     "react": "18.2.0",
     "react-native": "^0.73.11",
     "react-native-gesture-handler": "^2.9.0",
@@ -50,7 +52,8 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "start": "expo start -c",
-    "web": "expo start --web"
+    "web": "expo start --web",
+    "postinstall": "patch-package"
   },
   "version": "1.0.0"
 }
