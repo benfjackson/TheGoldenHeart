@@ -76,7 +76,6 @@ export default function Login({ route }) {
             secureTextEntry
             placeholder="Password"
             autoCapitalize="none"
-            underlineColorAndroid={colors.gold}
           />
         </View>
         <View style={[styles.verticallySpaced, styles.mt20]}>

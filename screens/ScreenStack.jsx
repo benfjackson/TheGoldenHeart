@@ -13,6 +13,9 @@ import Tutorial from './Tutorial';
 import { useEffect, useState } from 'react';
 import ResumeGame from './ResumeGame';
 import HomeScreen from './HomeScreen';
+
+import Gallery from './Gallery';
+
 import {
   checkHasCompletedTutorial,
   loadGameState
@@ -111,6 +114,7 @@ export default function ScreenStack() {
       <Stack.Screen name="Tutorial" component={Tutorial} />
       <Stack.Screen name="ResumeGame" component={ResumeGame} />
       <Stack.Screen name="Login" component={Login} />
+      <Stack.Screen name="Gallery" component={Gallery} />
 
       <Stack.Screen name="SelectSkin" component={SelectSkin} />
       <Stack.Screen name="InGame" component={InGame} />
