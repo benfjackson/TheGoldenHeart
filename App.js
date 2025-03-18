@@ -7,6 +7,7 @@ import { useFonts } from '@expo-google-fonts/dev';
 import { AuthProvider } from './auth/AuthContext';
 
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 // Ignore this error from the carousel package. Its within their library so beyond our reach
 //It doesnt actually affect anything, so happy to ignore it
@@ -23,6 +24,8 @@ export default function App() {
     Immortal: require('./assets/fonts/immortal/IMMORTAL.ttf')
   });
 
+  const queryClient = new QueryClient();
+
   if (!fontsLoaded) {
     return <Text>Loading...</Text>;
   }
@@ -36,12 +39,14 @@ export default function App() {
       />
       <SafeAreaProvider>
         <AuthProvider>
-          <View style={styles.container}>
-            {/* <StatusBar style="auto" /> */}
-            <NavigationContainer>
-              <ScreenStack />
-            </NavigationContainer>
-          </View>
+          <QueryClientProvider client={queryClient}>
+            <View style={styles.container}>
+              {/* <StatusBar style="auto" /> */}
+              <NavigationContainer>
+                <ScreenStack />
+              </NavigationContainer>
+            </View>
+          </QueryClientProvider>
         </AuthProvider>
       </SafeAreaProvider>
     </>
