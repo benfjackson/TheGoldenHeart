@@ -1,15 +1,16 @@
-import { useState } from 'react';
-import { View, Text, Image } from 'react-native';
+import { useEffect, useState } from 'react';
+import { View, Text, Image, ActivityIndicator } from 'react-native';
 import shardIconImage from './shardIcon2.jpg';
 import { colors, fonts } from '../../styles';
-import { fetchGoldShards, fetchUserProfile } from '../../services/api';
+import { useProfile } from '../../hooks/useProfile';
 
 export default function GoldShards() {
   //Should be useQuery?
   const [shardCount, setShardCount] = useState(0);
 
-  fetchUserProfile();
-  //   fetchGoldShards();
+  const { profile, loading, error } = useProfile();
+
+  if (loading) return <ActivityIndicator />;
 
   return (
     <View
@@ -27,7 +28,7 @@ export default function GoldShards() {
       <Image source={shardIconImage} style={{ height: 60, width: 40 }} />
       <Text
         style={{ color: colors.gold, fontFamily: fonts.number, fontSize: 35 }}>
-        {shardCount}
+        {profile?.gold_shards}
       </Text>
     </View>
   );

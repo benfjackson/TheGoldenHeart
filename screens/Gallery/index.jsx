@@ -13,6 +13,7 @@ import { colors } from '../../styles';
 
 import BackButton from '../../components/BackButton';
 import RequiresAccount from '../RequiresAccount';
+import GoldShards from './GoldShards';
 
 export default function Gallery({ route }) {
   return (
@@ -20,6 +21,7 @@ export default function Gallery({ route }) {
       <View style={{ flex: 1 }}>
         <ScreenFrame>
           <BackButton />
+          <GoldShards />
           <Text style={{ color: colors.gold }}>Gallery</Text>
         </ScreenFrame>
       </View>
