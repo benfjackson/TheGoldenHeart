@@ -2,6 +2,7 @@
 export function getMiniImage(skinID) {
   const imageMap = {
     Angel: require('../skins/Basic/Angel/mini.png'),
+    Crab: require('../skins/Basic/Crab/mini.png'),
     DeathAngel: require('../skins/Basic/DeathAngel/mini.png'),
     Devil: require('../skins/Basic/Devil/mini.png'),
     Druid: require('../skins/Basic/Druid/mini.png'),
@@ -28,6 +29,7 @@ export function getSkinData(skinID) {
   //load data from json file
   const dataMap = {
     Angel: require('../skins/Basic/Angel/data.json'),
+    Crab: require('../skins/Basic/Crab/data.json'),
     DeathAngel: require('../skins/Basic/DeathAngel/data.json'),
     Devil: require('../skins/Basic/Devil/data.json'),
     Druid: require('../skins/Basic/Druid/data.json'),
