@@ -6,11 +6,9 @@ import { useProfile } from '../../hooks/useProfile';
 
 export default function GoldShards() {
   //Should be useQuery?
-  const [shardCount, setShardCount] = useState(0);
-
   const { profile, loading, error } = useProfile();
 
-  if (loading) return <ActivityIndicator />;
+  // if (loading) return <ActivityIndicator />;
 
   return (
     <View
@@ -23,13 +21,29 @@ export default function GoldShards() {
         borderRadius: 40,
         paddingHorizontal: 20,
         paddingRight: 30,
-        paddingVertical: 2
+        paddingVertical: 2,
+        height: 60,
+        overflow: 'hidden'
       }}>
-      <Image source={shardIconImage} style={{ height: 60, width: 40 }} />
-      <Text
-        style={{ color: colors.gold, fontFamily: fonts.number, fontSize: 35 }}>
-        {profile?.gold_shards}
-      </Text>
+      <Image
+        source={shardIconImage}
+        style={{
+          height: 60,
+          width: 40
+        }}
+      />
+      {loading ? (
+        <ActivityIndicator />
+      ) : (
+        <Text
+          style={{
+            color: colors.gold,
+            fontFamily: fonts.number,
+            fontSize: 35
+          }}>
+          {profile?.gold_shards}
+        </Text>
+      )}
     </View>
   );
 }

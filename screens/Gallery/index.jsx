@@ -20,8 +20,21 @@ export default function Gallery({ route }) {
     <RequiresAccount>
       <View style={{ flex: 1 }}>
         <ScreenFrame>
-          <BackButton />
-          <GoldShards />
+          <View
+            style={{
+              // Sit at top
+              position: 'absolute',
+              top: '8%',
+
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              // height: '10%',
+              width: '80%'
+            }}>
+            <BackButton />
+            <GoldShards />
+          </View>
           <Text style={{ color: colors.gold }}>Gallery</Text>
         </ScreenFrame>
       </View>

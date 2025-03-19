@@ -9,7 +9,6 @@ export const useProfile = () => {
 
   useEffect(() => {
     const fetchUserProfile = async () => {
-      console.log('Fetching user profile');
       setLoading(true);
 
       const { data, error } = await supabase

@@ -56,7 +56,15 @@ export default function SelectSkin() {
         // alignItems: 'center',
         // paddingTop: '10%'
       }}>
-      <BackButton />
+      <View
+        style={{
+          position: 'absolute',
+          top: '10%',
+          left: '2%',
+          zIndex: 10
+        }}>
+        <BackButton />
+      </View>
 
       <View
         // style={{ paddingVertical: '35%' }}
