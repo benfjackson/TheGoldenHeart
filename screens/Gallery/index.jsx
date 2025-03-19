@@ -14,6 +14,7 @@ import { colors } from '../../styles';
 import BackButton from '../../components/BackButton';
 import RequiresAccount from '../RequiresAccount';
 import GoldShards from './GoldShards';
+import DisplayCase from './DisplayCase';
 
 export default function Gallery({ route }) {
   return (
@@ -23,19 +24,18 @@ export default function Gallery({ route }) {
           <View
             style={{
               // Sit at top
-              position: 'absolute',
-              top: '8%',
+              // position: 'absolute',
+              // top: '8%',
 
               flexDirection: 'row',
               justifyContent: 'space-between',
               alignItems: 'center',
-              // height: '10%',
               width: '80%'
             }}>
             <BackButton />
             <GoldShards />
           </View>
-          <Text style={{ color: colors.gold }}>Gallery</Text>
+          <DisplayCase />
         </ScreenFrame>
       </View>
     </RequiresAccount>
