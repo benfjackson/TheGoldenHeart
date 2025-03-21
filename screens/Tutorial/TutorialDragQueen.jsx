@@ -84,7 +84,7 @@ export default function Count({
         clearTimeout(adjustmentTimeoutRef.current);
       }
 
-      if (!['trackingNumber', 'swipeUp'].includes(tutorialState)) {
+      if (!['trackingNumber', 'swipeUp', 'tapDown'].includes(tutorialState)) {
         adjustmentTimeoutRef.current = setTimeout(() => {
           fadeOutAnimation = Animated.timing(fadeAnim, {
             toValue: 0,

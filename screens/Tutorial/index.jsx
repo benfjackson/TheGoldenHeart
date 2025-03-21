@@ -12,6 +12,7 @@ import DragQueen from './TutorialDragQueen';
 import Sparkles from '../../components/Sparkle/Sparkles';
 import PopupMenu from './TutorialMenu';
 import ScreenFrame from '../../components/ScreenFrame';
+import { fonts } from '../../styles';
 
 export default function Tutorial() {
   const [life, setLife] = useState(20);
@@ -38,7 +39,7 @@ export default function Tutorial() {
       next: 'trackingNumber'
     },
     trackingNumber: {
-      text: 'This tracks how much your health has just changed',
+      text: 'The number below tracks the recent health change',
       styling: { justifyContent: 'flex-end' },
       next: 'swipeUp'
     },
@@ -141,7 +142,7 @@ const styles = StyleSheet.create({
     color: '#FFA500a0',
     fontSize: 40,
     textAlign: 'center',
-    fontFamily: 'Endor',
+    fontFamily: fonts.readableText,
     width: '80%'
   },
   textContainer: {

@@ -20,7 +20,8 @@ import ScreenStack from './screens/ScreenStack';
 export default function App() {
   const [fontsLoaded] = useFonts({
     Endor: require('./assets/fonts/endor/ENDOR___.ttf'),
-    Immortal: require('./assets/fonts/immortal/IMMORTAL.ttf')
+    Immortal: require('./assets/fonts/immortal/IMMORTAL.ttf'),
+    DarkElf: require('./assets/fonts/CWDRKAGE.ttf')
   });
 
   if (!fontsLoaded) {

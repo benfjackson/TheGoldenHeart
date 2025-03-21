@@ -4,5 +4,6 @@ export const colors = {
 
 export const fonts = {
   number: 'Immortal',
-  text: 'Endor'
+  text: 'Endor',
+  readableText: 'DarkElf'
 };
