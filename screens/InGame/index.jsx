@@ -88,18 +88,7 @@ export default function InGame({ route }) {
         </Text>
 
         <Counters counterControl={counterControl} />
-
-        {/* <View
-          style={{
-            position: 'absolute',
-            bottom: 0,
-            height: counterControl.counters.length > 0 ? '25%' : '0%',
-            width: '100%',
-            marginBottom: '-15%'
-          }}> */}
-        {/* </View> */}
       </View>
-      {/* </View> */}
     </>
   );
 }

@@ -37,46 +37,39 @@ export default function PopupMenu({
         setIsOpen(false);
       }}
       {...props}>
-      <ImageBackground
-        imageStyle={{
-          resizeMode: 'contain',
-          // width: '100%',
-          height: '100%'
-        }}
-        source={bg}>
-        <View
-          style={{
-            flexDirection: 'column',
-            alignItems: 'center',
-            width: '70%',
-            height: '70%',
-            marginLeft: '15%',
-            marginRight: '15%',
-            marginTop: '25%'
-          }}>
-          {menuState === 'main' && (
-            <Main
-              setMenuState={setMenuState}
-              setPopupMenuIsOpen={setIsOpen}
-              resetGame={resetGame}
-            />
-          )}
-          {/* {menuState === 'history' && (
-            <History
-              histories={histories}
-              numPlayers={numPlayers}
-              setMenuState={setMenuState}
-            />
-          )} */}
-          {menuState === 'counters' && (
-            <CountersSelection
-              setMenuState={setMenuState}
-              counterControl={counterControl}
-            />
-          )}
-          {menuState === 'game' && <Game setMenuState={setMenuState} />}
-        </View>
-      </ImageBackground>
+      <View>
+        <ImageBackground
+          imageStyle={{
+            resizeMode: 'contain'
+          }}
+          source={bg}>
+          <View
+            style={{
+              flexDirection: 'column',
+              alignItems: 'center',
+              width: '70%',
+              height: '70%',
+              marginLeft: '15%',
+              marginRight: '15%',
+              marginTop: '25%'
+            }}>
+            {menuState === 'main' && (
+              <Main
+                setMenuState={setMenuState}
+                setPopupMenuIsOpen={setIsOpen}
+                resetGame={resetGame}
+              />
+            )}
+            {menuState === 'counters' && (
+              <CountersSelection
+                setMenuState={setMenuState}
+                counterControl={counterControl}
+              />
+            )}
+            {menuState === 'game' && <Game setMenuState={setMenuState} />}
+          </View>
+        </ImageBackground>
+      </View>
     </Modal>
   );
 }
