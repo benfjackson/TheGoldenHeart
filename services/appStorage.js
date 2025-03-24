@@ -53,8 +53,6 @@ export async function loadGameState() {
   try {
     const loadedState = await AsyncStorage.getItem('gameState');
     if (loadedState !== null) {
-      console.log('game state found');
-      console.log(loadedState);
       const gameState = JSON.parse(loadedState);
       const timestamp = new Date(gameState.timestamp);
       const now = new Date();

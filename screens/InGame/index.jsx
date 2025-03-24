@@ -36,13 +36,9 @@ export default function InGame({ route }) {
   const [loaded, setLoaded] = useState(false);
   if (!loaded) {
     if (loadGameState) {
-      console.log('LOADGAMESTATE received as');
-      console.log(loadGameState);
       loadGame(loadGameState);
       setLoaded(true);
     } else if (initialiseGameState) {
-      console.log('initialising game as');
-      console.log(initialiseGameState);
       const { numPlayers, skinID, startingLife } = initialiseGameState;
       initialiseGame(numPlayers, skinID, startingLife);
       setLoaded(true);
