@@ -1,22 +1,23 @@
 import { View, Text, TouchableOpacity, ImageBackground } from 'react-native';
 import CounterImage from '../../images/Counter.png';
+import { fonts } from '../../styles';
 
 export default function NumPlayersStepper({
   startingHealth,
   setStartingHealth
 }) {
-  const playerOptions = [20, 25, 30, 40];
-  const currentIndex = playerOptions.indexOf(startingHealth);
+  const startingHealthOptions = [20, 25, 30, 40];
+  const currentIndex = startingHealthOptions.indexOf(startingHealth);
 
   const increment = () => {
-    if (currentIndex < playerOptions.length - 1) {
-      setStartingHealth(playerOptions[currentIndex + 1]);
+    if (currentIndex < startingHealthOptions.length - 1) {
+      setStartingHealth(startingHealthOptions[currentIndex + 1]);
     }
   };
 
   const decrement = () => {
     if (currentIndex > 0) {
-      setStartingHealth(playerOptions[currentIndex - 1]);
+      setStartingHealth(startingHealthOptions[currentIndex - 1]);
     }
   };
 
@@ -94,7 +95,7 @@ export default function NumPlayersStepper({
                 fontSize: 30,
                 fontFamily: 'Immortal'
               }}>
-              {currentIndex < playerOptions.length - 1 ? '+' : ' '}
+              {currentIndex < startingHealthOptions.length - 1 ? '+' : ' '}
             </Text>
           </TouchableOpacity>
         </View>
@@ -104,7 +105,7 @@ export default function NumPlayersStepper({
       <Text
         style={{
           color: '#FFA500',
-          fontFamily: 'Endor',
+          fontFamily: fonts.readableText,
           fontSize: 30,
           paddingTop: '5%'
         }}>

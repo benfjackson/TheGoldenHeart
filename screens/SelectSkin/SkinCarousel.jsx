@@ -14,6 +14,8 @@ import Animated, { FadeOut, FadeIn } from 'react-native-reanimated';
 import FrameImage from '../../images/FRAME_TRANSPARENT.png';
 import { getSkinsInfo, getMiniImage } from '../../services/getSkinInfo';
 
+import { fonts } from '../../styles';
+
 export default function SkinCarousel({
   favourites = ['Angel'],
   startingHealth,
@@ -60,8 +62,9 @@ export default function SkinCarousel({
       textAlign: 'center',
       marginTop: '10%',
       color: '#FFA500',
-      fontFamily: 'Endor',
-      height: '50%'
+      fontFamily: fonts.readableText,
+      height: '50%',
+      paddingTop: 20
     }
   };
 
