@@ -53,35 +53,31 @@ export default function DragQueen({
   let fadeOutAnimation;
 
   const updateLife = (amount) => {
-    setLife((prevLife) => {
-      // const newLife = Math.max(prevLife + amount, 0); // Prevent negative life
+    setAdjustmentNumber((prevAdjustment) => prevAdjustment + amount);
 
-      // Add the change to the current adjustment number
-      setAdjustmentNumber((prevAdjustment) => prevAdjustment + amount);
+    // Show adjustment number with fade-in effect
+    Animated.timing(fadeAnim, {
+      toValue: 1,
+      duration: 200,
+      useNativeDriver: true
+    }).start();
 
-      // Show adjustment number with fade-in effect
-      Animated.timing(fadeAnim, {
-        toValue: 1,
-        duration: 200,
+    // Reset adjustment number after 3 seconds with fade-out
+    if (adjustmentTimeoutRef.current) {
+      clearTimeout(adjustmentTimeoutRef.current);
+    }
+    adjustmentTimeoutRef.current = setTimeout(() => {
+      fadeOutAnimation = Animated.timing(fadeAnim, {
+        toValue: 0,
+        duration: 1000,
         useNativeDriver: true
-      }).start();
-
-      // Reset adjustment number after 3 seconds with fade-out
-      if (adjustmentTimeoutRef.current) {
-        clearTimeout(adjustmentTimeoutRef.current);
-      }
-      adjustmentTimeoutRef.current = setTimeout(() => {
-        fadeOutAnimation = Animated.timing(fadeAnim, {
-          toValue: 0,
-          duration: 1000,
-          useNativeDriver: true
-        }).start(({ finished }) => {
-          if (finished) {
-            setAdjustmentNumber(0);
-          }
-        }); // Reset adjustment number to 0
-      }, 5000);
-
+      }).start(({ finished }) => {
+        if (finished) {
+          setAdjustmentNumber(0);
+        }
+      }); // Reset adjustment number to 0
+    }, 5000);
+    setLife((prevLife) => {
       return prevLife + amount;
     });
   };
