@@ -26,18 +26,13 @@ export default function SelectSkin() {
       console.log(favourites);
       // setFavourites(favourites);
       setFavourites([
-        'Quadrants',
-        'DeathAngel',
         'Island',
         'Mountain',
         'Plains',
         'Swamp',
         'Forest',
-        'Devil',
-        'Angel',
-        'Kraken',
-        'NobleVampire',
-        'Waves'
+        'Waves',
+        'Quadrants'
       ]);
 
       //Should put image loading in here
