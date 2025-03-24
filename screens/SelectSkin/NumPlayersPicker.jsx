@@ -6,20 +6,21 @@ import {
   Image
 } from 'react-native';
 import CounterImage from '../../images/Counter.png';
+import { fonts } from '../../styles';
 
 export default function NumPlayersStepper({ numPlayers, setNumPlayers }) {
-  const minPlayers = 1;
-  const maxPlayers = 4;
+  const playerOptions = [1, 2, 4];
+  const currentIndex = playerOptions.indexOf(numPlayers);
 
   const increment = () => {
-    if (numPlayers < maxPlayers) {
-      setNumPlayers(numPlayers + 1);
+    if (currentIndex < playerOptions.length - 1) {
+      setNumPlayers(playerOptions[currentIndex + 1]);
     }
   };
 
   const decrement = () => {
-    if (numPlayers > minPlayers) {
-      setNumPlayers(numPlayers - 1);
+    if (currentIndex > 0) {
+      setNumPlayers(playerOptions[currentIndex - 1]);
     }
   };
 
@@ -106,7 +107,7 @@ export default function NumPlayersStepper({ numPlayers, setNumPlayers }) {
       <Text
         style={{
           color: '#FFA500',
-          fontFamily: 'Endor',
+          fontFamily: fonts.readableText,
           fontSize: 30,
           paddingTop: '5%'
         }}>
