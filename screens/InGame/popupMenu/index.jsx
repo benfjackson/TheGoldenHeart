@@ -45,13 +45,16 @@ export default function PopupMenu({
           source={bg}>
           <View
             style={{
+              // flex: 1,
               flexDirection: 'column',
               alignItems: 'center',
               width: '70%',
-              height: '70%',
+              height: 450,
+
               marginLeft: '15%',
               marginRight: '15%',
-              marginTop: '25%'
+              marginVertical: '10%'
+              // marginTop: '25%'
             }}>
             {menuState === 'main' && (
               <Main
@@ -66,7 +69,6 @@ export default function PopupMenu({
                 counterControl={counterControl}
               />
             )}
-            {menuState === 'game' && <Game setMenuState={setMenuState} />}
           </View>
         </ImageBackground>
       </View>

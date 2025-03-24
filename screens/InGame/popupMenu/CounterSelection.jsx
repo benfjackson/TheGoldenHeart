@@ -25,6 +25,7 @@ export default function CountersSelection({ setMenuState, counterControl }) {
       style={{
         // flex: 1,
         // marginTop: '20%',
+        paddingTop: 40,
         width: '100%',
         height: '80%',
         alignItems: 'center'
