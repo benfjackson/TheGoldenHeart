@@ -142,7 +142,6 @@ export default function useGameState() {
   }, [player1Life, player2Life, player3Life, player4Life, countersState]);
 
   const initialiseGame = (initNumPlayers, initSkinID, initStartingLife) => {
-    console.log('initialising!');
     setNumPlayers(initNumPlayers);
     setSkinID(initSkinID);
     setStartingLife(initStartingLife);
@@ -155,6 +154,8 @@ export default function useGameState() {
     loadPlayer2History([initStartingLife]);
     loadPlayer3History([initStartingLife]);
     loadPlayer4History([initStartingLife]);
+
+    setCountersState([]);
     // resetGame();
   };
   const loadGame = (gameState) => {
