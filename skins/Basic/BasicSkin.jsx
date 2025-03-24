@@ -23,7 +23,7 @@ export default function BasicSkin({ skinID = 'Default', lives, setLives }) {
     Island: require(`./Island/Island.png`),
     Plains: require(`./Plains/Plains.png`),
     Mountain: require(`./Mountain/Mountain.png`),
-    Forest: require(`./Forest/Forest.png`),
+    Forest: require(`./Forest/image.png`),
     DeathAngel: require(`./DeathAngel/DeathAngel.png`)
   };
 
