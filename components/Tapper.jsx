@@ -6,34 +6,39 @@ export default function Tapper({ inverse = false, life, setLife }) {
   const [countBoxTop, setCountBoxTop] = useState();
   const [countBoxBottom, setCountBoxBottom] = useState(0);
 
-  const calcNewCount = (y) => {
-    const centreOfBox = (countBoxTop + countBoxBottom) / 2;
-    const toAdd = y < centreOfBox ? -1 : 1;
-    const inverseN = inverse ? 1 : -1;
-    const newCount = life + toAdd * inverseN;
-    if (life === 0 && toAdd * inverseN < 0) {
-      return 0;
-    } else {
-      return newCount;
-    }
+  const updateLife = (toAdd) => {
+    setLife(life + toAdd);
   };
 
   const tapResponder = useMemo(
     () =>
       PanResponder.create({
         onStartShouldSetPanResponder: (event) => {
+          //might need logic in here
           return true;
+          // return false;
         },
-        onPanResponderRelease: (event, gestureState) => {
-          const y = event.nativeEvent.pageY;
-          setLife(calcNewCount(y));
+
+        onPanResponderRelease: (evt, gestureState) => {
+          if (Math.abs(gestureState.dy) < 5) {
+            var y0 = gestureState.y0;
+            countBoxRef.current.measureInWindow((x, y, width, height) => {
+              var center = y + height / 2;
+              var toAdd = y0 < center ? 1 : -1;
+
+              updateLife(toAdd);
+            });
+          }
         }
       }),
     [countBoxTop, countBoxBottom, life]
   );
 
   return (
-    <View style={styles.container} {...tapResponder.panHandlers}>
+    <View
+      style={styles.container}
+      {...tapResponder.panHandlers}
+      pointerEvents="box-only">
       <View
         ref={countBoxRef}
         onLayout={() => {
@@ -52,7 +57,6 @@ export default function Tapper({ inverse = false, life, setLife }) {
           {life}
         </Text>
       </View>
-      <Text style={{ opacity: 0 }}> HI LIVI!!!</Text>
     </View>
   );
 }
@@ -61,7 +65,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    width: '60%'
   },
   text: {
     fontSize: 100,

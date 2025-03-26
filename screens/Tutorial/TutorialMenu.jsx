@@ -17,6 +17,7 @@ import { useState } from 'react';
 import Sparkles from '../../components/Sparkle/Sparkles';
 
 import { completeTutorial } from '../../services/appStorage';
+import { fonts } from '../../styles';
 
 export default function PopupMenu({
   isOpen,
@@ -34,7 +35,7 @@ export default function PopupMenu({
       color: 'rgb(250, 180, 40)',
       fontSize: 35,
       textAlign: 'center',
-      fontFamily: 'Endor'
+      fontFamily: fonts.readableText
     }
   });
   const navigation = useNavigation();

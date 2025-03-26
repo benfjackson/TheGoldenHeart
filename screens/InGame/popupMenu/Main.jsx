@@ -3,6 +3,7 @@ import { useNavigation } from '@react-navigation/native';
 import { Text, View, Pressable, StyleSheet } from 'react-native';
 
 import { clearGameState } from '../../../services/appStorage';
+import { fonts } from '../../../styles';
 
 export default function Main({ setMenuState, setPopupMenuIsOpen, resetGame }) {
   const styles = StyleSheet.create({
@@ -10,7 +11,7 @@ export default function Main({ setMenuState, setPopupMenuIsOpen, resetGame }) {
       color: 'rgb(250, 180, 40)',
       fontSize: 35,
       textAlign: 'center',
-      fontFamily: 'Endor'
+      fontFamily: fonts.readableText
     }
   });
 
@@ -25,9 +26,10 @@ export default function Main({ setMenuState, setPopupMenuIsOpen, resetGame }) {
         justifyContent: 'space-evenly'
       }}>
       <Pressable
-        onPress={async () => {
+        onPress={() => {
           setPopupMenuIsOpen(false);
-          clearGameState().then(() => navigation.navigate('HomeScreen'));
+          clearGameState();
+          navigation.navigate('HomeScreen');
         }}>
         <Text style={styles.button}>Home</Text>
       </Pressable>

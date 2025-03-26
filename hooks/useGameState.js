@@ -1,8 +1,77 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { saveGameState, clearGameState } from '../services/appStorage';
 
+function usePlayerHistory(initialLife) {
+  const [history, setHistory] = useState([initialLife]);
+
+  const updateHistory = (life) => {
+    if (
+      life !== undefined &&
+      history.length > 0 &&
+      life !== history[history.length - 1]
+    ) {
+      setHistory((prev) => [...prev, life]);
+    }
+  };
+
+  const resetHistory = () => setHistory([initialLife]);
+  const loadHistory = (historyToLoad) => setHistory(historyToLoad);
+
+  return [history, updateHistory, resetHistory, loadHistory];
+}
+
+import 'react-native-get-random-values';
+import { v4 as uuidv4 } from 'uuid';
+
+function useCounters(initialCounters = []) {
+  const [counters, setCounters] = useState(() =>
+    initialCounters.map((c) => ({ ...c, id: c.id || uuidv4() }))
+  );
+
+  const updateCounter = (id, newCount) => {
+    setCounters((prev) =>
+      prev.map((c) => (c.id === id ? { ...c, count: newCount } : c))
+    );
+  };
+
+  const resetCounter = (id) => {
+    setCounters((prev) =>
+      prev.map((c) => (c.id === id ? { ...c, count: c.initialCount } : c))
+    );
+  };
+
+  const addCounter = (counter) => {
+    const newCounter = { ...counter, id: uuidv4() };
+    setCounters((prev) => [...prev, newCounter]);
+  };
+
+  const removeCounter = (id) => {
+    setCounters((prev) => prev.filter((c) => c.id !== id));
+  };
+
+  const clearCounters = () => setCounters([]);
+
+  const enrichedCounters = useMemo(
+    () =>
+      counters.map((c) => ({
+        ...c,
+        setCount: (newCount) => updateCounter(c.id, newCount),
+        resetCount: () => resetCounter(c.id)
+      })),
+    [counters]
+  );
+
+  return {
+    counters: enrichedCounters,
+    rawState: counters,
+    setCounters,
+    addCounter,
+    removeCounter,
+    clearCounters
+  };
+}
+
 export default function useGameState() {
-  //Game info: num players, skinID, starting life
   const [numPlayers, setNumPlayers] = useState(null);
   const [skinID, setSkinID] = useState(null);
   const [startingLife, setStartingLife] = useState(null);
@@ -12,26 +81,6 @@ export default function useGameState() {
   const [player3Life, setPlayer3Life] = useState(startingLife);
   const [player4Life, setPlayer4Life] = useState(startingLife);
 
-  function usePlayerHistory(initialLife) {
-    const [history, setHistory] = useState([initialLife]);
-
-    const updateHistory = (life) => {
-      if (
-        life !== undefined &&
-        history.length > 0 &&
-        life !== history[history.length - 1]
-      ) {
-        setHistory((prevHistory) => [...prevHistory, life]);
-      }
-    };
-
-    const resetHistory = () => setHistory([startingLife]);
-    const loadHistory = (historyToLoad) => setHistory(historyToLoad);
-
-    return [history, updateHistory, resetHistory, loadHistory];
-  }
-
-  // Usage for each player
   const [
     player1History,
     updatePlayer1History,
@@ -57,85 +106,28 @@ export default function useGameState() {
     loadPlayer4History
   ] = usePlayerHistory(startingLife);
 
-  // Usage within useEffect for each player
+  const {
+    counters,
+    rawState: countersState,
+    setCounters,
+    addCounter,
+    removeCounter,
+    clearCounters
+  } = useCounters();
+
+  // Watch life changes and track history
   useEffect(() => {
     updatePlayer1History(player1Life);
   }, [player1Life]);
-
   useEffect(() => {
     updatePlayer2History(player2Life);
   }, [player2Life]);
-
   useEffect(() => {
     updatePlayer3History(player3Life);
   }, [player3Life]);
-
   useEffect(() => {
     updatePlayer4History(player4Life);
   }, [player4Life]);
-
-  //array of counter objects of the form
-  // { counterName: str, count: int, initialCount: int}
-
-  // const [countersState, setCountersState] = useState([]);
-  // const counters = countersState.map((counter, i) => {
-  //   const { counterName, count, initialCount } = counter;
-  //   const setCount = (newCount) => {
-  //     //Set the counter.count stored in counterState to newCount
-  //     // const newState = countersState[i].count
-
-  //     setCountersState((prevState) => {
-  //       prevState[i].count = newCount;
-  //     });
-  //   };
-  //   const resetCount = () => {
-  //     setCountersState((prevState) => {
-  //       prevState[i].count = initialCount;
-  //     });
-  //   };
-  //   return { counterName, count, setCount, resetCount };
-  // });
-
-  const [countersState, setCountersState] = useState([]);
-
-  const counters = countersState.map((counter, i) => {
-    const { counterName, count, initialCount } = counter;
-
-    const setCount = (newCount) => {
-      setCountersState((prevState) => {
-        // Create a copy of the previous state
-        const newState = [...prevState];
-
-        // Update the count of the specific counter
-        newState[i] = { ...newState[i], count: newCount };
-
-        return newState;
-      });
-    };
-
-    const resetCount = () => {
-      setCountersState((prevState) => {
-        // Create a copy of the previous state
-        const newState = [...prevState];
-
-        // Reset the count of the specific counter to its initial value
-        newState[i] = { ...newState[i], count: initialCount };
-
-        return newState;
-      });
-    };
-
-    return { counterName, count, setCount, resetCount };
-  });
-
-  const addCounter = (counter) => {
-    setCountersState([...countersState, counter]);
-  };
-  const removeCounter = (counterName) => {
-    setCountersState((prevState) => {
-      prevState.filter((counter) => counter.counterName !== counterName);
-    });
-  };
 
   useEffect(() => {
     saveGame();
@@ -145,6 +137,7 @@ export default function useGameState() {
     setNumPlayers(initNumPlayers);
     setSkinID(initSkinID);
     setStartingLife(initStartingLife);
+
     setPlayer1Life(initStartingLife);
     setPlayer2Life(initStartingLife);
     setPlayer3Life(initStartingLife);
@@ -155,30 +148,32 @@ export default function useGameState() {
     loadPlayer3History([initStartingLife]);
     loadPlayer4History([initStartingLife]);
 
-    setCountersState([]);
-    // resetGame();
+    clearCounters();
   };
+
   const loadGame = (gameState) => {
     const { player1Life, player2Life, player3Life, player4Life } =
       gameState.lives;
     const { player1History, player2History, player3History, player4History } =
       gameState.histories;
+
     setPlayer1Life(player1Life);
     setPlayer2Life(player2Life);
     setPlayer3Life(player3Life);
     setPlayer4Life(player4Life);
+
     loadPlayer1History(player1History);
     loadPlayer2History(player2History);
     loadPlayer3History(player3History);
     loadPlayer4History(player4History);
-    setCountersState(gameState.countersState);
 
+    setCounters(gameState.countersState);
     setNumPlayers(gameState.numPlayers);
     setSkinID(gameState.skinID);
     setStartingLife(gameState.startingLife);
   };
+
   const saveGame = () => {
-    //NEEDS TO SAVE THE SKIN TOO
     const lives = {
       player1Life,
       player2Life,
@@ -200,12 +195,13 @@ export default function useGameState() {
       startingLife
     });
   };
+
   const resetGame = () => {
-    console.log('resetting game with: ', startingLife);
     resetPlayer1History();
     resetPlayer2History();
     resetPlayer3History();
     resetPlayer4History();
+
     setPlayer1Life(startingLife);
     setPlayer2Life(startingLife);
     setPlayer3Life(startingLife);
@@ -213,14 +209,13 @@ export default function useGameState() {
 
     clearGameState();
 
-    setCountersState((prevState) =>
-      prevState.map((preResetCounter) => {
-        return {
-          counterName: preResetCounter.counterName,
-          initialCount: preResetCounter.initialCount,
-          count: preResetCounter.initialCount
-        };
-      })
+    setCounters((prev) =>
+      prev.map(({ counterName, initialCount, id }) => ({
+        counterName,
+        initialCount,
+        count: initialCount,
+        id
+      }))
     );
   };
 
@@ -237,11 +232,12 @@ export default function useGameState() {
     player3History,
     player4History
   };
+
   const counterControl = {
     counters,
     addCounter,
     removeCounter,
-    clearCounters: () => setCountersState([])
+    clearCounters
   };
 
   return {

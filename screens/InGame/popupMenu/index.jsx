@@ -45,13 +45,12 @@ export default function PopupMenu({
           source={bg}>
           <View
             style={{
-              // flex: 1,
               flexDirection: 'column',
               alignItems: 'center',
-              width: '70%',
+              minWidth: '80%',
               height: 450,
 
-              marginLeft: '15%',
+              marginLeft: '10%',
               marginRight: '15%',
               marginVertical: '10%'
               // marginTop: '25%'

@@ -1,6 +1,6 @@
 import { View } from 'react-native';
 
-import Counter from './Counter';
+import Counter from './DraggableTapper';
 
 export default function Counters({ counterControl }) {
   const { counters } = counterControl;
@@ -11,8 +11,8 @@ export default function Counters({ counterControl }) {
         position: 'absolute',
         bottom: 0
       }}>
-      {counters.map((counter, index) => {
-        return <Counter key={index} counter={counter} />;
+      {counters.map((counter) => {
+        return <Counter key={counter.id} counter={counter} />;
       })}
     </View>
   );

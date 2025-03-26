@@ -29,12 +29,22 @@ export default function Tutorial() {
       next: 'tapUp'
     },
     tapUp: {
-      text: 'Tap above for +1 health',
+      text: (
+        <Text>
+          Tap above for +<View>{<Text style={styles.numberText}>1</Text>}</View>{' '}
+          health
+        </Text>
+      ),
       styling: { justifyContent: 'flex-start' },
       next: 'tapDown'
     },
     tapDown: {
-      text: 'Tap below for -1 health',
+      text: (
+        <Text>
+          Tap below for <View>{<Text style={styles.numberText}>-1</Text>}</View>{' '}
+          health
+        </Text>
+      ),
       styling: { justifyContent: 'flex-end' },
       next: 'trackingNumber'
     },
@@ -143,6 +153,13 @@ const styles = StyleSheet.create({
     fontSize: 40,
     textAlign: 'center',
     fontFamily: fonts.readableText,
+    width: '80%'
+  },
+  numberText: {
+    color: '#FFA500a0',
+    fontSize: 40,
+    textAlign: 'center',
+    fontFamily: fonts.number,
     width: '80%'
   },
   textContainer: {

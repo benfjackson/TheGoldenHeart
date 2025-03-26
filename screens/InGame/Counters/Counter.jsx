@@ -1,4 +1,11 @@
-import { Text, View, Image, ImageBackground, Dimensions } from 'react-native';
+import {
+  Text,
+  View,
+  Image,
+  ImageBackground,
+  Dimensions,
+  StyleSheet
+} from 'react-native';
 
 import CounterImage from '../../../images/Counter.png';
 
@@ -9,23 +16,10 @@ import DragAndDrop from './DragAndDrop';
 function Label({ counterName }) {
   switch (counterName) {
     case 'Commander damage':
-      return <></>;
+      return <Text style={styles.labelText}>Commander</Text>;
 
     default:
-      return (
-        <Text
-          style={{
-            position: 'absolute',
-            top: '40%',
-            left: '20%',
-            textAlign: 'center',
-            textAlignVertical: 'center',
-            color: '#FFA500',
-            fontFamily: 'Endor'
-          }}>
-          {counterName}
-        </Text>
-      );
+      return <Text style={styles.labelText}>{counterName}</Text>;
   }
 }
 
@@ -36,7 +30,7 @@ export default function Counter({ counter }) {
   const size = windowWidth * 0.4;
 
   return (
-    <DragAndDrop>
+    <DragAndDrop updateLife={(toAdd) => setCount(count + toAdd)}>
       <ImageBackground
         style={{
           height: size,
@@ -46,14 +40,20 @@ export default function Counter({ counter }) {
         }}
         source={CounterImage}>
         <Label counterName={counterName} />
-        <Tapper
-          skull={false}
-          inverse={false}
-          life={count}
-          setLife={setCount}
-          size="counter"
-        />
+        <Tapper skull={false} inverse={false} life={count} setLife={setCount} />
       </ImageBackground>
     </DragAndDrop>
   );
 }
+
+const styles = StyleSheet.create({
+  labelText: {
+    position: 'absolute',
+    top: '40%',
+    left: '20%',
+    textAlign: 'center',
+    textAlignVertical: 'center',
+    color: '#FFA500',
+    fontFamily: 'Endor'
+  }
+});

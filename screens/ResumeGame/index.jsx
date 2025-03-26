@@ -4,6 +4,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import { clearGameState, loadGameState } from '../../services/appStorage';
 
 import { useEffect, useState } from 'react';
+import { fonts } from '../../styles';
 
 export default function ResumeGame({}) {
   const styles = StyleSheet.create({
@@ -18,13 +19,13 @@ export default function ResumeGame({}) {
       color: '#FFA500',
       fontSize: 35,
       textAlign: 'center',
-      fontFamily: 'Endor'
+      fontFamily: fonts.readableText
     },
     title: {
       color: '#FFA500',
       fontSize: 50,
       textAlign: 'center',
-      fontFamily: 'Endor'
+      fontFamily: fonts.readableText
     }
   });
 

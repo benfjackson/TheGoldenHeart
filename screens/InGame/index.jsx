@@ -34,7 +34,7 @@ export default function InGame({ route }) {
 
   const [menuOpen, setMenuOpen] = useState(false);
   const [loaded, setLoaded] = useState(false);
-  if (!loaded) {
+  useEffect(() => {
     if (loadGameState) {
       loadGame(loadGameState);
       setLoaded(true);
@@ -43,7 +43,8 @@ export default function InGame({ route }) {
       initialiseGame(numPlayers, skinID, startingLife);
       setLoaded(true);
     }
-  }
+  }, [loadGameState, initialiseGameState]);
+
   if (!loaded) return <></>;
   const menuButton = require('../../images/popupButton.png');
 
@@ -60,8 +61,6 @@ export default function InGame({ route }) {
       <View
         style={{
           flex: 1,
-          // width: '100%',
-          // height: '10%'
           backgroundColor: 'black'
         }}>
         <Pressable
@@ -74,14 +73,14 @@ export default function InGame({ route }) {
           onPress={() => setMenuOpen(true)}>
           <Image source={menuButton} style={{ width: 80, height: 80 }} />
         </Pressable>
-        <Text
+        <View
           style={{
             flex: 1,
             width: '100%',
             height: '100%'
           }}>
           <Skin skinID={skinID} lives={lives} setLives={setLives} />
-        </Text>
+        </View>
 
         <Counters counterControl={counterControl} />
       </View>

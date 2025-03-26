@@ -2,6 +2,7 @@ import allCounters from './allCounters';
 
 import { Text, View, Pressable, Image, StyleSheet } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
+import { fonts } from '../../../styles';
 
 export default function CountersSelection({ setMenuState, counterControl }) {
   const { counters, addCounter, removeCounter, clearCounters } = counterControl;
@@ -10,8 +11,6 @@ export default function CountersSelection({ setMenuState, counterControl }) {
 
   const styles = StyleSheet.create({
     counterButton: {
-      // width: '100%',
-      // height: '100%',
       borderRadius: 100,
       borderWidth: 2,
       justifyContent: 'center',
@@ -51,7 +50,7 @@ export default function CountersSelection({ setMenuState, counterControl }) {
             color: 'rgb(250, 180, 40)',
             fontSize: 40,
             textAlign: 'center',
-            fontFamily: 'Endor'
+            fontFamily: fonts.readableText
           }}>
           Counters
         </Text>
@@ -83,7 +82,7 @@ export default function CountersSelection({ setMenuState, counterControl }) {
                     style={{
                       color: active ? '#000' : 'rgb(250, 180, 40)',
                       textAlign: 'center',
-                      fontFamily: 'Endor',
+                      fontFamily: fonts.readableText,
                       fontSize: 20
                     }}>
                     {counter.counterName}
@@ -102,11 +101,11 @@ export default function CountersSelection({ setMenuState, counterControl }) {
           <Text
             style={{
               textAlign: 'center',
-              fontFamily: 'Endor',
+              fontFamily: fonts.readableText,
               fontSize: 20,
               color: 'rgb(250, 180, 40)'
             }}>
-            Reset
+            Remove all
           </Text>
         </Pressable>
       </View>
