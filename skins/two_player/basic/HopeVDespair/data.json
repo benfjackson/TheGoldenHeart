@@ -1,0 +1,8 @@
+{
+  "id": "HopeVDespair",
+  "title": "Hope and Despair",
+  "numPlayers": 2,
+  "tags": ["2player", "angel", "demon"],
+  "textColour1": "#000000a0",
+  "textColour2": "#ffffffa0"
+}

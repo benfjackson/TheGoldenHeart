@@ -31,8 +31,10 @@ export default function SelectSkin() {
         'Plains',
         'Swamp',
         'Forest',
+        'HopeVDespair',
         'Waves',
-        'Quadrants'
+        'Quadrants',
+        'Serenity'
       ]);
 
       //Should put image loading in here

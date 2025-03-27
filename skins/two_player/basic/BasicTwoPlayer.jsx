@@ -13,7 +13,8 @@ export default function BasicTwoPlayer({
 }) {
   const imgMap = {
     Waves: require(`./Waves/Waves.png`),
-    Default: require(`./Waves/Waves.png`)
+    HopeVDespair: require(`./HopeVDespair/final.png`),
+    Default: require(`./HopeVDespair/final.png`)
   };
 
   const { player1Life, player2Life } = lives;
@@ -21,7 +22,8 @@ export default function BasicTwoPlayer({
 
   const data = getSkinData(skinID);
   const img = imgMap[skinID];
-  const textColour = data.textColour;
+  const textColour1 = data.textColour1;
+  const textColour2 = data.textColour2;
 
   return (
     <ImageBackground
@@ -38,7 +40,7 @@ export default function BasicTwoPlayer({
         <DragQueen
           life={player1Life}
           setLife={setPlayer1Life}
-          textColour={textColour}
+          textColour={textColour1}
           rotation="180deg"
         />
       </View>
@@ -46,7 +48,7 @@ export default function BasicTwoPlayer({
         <DragQueen
           life={player2Life}
           setLife={setPlayer2Life}
-          textColour={textColour}
+          textColour={textColour2}
         />
       </View>
     </ImageBackground>

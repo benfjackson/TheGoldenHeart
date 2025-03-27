@@ -3,5 +3,6 @@
   "title": "Opposing Storms",
   "numPlayers": 2,
   "tags": ["2player"],
-  "textColour": "#ffffffa0"
+  "textColour1": "#ffffffa0",
+  "textColour2": "#ffffffa0"
 }

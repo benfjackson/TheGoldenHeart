@@ -19,9 +19,16 @@ export function getMiniImage(skinID) {
     Plains: require('../skins/Basic/Plains/Plains.png'),
     Mountain: require('../skins/Basic/Mountain/mini.png'),
     Forest: require('../skins/Basic/Forest/image.png'),
+
+    // 2 Players
     Waves: require('../skins/two_player/basic/Waves/mini.png'),
+
+    HopeVDespair: require('../skins/two_player/basic/HopeVDespair/final.png'),
+
+    // 4 Players
     Waves4player: require('../skins/four_player/basic/Waves/mini.png'),
-    Quadrants: require('../skins/four_player/basic/Quadrants/mini.png')
+    Quadrants: require('../skins/four_player/basic/Quadrants/mini.png'),
+    Serenity: require('../skins/four_player/basic/Serenity/image.png')
   };
   return imageMap[skinID];
 }
@@ -46,9 +53,15 @@ export function getSkinData(skinID) {
     Plains: require('../skins/Basic/Plains/data.json'),
     Mountain: require('../skins/Basic/Mountain/data.json'),
     Forest: require('../skins/Basic/Forest/data.json'),
+
+    // 2 Players
     Waves: require('../skins/two_player/basic/Waves/data.json'),
+    HopeVDespair: require('../skins/two_player/basic/HopeVDespair/data.json'),
+
+    // 4 Players
     Waves4player: require('../skins/four_player/basic/Waves/data.json'),
-    Quadrants: require('../skins/four_player/basic/Quadrants/data.json')
+    Quadrants: require('../skins/four_player/basic/Quadrants/data.json'),
+    Serenity: require('../skins/four_player/basic/Serenity/data.json')
   };
   //parse the json into a js object
   const data = dataMap[skinID];

@@ -14,6 +14,7 @@ export default function BasicFourPlayer({
   const imgMap = {
     Waves4player: require(`./Waves/Waves.png`),
     Quadrants: require(`./Quadrants/Quadrants.png`),
+    Serenity: require(`./Serenity/image.png`),
     Default: require(`./Waves/Waves.png`)
   };
 
@@ -23,7 +24,10 @@ export default function BasicFourPlayer({
 
   const data = getSkinData(skinID);
   const img = imgMap[skinID];
-  const textColour = data.textColour;
+  const textColour1 = data.textColour1;
+  const textColour2 = data.textColour2;
+  const textColour3 = data.textColour3;
+  const textColour4 = data.textColour4;
 
   return (
     <ImageBackground
@@ -32,16 +36,13 @@ export default function BasicFourPlayer({
         width: '100%',
         height: '100%',
         flex: 1
-        // flex: 'auto'
-        // resizeMode: 'cover'
-        // resizeMode: 'cover' // Adjust this as needed
       }}>
       <View style={{ flex: 1, flexDirection: 'row' }}>
         <View style={{ flex: 1 }}>
           <DragQueen
             life={player1Life}
             setLife={setPlayer1Life}
-            textColour={textColour}
+            textColour={textColour1}
             rotation="180deg"
           />
         </View>
@@ -49,7 +50,7 @@ export default function BasicFourPlayer({
           <DragQueen
             life={player2Life}
             setLife={setPlayer2Life}
-            textColour={textColour}
+            textColour={textColour2}
             rotation="180deg"
           />
         </View>
@@ -59,14 +60,14 @@ export default function BasicFourPlayer({
           <DragQueen
             life={player3Life}
             setLife={setPlayer3Life}
-            textColour={textColour}
+            textColour={textColour3}
           />
         </View>
         <View style={{ flex: 1 }}>
           <DragQueen
             life={player4Life}
             setLife={setPlayer4Life}
-            textColour={textColour}
+            textColour={textColour4}
           />
         </View>
       </View>
