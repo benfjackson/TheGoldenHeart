@@ -68,39 +68,38 @@ export default function Count({
 
   const updateLife = (amount) => {
     setLife((prevLife) => {
-      // const newLife = Math.max(prevLife + amount, 0); // Prevent negative life
-
-      // Add the change to the current adjustment number
-      setAdjustmentNumber((prevAdjustment) => prevAdjustment + amount);
-
-      Animated.timing(fadeAnim, {
-        toValue: 1,
-        duration: 200,
-        useNativeDriver: true
-      }).start();
-
-      // Reset adjustment number after 3 seconds with fade-out
-      if (adjustmentTimeoutRef.current) {
-        clearTimeout(adjustmentTimeoutRef.current);
-      }
-
-      if (!['trackingNumber', 'swipeUp', 'tapDown'].includes(tutorialState)) {
-        adjustmentTimeoutRef.current = setTimeout(() => {
-          fadeOutAnimation = Animated.timing(fadeAnim, {
-            toValue: 0,
-            duration: 1000,
-            useNativeDriver: true
-          }).start(({ finished }) => {
-            if (finished) {
-              console.log('erasure State', tutorialState);
-              setAdjustmentNumber(0);
-            }
-          }); // Reset adjustment number to 0
-        }, 3000);
-      }
-
       return prevLife + amount;
     });
+    // const newLife = Math.max(prevLife + amount, 0); // Prevent negative life
+
+    // Add the change to the current adjustment number
+    setAdjustmentNumber((prevAdjustment) => prevAdjustment + amount);
+
+    Animated.timing(fadeAnim, {
+      toValue: 1,
+      duration: 200,
+      useNativeDriver: true
+    }).start();
+
+    // Reset adjustment number after 3 seconds with fade-out
+    if (adjustmentTimeoutRef.current) {
+      clearTimeout(adjustmentTimeoutRef.current);
+    }
+
+    if (!['trackingNumber', 'swipeUp', 'tapDown'].includes(tutorialState)) {
+      adjustmentTimeoutRef.current = setTimeout(() => {
+        fadeOutAnimation = Animated.timing(fadeAnim, {
+          toValue: 0,
+          duration: 1000,
+          useNativeDriver: true
+        }).start(({ finished }) => {
+          if (finished) {
+            console.log('erasure State', tutorialState);
+            setAdjustmentNumber(0);
+          }
+        }); // Reset adjustment number to 0
+      }, 3000);
+    }
   };
 
   useEffect(() => {

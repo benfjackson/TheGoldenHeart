@@ -54,7 +54,7 @@ export default function Tutorial() {
       next: 'swipeUp'
     },
     swipeUp: {
-      text: 'Swipe up from anywhere for large life gain',
+      text: 'Swipe up to make your life go up',
       styling: { justifyContent: 'flex-start' },
       next: 'again'
     },
@@ -64,7 +64,7 @@ export default function Tutorial() {
       next: 'swipeDown'
     },
     swipeDown: {
-      text: 'Swipe down to reduce your health',
+      text: 'Swipe down to make your life go down',
       styling: { justifyContent: 'flex-end' },
       next: 'menu'
     },
