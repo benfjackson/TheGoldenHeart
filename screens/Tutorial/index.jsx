@@ -31,8 +31,8 @@ export default function Tutorial() {
     tapUp: {
       text: (
         <Text>
-          Tap above for +<View>{<Text style={styles.numberText}>1</Text>}</View>{' '}
-          health
+          <Text>Tap above for +</Text>
+          <Text style={styles.numberText}>1</Text> <Text>health</Text>
         </Text>
       ),
       styling: { justifyContent: 'flex-start' },
@@ -41,8 +41,8 @@ export default function Tutorial() {
     tapDown: {
       text: (
         <Text>
-          Tap below for <View>{<Text style={styles.numberText}>-1</Text>}</View>{' '}
-          health
+          <Text>Tap below for</Text> <Text style={styles.numberText}>-1</Text>{' '}
+          <Text>health</Text>
         </Text>
       ),
       styling: { justifyContent: 'flex-end' },
