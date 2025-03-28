@@ -21,18 +21,6 @@ export default function HomeScreen() {
       justifyContent: 'center',
       // width: '100%',
       backgroundColor: 'black'
-    },
-    button: {
-      color: '#FFA500',
-      fontSize: 35,
-      textAlign: 'center',
-      fontFamily: 'Endor'
-    },
-    title: {
-      color: '#FFA500',
-      fontSize: 50,
-      textAlign: 'center',
-      fontFamily: 'Endor'
     }
   });
   // const { width, height } = Dimensions.get('window');
@@ -44,10 +32,10 @@ export default function HomeScreen() {
     <View style={styles.container}>
       <ScreenFrame>
         <PlayButton />
-        <BasicButton
+        {/* <BasicButton
           onPress={() => navigation.navigate('Gallery')}
           text={'Gallery'}
-        />
+        /> */}
       </ScreenFrame>
     </View>
   );
