@@ -3,15 +3,19 @@ import { View, Text, Image, ActivityIndicator } from 'react-native';
 import shardIconImage from './shardIcon2.jpg';
 import { colors, fonts } from '../../styles';
 import { useProfile } from '../../hooks/useProfile';
+import { TouchableOpacity } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 export default function GoldShards() {
   //Should be useQuery?
   const { profile, loading, error } = useProfile();
+  const navigation = useNavigation();
 
   // if (loading) return <ActivityIndicator />;
 
   return (
-    <View
+    <TouchableOpacity
+      onPress={() => navigation.navigate('GetShard')}
       style={{
         flexDirection: 'row',
         alignItems: 'center',
@@ -44,6 +48,6 @@ export default function GoldShards() {
           {profile?.gold_shards}
         </Text>
       )}
-    </View>
+    </TouchableOpacity>
   );
 }

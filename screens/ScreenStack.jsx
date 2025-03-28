@@ -20,6 +20,7 @@ import {
   checkHasCompletedTutorial,
   loadGameState
 } from '../services/appStorage';
+import GetShard from './GetShard';
 
 export default function ScreenStack() {
   const Stack = createStackNavigator();
@@ -111,9 +112,13 @@ export default function ScreenStack() {
         transitionSpec: transitionConfig.transitionSpec
       }}>
       <Stack.Screen name="HomeScreen" component={HomeScreen} />
+
       <Stack.Screen name="Tutorial" component={Tutorial} />
       <Stack.Screen name="ResumeGame" component={ResumeGame} />
+
       <Stack.Screen name="Login" component={Login} />
+      <Stack.Screen name="GetShard" component={GetShard} />
+
       <Stack.Screen name="Gallery" component={Gallery} />
 
       <Stack.Screen name="SelectSkin" component={SelectSkin} />

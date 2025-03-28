@@ -17,10 +17,8 @@ export default function InspectSkinModal({ skin, isOpen, setIsOpen }) {
   return (
     <Modal
       style={{
-        flex: 1,
         alignItems: 'center',
         justifyContent: 'center'
-        // backgroundColor: '#fff'
       }}
       animationIn={'fadeIn'}
       animationOut={'fadeOut'}
@@ -30,9 +28,7 @@ export default function InspectSkinModal({ skin, isOpen, setIsOpen }) {
       onBackdropPress={() => {
         setIsOpen(false);
       }}>
-      <Text>{skin?.data?.name}</Text>
-
-      <View style={styles.slide}>
+      <View>
         <ImageBackground
           source={miniImage}
           style={{
@@ -47,32 +43,13 @@ export default function InspectSkinModal({ skin, isOpen, setIsOpen }) {
             style={{ width: frameSize, height: '100%', overflow: 'visible' }}
           />
         </ImageBackground>
-        {/* <ImageBackground
-          source={TextFrameImage}
-          style={{
-            //   width: textFrameSize,
-            // width: textFrameSize,
-            width: '100%',
-            alignSelf: 'center',
-            height: textFrameSize,
-            //   height: '100%',
-            overflow: 'visible'
-          }}> */}
         <Text style={styles.title}>{skin?.data?.title}</Text>
-        {/* </ImageBackground> */}
       </View>
     </Modal>
   );
 }
 
 const styles = {
-  slide: {
-    flex: 1,
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-    textAlign: 'center'
-  },
   title: {
     fontSize: 40,
     textAlign: 'center',

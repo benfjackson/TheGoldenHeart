@@ -6,7 +6,7 @@ import InspectSkinModal from './InspectSkinModal';
 
 export default function DisplayCase() {
   // Should reflect owned skins?
-  const skins = ['Angel', 'Devil', 'Kraken', 'Druid', 'Crab'];
+  const skins = ['Angel', 'Devil', 'Kraken', 'GreenVampire', 'Crab'];
 
   const skinsData = getSkinsInfo(skins);
 
@@ -26,7 +26,10 @@ export default function DisplayCase() {
           height: '80%',
           width: '80%'
         }}>
-        <ScrollView style={{ paddingTop: 50 }}>
+        <ScrollView
+          style={{
+            paddingTop: 50
+          }}>
           {skinsData.map((skin) => (
             <DisplaySkin
               skin={skin}
