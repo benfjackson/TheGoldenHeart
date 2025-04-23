@@ -29,7 +29,6 @@ export default function NumPlayersStepper({ numPlayers, setNumPlayers }) {
       style={{
         alignItems: 'center',
         flexDirection: 'column',
-
         justifyContent: 'center'
       }}>
       <View

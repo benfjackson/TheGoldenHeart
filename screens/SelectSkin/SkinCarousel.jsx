@@ -51,11 +51,13 @@ export default function SkinCarousel({
 
   const styles = {
     slide: {
-      flex: 1,
       flexDirection: 'column',
       justifyContent: 'center',
       alignItems: 'center',
-      textAlign: 'center'
+      textAlign: 'center',
+      paddingTop: 50,
+      overflow: 'visible',
+      paddingBottom: 50
     },
     title: {
       fontSize: 35,
@@ -63,7 +65,9 @@ export default function SkinCarousel({
       marginTop: '10%',
       color: '#FFA500',
       fontFamily: fonts.readableText,
-      height: '50%',
+
+      overflow: 'visible',
+
       paddingTop: 20
     }
   };
@@ -74,6 +78,7 @@ export default function SkinCarousel({
     return (
       <View style={styles.slide}>
         <TouchableOpacity
+          style={{ overflow: 'visible' }}
           onPress={() =>
             navigation.navigate('InGame', {
               initialiseGameState: {
@@ -105,17 +110,36 @@ export default function SkinCarousel({
 
   return (
     <Animated.View
+      style={{
+        overflow: 'visible',
+        flex: 1,
+        //make the min height fit the maximum height of the carousel, which is the frame size + all the padding plus the max height of the titles.
+        minHeight:
+          frameSize + 2 * styles.slide.paddingTop + styles.title.fontSize + 20
+      }}
       key={currentKey}
       entering={FadeIn.duration(1000)}
       exiting={FadeOut.duration(1000)}>
-      <Carousel
-        ref={carouselRef}
-        data={skinsToDisplay}
-        renderItem={renderItem}
-        sliderWidth={SCREEN_WIDTH}
-        itemWidth={0.7 * SCREEN_WIDTH}
-        style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
-      />
+      <View
+        style={{
+          flex: 1,
+          justifyContent: 'center',
+          overflow: 'visible',
+          paddingBottom: 50
+        }}>
+        <Carousel
+          ref={carouselRef}
+          data={skinsToDisplay}
+          renderItem={renderItem}
+          sliderWidth={SCREEN_WIDTH}
+          itemWidth={0.7 * SCREEN_WIDTH}
+          style={{
+            justifyContent: 'center',
+            alignItems: 'center',
+            overflow: 'visible'
+          }}
+        />
+      </View>
     </Animated.View>
   );
 }

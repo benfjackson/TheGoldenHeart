@@ -48,10 +48,8 @@ export default function SelectSkin() {
       style={{
         flex: 1,
         flexDirection: 'column',
-        // justifyContent: 'flex-start',
+
         backgroundColor: '#000'
-        // alignItems: 'center',
-        // paddingTop: '10%'
       }}>
       <View
         style={{
@@ -64,17 +62,13 @@ export default function SelectSkin() {
       </View>
 
       <View
-        // style={{ paddingVertical: '35%' }}
         style={{
           flex: 1,
-          // flexDirection: 'column',
-          justifyContent: 'space-evenly',
+          justifyContent: 'center',
           alignItems: 'center',
-          paddingTop: '40%',
-          paddingBottom: '20%'
+          paddingTop: '20%'
         }}>
-        {/* paddingVertical: '25%' */}
-        <View style={{ paddingTop: '10%', marginBottom: '-60%' }}>
+        <View style={{ flex: 1, paddingTop: '10%', overflow: 'visible' }}>
           <SkinCarousel
             startingHealth={startingHealth}
             favourites={favourites}
@@ -83,9 +77,8 @@ export default function SelectSkin() {
         </View>
         <View
           style={{
+            flex: 1,
             alignItems: 'center',
-            // gap: 20,
-            paddingBottom: '30%',
             flexDirection: 'row'
           }}>
           <NumPlayersPicker
