@@ -66,6 +66,9 @@ export default function DragQueen({
     if (adjustmentTimeoutRef.current) {
       clearTimeout(adjustmentTimeoutRef.current);
     }
+    if (fadeOutAnimation) {
+      fadeOutAnimation.stop(); // Cancels the animation
+    }
     adjustmentTimeoutRef.current = setTimeout(() => {
       fadeOutAnimation = Animated.timing(fadeAnim, {
         toValue: 0,
@@ -129,7 +132,7 @@ export default function DragQueen({
           }
         },
         onPanResponderRelease: (evt, gestureState) => {
-          if (gestureState.dy === 0 && !showDragNumber) {
+          if (Math.abs(gestureState.dy) < 5 && !showDragNumber) {
             const y = gestureState.y0;
             const centerOfBox = (countBoxTop + countBoxBottom) / 2;
             var toAdd = y < centerOfBox ? 1 : -1;
