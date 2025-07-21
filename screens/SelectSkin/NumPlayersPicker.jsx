@@ -9,7 +9,7 @@ import CounterImage from '../../images/Counter.png';
 import { fonts } from '../../styles';
 
 export default function NumPlayersStepper({ numPlayers, setNumPlayers }) {
-  const playerOptions = [1, 2, 4];
+  const playerOptions = [1, 2, 3, 4];
   const currentIndex = playerOptions.indexOf(numPlayers);
 
   const increment = () => {

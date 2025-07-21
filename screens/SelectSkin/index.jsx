@@ -34,7 +34,8 @@ export default function SelectSkin() {
         'HopeVDespair',
         'Waves',
         'Quadrants',
-        'Serenity'
+        'Serenity',
+        'ThreeRings'
       ]);
 
       //Should put image loading in here

@@ -1,6 +1,7 @@
 import BasicSkin from '../../skins/Basic/BasicSkin';
 import { View, Image, Pressable, Text, Dimensions } from 'react-native';
 import BasicTwoPlayer from '../../skins/two_player/basic/BasicTwoPlayer';
+import BasicThreePlayer from '../../skins/three_player/basic/BasicThreePlayer';
 import BasicFourPlayer from '../../skins/four_player/basic/BasicFourPlayer';
 import { getSkinData } from '../../services/getSkinInfo';
 
@@ -25,6 +26,11 @@ export function GetSkin({ skinID, lives, setLives }) {
     case 2:
       return (
         <BasicTwoPlayer skinID={skinID} lives={lives} setLives={setLives} />
+      );
+
+    case 3:
+      return (
+        <BasicThreePlayer skinID={skinID} lives={lives} setLives={setLives} />
       );
 
     case 4:

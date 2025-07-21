@@ -1,0 +1,9 @@
+{
+  "id": "ThreeRings",
+  "title": "Three Rings",
+  "numPlayers": 3,
+  "tags": ["3player"],
+  "textColour1": "#ffffffa0",
+  "textColour2": "#000000a0",
+  "textColour3": "#ffffffa0"
+}

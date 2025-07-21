@@ -25,6 +25,9 @@ export function getMiniImage(skinID) {
 
     HopeVDespair: require('../skins/two_player/basic/HopeVDespair/final.png'),
 
+    // 3 Players
+    ThreeRings: require('../skins/three_player/basic/ThreeRings.png'),
+
     // 4 Players
     Waves4player: require('../skins/four_player/basic/Waves/mini.png'),
     Quadrants: require('../skins/four_player/basic/Quadrants/mini.png'),
@@ -57,6 +60,9 @@ export function getSkinData(skinID) {
     // 2 Players
     Waves: require('../skins/two_player/basic/Waves/data.json'),
     HopeVDespair: require('../skins/two_player/basic/HopeVDespair/data.json'),
+
+    // 3 Players
+    ThreeRings: require('../skins/three_player/basic/data.json'),
 
     // 4 Players
     Waves4player: require('../skins/four_player/basic/Waves/data.json'),
