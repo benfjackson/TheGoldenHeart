@@ -26,8 +26,8 @@ export default function DragQueen({
   const adjustmentTimeoutRef = useRef(null);
 
   const countBoxRef = useRef(null);
-  const [countBoxTop, setCountBoxTop] = useState();
-  const [countBoxBottom, setCountBoxBottom] = useState(0);
+  const countBoxTop = useRef(0);
+  const countBoxBottom = useRef(0);
   const { height: screenHeight } = Dimensions.get('window');
 
   const styles = StyleSheet.create({
@@ -134,7 +134,8 @@ export default function DragQueen({
         onPanResponderRelease: (evt, gestureState) => {
           if (Math.abs(gestureState.dy) < 5 && !showDragNumber) {
             const y = gestureState.y0;
-            const centerOfBox = (countBoxTop + countBoxBottom) / 2;
+            const centerOfBox =
+              (countBoxTop.current + countBoxBottom.current) / 2;
             var toAdd = y < centerOfBox ? 1 : -1;
             if (rotation !== '0deg') {
               toAdd = toAdd * -1;
@@ -147,7 +148,7 @@ export default function DragQueen({
           setShowDragNumber(false);
         }
       }),
-    [countBoxTop, countBoxBottom]
+    []
   );
 
   return (
@@ -156,8 +157,8 @@ export default function DragQueen({
         ref={countBoxRef}
         onLayout={() => {
           countBoxRef.current.measure((x, y, width, height, pageX, pageY) => {
-            setCountBoxTop(pageY);
-            setCountBoxBottom(height + pageY);
+            countBoxTop.current = pageY;
+            countBoxBottom.current = height + pageY;
           });
         }}>
         {life > 0 ? (
