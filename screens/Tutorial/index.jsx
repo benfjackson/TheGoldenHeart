@@ -109,7 +109,11 @@ export default function Tutorial() {
 
   return (
     <>
-      <PopupMenu isOpen={menuOpen} setIsOpen={setMenuOpen} />
+      <PopupMenu
+        isOpen={menuOpen}
+        setIsOpen={setMenuOpen}
+        tutorialStep={currentStep}
+      />
       <View style={{ flex: 1, width: '100%', height: '100%' }}>
         <ScreenFrame>
           <View

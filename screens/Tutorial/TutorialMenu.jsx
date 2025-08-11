@@ -26,6 +26,7 @@ export default function PopupMenu({
   histories,
   counterControl,
   resetGame,
+  tutorialStep,
   ...props
 }) {
   const bg = require('../InGame/popupMenu/popup.png');
@@ -79,15 +80,25 @@ export default function PopupMenu({
               flexDirection: 'column',
               justifyContent: 'space-evenly'
             }}>
-            <Pressable
-              onPress={async () => {
-                setIsOpen(false);
-                completeTutorial().then(() =>
-                  navigation.navigate('HomeScreen')
-                );
-              }}>
-              <Text style={styles.button}>complete tutorial</Text>
-            </Pressable>
+            <Text
+              style={[
+                styles.button,
+                { fontSize: 30, lineHeight: 40, marginBottom: 20 }
+              ]}>
+              Use the menu to{'\n'}
+              Reset your life{'\n'}add counters{'\n'}or quit home
+            </Text>
+            <Sparkles on={true}>
+              <Pressable
+                onPress={async () => {
+                  setIsOpen(false);
+                  completeTutorial().then(() =>
+                    navigation.navigate('HomeScreen')
+                  );
+                }}>
+                <Text style={styles.button}>complete tutorial</Text>
+              </Pressable>
+            </Sparkles>
           </View>
         </View>
       </ImageBackground>
