@@ -1,7 +1,6 @@
-import { ImageBackground, Image, Button, View, Text } from 'react-native';
+import { ImageBackground, View } from 'react-native';
 
-// import Counter from '../components/CrossCounter';
-import HorizontalDragQueen from '../../../components/HorizontalDragQueen';
+import LifeCounter from '../../../components/LifeCounter';
 import { getSkinData } from '../../../services/getSkinInfo';
 
 import React from 'react';
@@ -15,8 +14,6 @@ export default function BasicThreePlayer({
     ThreeRings: require(`./ThreeRings.png`),
     Default: require(`./ThreeRings.png`)
   };
-
-  console.log(skinID);
 
   const { player1Life, player2Life, player3Life } = lives;
   const { setPlayer1Life, setPlayer2Life, setPlayer3Life } = setLives;
@@ -36,25 +33,31 @@ export default function BasicThreePlayer({
         flex: 1,
         flexDirection: 'column'
       }}>
-      <View style={{ flex: 1 }}>
-        <HorizontalDragQueen
+      <View style={{ flex: 1 }} pointerEvents="box-none">
+        <LifeCounter
           life={player1Life}
           setLife={setPlayer1Life}
           textColour={textColour1}
+          axis="horizontal"
+          layout="rotated-column"
         />
       </View>
-      <View style={{ flex: 1 }}>
-        <HorizontalDragQueen
+      <View style={{ flex: 1 }} pointerEvents="box-none">
+        <LifeCounter
           life={player2Life}
           setLife={setPlayer2Life}
           textColour={textColour2}
+          axis="horizontal"
+          layout="rotated-column"
         />
       </View>
-      <View style={{ flex: 1 }}>
-        <HorizontalDragQueen
+      <View style={{ flex: 1 }} pointerEvents="box-none">
+        <LifeCounter
           life={player3Life}
           setLife={setPlayer3Life}
           textColour={textColour3}
+          axis="horizontal"
+          layout="rotated-column"
         />
       </View>
     </ImageBackground>

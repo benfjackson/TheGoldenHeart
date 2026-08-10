@@ -1,7 +1,6 @@
-import { ImageBackground, Image, Button, View, Text } from 'react-native';
+import { ImageBackground, View } from 'react-native';
 
-// import Counter from '../components/CrossCounter';
-import DragQueen from '../../../components/DragQueen';
+import LifeCounter from '../../../components/LifeCounter';
 import { getSkinData } from '../../../services/getSkinInfo';
 
 import React from 'react';
@@ -38,16 +37,16 @@ export default function BasicFourPlayer({
         flex: 1
       }}>
       <View style={{ flex: 1, flexDirection: 'row' }}>
-        <View style={{ flex: 1 }}>
-          <DragQueen
+        <View style={{ flex: 1 }} pointerEvents="box-none">
+          <LifeCounter
             life={player1Life}
             setLife={setPlayer1Life}
             textColour={textColour1}
             rotation="180deg"
           />
         </View>
-        <View style={{ flex: 1 }}>
-          <DragQueen
+        <View style={{ flex: 1 }} pointerEvents="box-none">
+          <LifeCounter
             life={player2Life}
             setLife={setPlayer2Life}
             textColour={textColour2}
@@ -56,15 +55,15 @@ export default function BasicFourPlayer({
         </View>
       </View>
       <View style={{ flex: 1, flexDirection: 'row' }}>
-        <View style={{ flex: 1 }}>
-          <DragQueen
+        <View style={{ flex: 1 }} pointerEvents="box-none">
+          <LifeCounter
             life={player3Life}
             setLife={setPlayer3Life}
             textColour={textColour3}
           />
         </View>
-        <View style={{ flex: 1 }}>
-          <DragQueen
+        <View style={{ flex: 1 }} pointerEvents="box-none">
+          <LifeCounter
             life={player4Life}
             setLife={setPlayer4Life}
             textColour={textColour4}

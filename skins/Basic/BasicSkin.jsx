@@ -1,15 +1,14 @@
-import { ImageBackground, Image, Button } from 'react-native';
+import { ImageBackground } from 'react-native';
 
-// import Counter from '../components/CrossCounter';
-import DragQueen from '../../components/DragQueen';
+import LifeCounter from '../../components/LifeCounter';
 import { getSkinData } from '../../services/getSkinInfo';
 
-import React, { useState } from 'react';
+import React from 'react';
 import ScreenFrame from '../../components/ScreenFrame';
 
 export default function BasicSkin({ skinID = 'Default', lives, setLives }) {
   const imgMap = {
-    Devil: require(`./Devil/Devil.png`), //Devil,
+    Devil: require(`./Devil/Devil.png`),
     NobleVampire: require(`./NobleVampire/NobleVampire.png`),
     GloriousElk: require(`./Elk/Elk.png`),
     Kraken: require(`./Kraken/Kraken.png`),
@@ -38,18 +37,11 @@ export default function BasicSkin({ skinID = 'Default', lives, setLives }) {
     <ImageBackground
       source={img}
       style={{
-        // width: '100%',
-        // height: '100%',
-        //ITS THIS
-        // width: 650,
         width: '100%',
         height: '100%'
-        // flex: 'auto'
-        // resizeMode: 'cover'
-        // resizeMode: 'cover' // Adjust this as needed
       }}>
       <ScreenFrame>
-        <DragQueen
+        <LifeCounter
           life={player1Life}
           setLife={setPlayer1Life}
           textColour={textColour}

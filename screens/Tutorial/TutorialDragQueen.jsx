@@ -1,18 +1,14 @@
-import React, { useState, useEffect, useRef, useMemo } from 'react';
-import {
-  View,
-  Text,
-  Image,
-  StyleSheet,
-  PanResponder,
-  Dimensions,
-  Animated
-} from 'react-native';
+import React, { useRef, useCallback, useEffect } from 'react';
+import { View, Text, Image, StyleSheet, Animated } from 'react-native';
 
 import Sparkles from '../../components/Sparkle/Sparkles';
 import skullIcon from '../../icons/skullWhite.png';
+import useAdjustmentTracker from '../../hooks/useAdjustmentTracker';
+import useLifeCounterGesture from '../../hooks/useLifeCounterGesture';
 
-export default function Count({
+const TRACKER_HOLD_STEPS = ['trackingNumber', 'swipeUp', 'tapDown'];
+
+export default function TutorialDragQueen({
   textColour = '#ffffffa0',
   life,
   setLife,
@@ -20,43 +16,53 @@ export default function Count({
   tutorialState,
   setTutorialState
 }) {
-  const [dragNumber, setDragNumber] = useState(0);
-  const [showDragNumber, setShowDragNumber] = useState(false);
+  const containerRef = useRef(null);
+  const autoFade = !TRACKER_HOLD_STEPS.includes(tutorialState);
+  const { adjustmentTotal, fadeAnim, recordChange, holdVisible } =
+    useAdjustmentTracker({ fadeDelayMs: 3000, autoFade });
 
-  const [adjustmentNumber, setAdjustmentNumber] = useState(0);
-  const fadeAnim = useRef(new Animated.Value(0)).current; // Animated value for opacity
-
-  const adjustmentTimeoutRef = useRef(null);
-
-  const countBoxRef = useRef(null);
-  const [countBoxTop, setCountBoxTop] = useState();
-  const [countBoxBottom, setCountBoxBottom] = useState(0);
-  const { height: screenHeight } = Dimensions.get('window');
-
-  const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
-      width: '100%',
-      transform: [{ rotate: rotation }]
+  const advanceTutorial = useCallback(
+    (delta) => {
+      if (delta === 1 && tutorialState === 'tapUp') {
+        setTutorialState();
+      }
+      if (delta === -1 && tutorialState === 'tapDown') {
+        setTutorialState();
+      }
+      if (
+        delta > 2 &&
+        (tutorialState === 'swipeUp' || tutorialState === 'again')
+      ) {
+        setTutorialState();
+      }
+      if (delta < -2 && tutorialState === 'swipeDown') {
+        setTutorialState();
+      }
     },
-    text: {
-      fontSize: 120,
-      color: textColour,
-      fontFamily: 'Immortal'
+    [setTutorialState, tutorialState]
+  );
+
+  const commitChange = useCallback(
+    (delta) => {
+      if (delta === 0) {
+        return;
+      }
+      recordChange(delta);
+      setLife((prevLife) => prevLife + delta);
+      advanceTutorial(delta);
     },
-    dragNumber: {
-      fontSize: 60,
-      marginTop: 10,
-      color: textColour
-    }
+    [advanceTutorial, recordChange, setLife]
+  );
+
+  const { previewDelta, panHandlers } = useLifeCounterGesture({
+    axis: 'vertical',
+    rotation,
+    containerRef,
+    onCommit: commitChange,
+    onSwipeStart: holdVisible
   });
 
-  let fadeOutAnimation;
-
   useEffect(() => {
-    // Show adjustment number with fade-in effect
     if (tutorialState === 'trackingNumber') {
       Animated.timing(fadeAnim, {
         toValue: 1,
@@ -64,171 +70,78 @@ export default function Count({
         useNativeDriver: true
       }).start();
     }
-  }, [tutorialState]);
+  }, [fadeAnim, tutorialState]);
 
-  const updateLife = (amount) => {
-    setLife((prevLife) => {
-      return prevLife + amount;
-    });
-    // const newLife = Math.max(prevLife + amount, 0); // Prevent negative life
-
-    // Add the change to the current adjustment number
-    setAdjustmentNumber((prevAdjustment) => prevAdjustment + amount);
-
-    Animated.timing(fadeAnim, {
-      toValue: 1,
-      duration: 200,
-      useNativeDriver: true
-    }).start();
-
-    // Reset adjustment number after 3 seconds with fade-out
-    if (adjustmentTimeoutRef.current) {
-      clearTimeout(adjustmentTimeoutRef.current);
-    }
-
-    if (!['trackingNumber', 'swipeUp', 'tapDown'].includes(tutorialState)) {
-      adjustmentTimeoutRef.current = setTimeout(() => {
-        fadeOutAnimation = Animated.timing(fadeAnim, {
-          toValue: 0,
-          duration: 1000,
-          useNativeDriver: true
-        }).start(({ finished }) => {
-          if (finished) {
-            console.log('erasure State', tutorialState);
-            setAdjustmentNumber(0);
-          }
-        }); // Reset adjustment number to 0
-      }, 3000);
-    }
-  };
-
-  useEffect(() => {
-    if (!showDragNumber) {
-      if (dragNumber !== 0) {
-        if (
-          dragNumber > 2 &&
-          (tutorialState == 'swipeUp' || tutorialState == 'again')
-        ) {
-          setTutorialState();
-        }
-        if (dragNumber < -2 && tutorialState == 'swipeDown') {
-          setTutorialState();
-        }
-
-        updateLife(dragNumber); // Apply the drag number to life
-        setDragNumber(0);
-      }
-    }
-  }, [showDragNumber]);
-
-  const swipeResponder = useMemo(
-    () =>
-      PanResponder.create({
-        onStartShouldSetPanResponder: () => true,
-        onMoveShouldSetPanResponder: () => true,
-        onPanResponderMove: (event, gestureState) => {
-          const normalizedSwipeLength = Math.abs(
-            gestureState.dy / screenHeight
-          );
-          const above = gestureState.dy < 0;
-
-          if (normalizedSwipeLength >= 0.05) {
-            setShowDragNumber(true);
-
-            // Cancel any fades that may be happening
-            if (adjustmentTimeoutRef.current) {
-              clearTimeout(adjustmentTimeoutRef.current);
-              adjustmentTimeoutRef.current = null; // Clean up the reference
-              // To cancel the animation before it completes:
-            }
-            if (fadeOutAnimation) {
-              fadeOutAnimation.stop(); // Cancels the animation
-            }
-            fadeAnim.setValue(1);
-            var numHealth = Math.floor((10 * normalizedSwipeLength) ** 1.3);
-            if (!above) {
-              numHealth = numHealth * -1;
-            }
-            if (rotation !== '0deg') {
-              numHealth = numHealth * -1;
-            }
-
-            setDragNumber(numHealth);
-          } else {
-            setShowDragNumber(false);
-          }
-        },
-        onPanResponderRelease: (evt, gestureState) => {
-          if (gestureState.dy === 0 && !showDragNumber) {
-            const y = gestureState.y0;
-            const centerOfBox = (countBoxTop + countBoxBottom) / 2;
-            var toAdd = y < centerOfBox ? 1 : -1;
-            if (rotation !== '0deg') {
-              toAdd = toAdd * -1;
-            }
-            console.log(tutorialState, ' tutorial state in dragqueen');
-            // TUTORIAL
-            if (toAdd === 1 && tutorialState == 'tapUp') {
-              setTutorialState();
-            }
-            if (toAdd === -1 && tutorialState == 'tapDown') {
-              setTutorialState();
-            }
-
-            updateLife(toAdd);
-          }
-          setShowDragNumber(false);
-        },
-        onPanResponderTerminate: () => {
-          setShowDragNumber(false);
-        }
-      }),
-    [countBoxTop, countBoxBottom, tutorialState]
-  );
+  const displayLife = life + previewDelta;
+  const trackerValue = adjustmentTotal + previewDelta;
+  const showSkull = life <= 0 && previewDelta <= 0;
 
   return (
-    <View style={styles.container} {...swipeResponder.panHandlers}>
-      <View
-        ref={countBoxRef}
-        onLayout={() => {
-          countBoxRef.current.measure((x, y, width, height, pageX, pageY) => {
-            setCountBoxTop(pageY);
-            setCountBoxBottom(height + pageY);
-          });
-        }}>
-        {life > 0 ? (
-          <Sparkles on={tutorialState === 'lifeTotal'}>
-            <Text style={[styles.text]}>{life + dragNumber}</Text>
-          </Sparkles>
+    <View
+      ref={containerRef}
+      style={[styles.container, { transform: [{ rotate: rotation }] }]}
+      pointerEvents="box-only"
+      {...panHandlers}>
+      <View style={styles.lifeContainer}>
+        {showSkull ? (
+          <Image style={styles.skull} source={skullIcon} />
         ) : (
-          <Image
-            style={{ width: 200, height: 200, opacity: 0.7 }}
-            source={skullIcon}
-          />
+          <Sparkles on={tutorialState === 'lifeTotal'}>
+            <Text style={[styles.lifeText, { color: textColour }]}>
+              {displayLife}
+            </Text>
+          </Sparkles>
         )}
       </View>
 
-      {/* Adjustment Number Display */}
-      <Animated.View
-        style={{
-          flexDirection: 'row',
-          opacity: fadeAnim // Bind opacity to Animated.Value
-        }}>
-        <Sparkles
-          on={['trackingNumber', 'again', 'swipeUp'].includes(tutorialState)}>
-          <View
-            style={{
-              flexDirection: 'row'
-            }}>
-            <Text style={[styles.dragNumber]}>
-              {adjustmentNumber + dragNumber > 0 ? '+' : ''}
-            </Text>
-            <Text style={[{ fontFamily: 'Immortal' }, styles.dragNumber]}>
-              {adjustmentNumber + dragNumber}
-            </Text>
-          </View>
-        </Sparkles>
-      </Animated.View>
+      {trackerValue !== 0 && (
+        <Animated.View style={[styles.trackerRow, { opacity: fadeAnim }]}>
+          <Sparkles
+            on={['trackingNumber', 'again', 'swipeUp'].includes(tutorialState)}>
+            <View style={styles.trackerRow}>
+              <Text style={[styles.trackerText, { color: textColour }]}>
+                {trackerValue > 0 ? '+' : ''}
+              </Text>
+              <Text
+                style={[
+                  styles.trackerText,
+                  { color: textColour, fontFamily: 'Immortal' }
+                ]}>
+                {trackerValue}
+              </Text>
+            </View>
+          </Sparkles>
+        </Animated.View>
+      )}
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%'
+  },
+  lifeContainer: {
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  lifeText: {
+    fontSize: 120,
+    fontFamily: 'Immortal'
+  },
+  skull: {
+    width: 200,
+    height: 200,
+    opacity: 0.7
+  },
+  trackerRow: {
+    flexDirection: 'row'
+  },
+  trackerText: {
+    fontSize: 60,
+    marginTop: 10
+  }
+});

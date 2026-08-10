@@ -52,9 +52,11 @@
   "name": "LIFE",
   "private": true,
   "scripts": {
-    "android": "expo start --android",
-    "ios": "expo start --ios",
+    "android": "expo run:android",
+    "ios": "expo run:ios",
     "start": "expo start -c",
+    "build:android": "eas build --platform android --profile preview",
+    "build:ios": "eas build --platform ios --profile preview",
     "web": "expo start --web",
     "postinstall": "patch-package"
   },

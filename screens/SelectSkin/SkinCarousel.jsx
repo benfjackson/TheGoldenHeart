@@ -82,7 +82,7 @@ export default function SkinCarousel({
           onPress={() =>
             navigation.navigate('InGame', {
               initialiseGameState: {
-                numPlayers: 1,
+                numPlayers,
                 skinID: data.id,
                 startingLife: startingHealth
               }

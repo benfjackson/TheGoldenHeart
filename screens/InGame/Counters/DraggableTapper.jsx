@@ -116,7 +116,7 @@ export default function Counter({ counter }) {
   const { count, counterName, setCount } = counter;
 
   const updateLife = (toAdd) => {
-    setCount(count + toAdd);
+    setCount((current) => current + toAdd);
   };
 
   return (
