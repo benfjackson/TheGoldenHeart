@@ -7,6 +7,7 @@ import useAdjustmentTracker from '../../hooks/useAdjustmentTracker';
 import useLifeCounterGesture from '../../hooks/useLifeCounterGesture';
 
 const TRACKER_HOLD_STEPS = ['trackingNumber', 'swipeUp', 'tapDown'];
+const TRACKER_MIN_WIDTH = 120;
 
 export default function TutorialDragQueen({
   textColour = '#ffffffa0',
@@ -75,6 +76,7 @@ export default function TutorialDragQueen({
   const displayLife = life + previewDelta;
   const trackerValue = adjustmentTotal + previewDelta;
   const showSkull = life <= 0 && previewDelta <= 0;
+  const trackerVisible = trackerValue !== 0;
 
   return (
     <View
@@ -82,29 +84,34 @@ export default function TutorialDragQueen({
       style={[styles.container, { transform: [{ rotate: rotation }] }]}
       pointerEvents="box-only"
       {...panHandlers}>
-      <View style={styles.lifeContainer}>
-        {showSkull ? (
-          <Image style={styles.skull} source={skullIcon} />
-        ) : (
-          <Sparkles on={tutorialState === 'lifeTotal'}>
-            <Text style={[styles.lifeText, { color: textColour }]}>
-              {displayLife}
-            </Text>
-          </Sparkles>
-        )}
-      </View>
+      <View style={styles.centerAnchor}>
+        <View style={styles.lifeContainer}>
+          {showSkull ? (
+            <Image style={styles.skull} source={skullIcon} />
+          ) : (
+            <Sparkles on={tutorialState === 'lifeTotal'}>
+              <Text style={[styles.lifeText, { color: textColour }]}>
+                {displayLife}
+              </Text>
+            </Sparkles>
+          )}
+        </View>
 
-      {trackerValue !== 0 && (
-        <Animated.View style={[styles.trackerRow, { opacity: fadeAnim }]}>
+        <Animated.View
+          pointerEvents={trackerVisible ? 'auto' : 'none'}
+          style={[
+            styles.trackerOverlay,
+            { opacity: trackerVisible ? fadeAnim : 0 }
+          ]}>
           <Sparkles
             on={['trackingNumber', 'again', 'swipeUp'].includes(tutorialState)}>
             <View style={styles.trackerRow}>
-              <Text style={[styles.trackerText, { color: textColour }]}>
+              <Text style={[styles.trackerSign, { color: textColour }]}>
                 {trackerValue > 0 ? '+' : ''}
               </Text>
               <Text
                 style={[
-                  styles.trackerText,
+                  styles.trackerValue,
                   { color: textColour, fontFamily: 'Immortal' }
                 ]}>
                 {trackerValue}
@@ -112,7 +119,7 @@ export default function TutorialDragQueen({
             </View>
           </Sparkles>
         </Animated.View>
-      )}
+      </View>
     </View>
   );
 }
@@ -123,6 +130,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     width: '100%'
+  },
+  centerAnchor: {
+    position: 'relative',
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   lifeContainer: {
     alignItems: 'center',
@@ -137,11 +149,22 @@ const styles = StyleSheet.create({
     height: 200,
     opacity: 0.7
   },
-  trackerRow: {
-    flexDirection: 'row'
+  trackerOverlay: {
+    position: 'absolute',
+    top: '100%',
+    marginTop: 10,
+    minWidth: TRACKER_MIN_WIDTH,
+    alignItems: 'center'
   },
-  trackerText: {
-    fontSize: 60,
-    marginTop: 10
+  trackerRow: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    minWidth: TRACKER_MIN_WIDTH
+  },
+  trackerSign: {
+    fontSize: 60
+  },
+  trackerValue: {
+    fontSize: 60
   }
 });

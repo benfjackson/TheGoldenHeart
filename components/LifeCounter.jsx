@@ -11,6 +11,8 @@ import skullIcon from '../icons/skullWhite.png';
 import useAdjustmentTracker from '../hooks/useAdjustmentTracker';
 import useLifeCounterGesture from '../hooks/useLifeCounterGesture';
 
+const TRACKER_MIN_WIDTH = 120;
+
 export default function LifeCounter({
   textColour = '#ffffffa0',
   life,
@@ -49,6 +51,7 @@ export default function LifeCounter({
   const displayLife = life + previewDelta;
   const trackerValue = adjustmentTotal + previewDelta;
   const showSkull = life <= 0 && previewDelta <= 0;
+  const trackerVisible = trackerValue !== 0;
 
   const lifeDisplay = showSkull ? (
     <Image
@@ -59,33 +62,10 @@ export default function LifeCounter({
     <Text style={[styles.lifeText, { color: textColour }]}>{displayLife}</Text>
   );
 
-  const trackerBaseStyle =
+  const trackerSignStyle =
     layout === 'rotated-column'
-      ? styles.trackerTextHorizontal
-      : styles.trackerText;
-
-  const trackerDisplay =
-    trackerValue !== 0 ? (
-      <Animated.View style={[styles.trackerRow, { opacity: fadeAnim }]}>
-        <Text style={[trackerBaseStyle, { color: textColour }]}>
-          {trackerValue > 0 ? '+' : ''}
-        </Text>
-        <Text
-          style={[
-            trackerBaseStyle,
-            { color: textColour, fontFamily: 'Immortal' }
-          ]}>
-          {trackerValue}
-        </Text>
-      </Animated.View>
-    ) : null;
-
-  const rotatedColumnContent = (
-    <View style={styles.rotatedColumnInner}>
-      {lifeDisplay}
-      {trackerDisplay}
-    </View>
-  );
+      ? styles.trackerSignHorizontal
+      : styles.trackerSign;
 
   return (
     <View
@@ -96,14 +76,30 @@ export default function LifeCounter({
       ]}
       pointerEvents="box-only"
       {...panHandlers}>
-      {layout === 'rotated-column' ? (
-        rotatedColumnContent
-      ) : (
-        <>
-          <View style={styles.lifeContainer}>{lifeDisplay}</View>
-          {trackerDisplay}
-        </>
-      )}
+      <View
+        style={[
+          styles.centerAnchor,
+          layout === 'rotated-column' && styles.rotatedColumnInner
+        ]}>
+        {lifeDisplay}
+        <Animated.View
+          pointerEvents={trackerVisible ? 'auto' : 'none'}
+          style={[
+            styles.trackerOverlay,
+            { opacity: trackerVisible ? fadeAnim : 0 }
+          ]}>
+          <Text style={[trackerSignStyle, { color: textColour }]}>
+            {trackerValue > 0 ? '+' : ''}
+          </Text>
+          <Text
+            style={[
+              styles.trackerValue,
+              { color: textColour, fontFamily: 'Immortal' }
+            ]}>
+            {trackerValue}
+          </Text>
+        </Animated.View>
+      </View>
     </View>
   );
 }
@@ -115,7 +111,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: '100%'
   },
-  lifeContainer: {
+  centerAnchor: {
+    position: 'relative',
     alignItems: 'center',
     justifyContent: 'center'
   },
@@ -128,21 +125,25 @@ const styles = StyleSheet.create({
     height: 200,
     opacity: 0.7
   },
-  trackerRow: {
-    flexDirection: 'row'
-  },
-  trackerText: {
-    fontSize: 60,
-    marginTop: 10
-  },
-  rotatedColumnInner: {
-    flexDirection: 'column',
-    alignItems: 'center',
+  trackerOverlay: {
+    position: 'absolute',
+    top: '100%',
+    marginTop: 10,
+    flexDirection: 'row',
     justifyContent: 'center',
-    transform: [{ rotate: '-90deg' }]
+    minWidth: TRACKER_MIN_WIDTH
   },
-  trackerTextHorizontal: {
+  trackerSign: {
+    fontSize: 60
+  },
+  trackerSignHorizontal: {
     fontSize: 60,
     marginRight: 10
+  },
+  trackerValue: {
+    fontSize: 60
+  },
+  rotatedColumnInner: {
+    transform: [{ rotate: '-90deg' }]
   }
 });
