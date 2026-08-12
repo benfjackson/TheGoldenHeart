@@ -25,6 +25,7 @@ export default function SelectSkin() {
     getFavourites().then((favourites) => {
       // setFavourites(favourites);
       setFavourites([
+        'ParallaxTest',
         'Island',
         'Mountain',
         'Plains',

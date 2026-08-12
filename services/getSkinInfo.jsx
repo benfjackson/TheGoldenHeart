@@ -19,6 +19,7 @@ export function getMiniImage(skinID) {
     Plains: require('../skins/Basic/Plains/Plains.png'),
     Mountain: require('../skins/Basic/Mountain/mini.png'),
     Forest: require('../skins/Basic/Forest/image.png'),
+    ParallaxTest: require('../skins/parallax/mini.png'),
 
     // 2 Players
     Waves: require('../skins/two_player/basic/Waves/mini.png'),
@@ -56,6 +57,7 @@ export function getSkinData(skinID) {
     Plains: require('../skins/Basic/Plains/data.json'),
     Mountain: require('../skins/Basic/Mountain/data.json'),
     Forest: require('../skins/Basic/Forest/data.json'),
+    ParallaxTest: require('../skins/parallax/data.json'),
 
     // 2 Players
     Waves: require('../skins/two_player/basic/Waves/data.json'),

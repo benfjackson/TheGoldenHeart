@@ -3,6 +3,7 @@ import { View, Image, Pressable, Text, Dimensions } from 'react-native';
 import BasicTwoPlayer from '../../skins/two_player/basic/BasicTwoPlayer';
 import BasicThreePlayer from '../../skins/three_player/basic/BasicThreePlayer';
 import BasicFourPlayer from '../../skins/four_player/basic/BasicFourPlayer';
+import ParallaxTestSkin from '../../skins/parallax/ParallaxTestSkin';
 import { getSkinData } from '../../services/getSkinInfo';
 
 export default function Skin({ skinID, lives, setLives }) {
@@ -18,6 +19,12 @@ export default function Skin({ skinID, lives, setLives }) {
 export function GetSkin({ skinID, lives, setLives }) {
   const skinData = getSkinData(skinID);
   const numPlayers = skinData.numPlayers;
+
+  if (skinData.skinType === 'parallax') {
+    return (
+      <ParallaxTestSkin skinID={skinID} lives={lives} setLives={setLives} />
+    );
+  }
 
   switch (numPlayers) {
     case 1:

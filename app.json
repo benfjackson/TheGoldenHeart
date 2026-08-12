@@ -38,11 +38,20 @@
           "hidden": true,
           "style": "light"
         }
+      ],
+      [
+        "expo-sensors",
+        {
+          "motionPermission": "Golden Heart uses device motion to create depth effects on parallax skins."
+        }
       ]
     ],
     "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSMotionUsageDescription": "Golden Heart uses device motion to create depth effects on parallax skins."
+      }
     },
     "androidStatusBar": {
       "hidden": true,

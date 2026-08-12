@@ -5,7 +5,11 @@ import frame2 from '../../images/frame2.png';
 import frame3 from '../../images/frame3.png';
 import frame4 from '../../images/frame4.png';
 
-export default function ScreenFrame({ children, frameStyle = '4' }) {
+export default function ScreenFrame({
+  children,
+  frameStyle = '4',
+  transparent = false
+}) {
   const styleMap = { 1: frame1, 2: frame2, 3: frame3, 4: frame4 };
 
   const frame = styleMap[frameStyle];
@@ -15,7 +19,7 @@ export default function ScreenFrame({ children, frameStyle = '4' }) {
       resizeMode="stretch"
       style={{
         flex: 1,
-        backgroundColor: 'black',
+        backgroundColor: transparent ? 'transparent' : 'black',
         // width: windowWidth,
         // height: windowHeight,
         width: '102%',

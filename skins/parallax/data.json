@@ -1,0 +1,8 @@
+{
+  "id": "ParallaxTest",
+  "title": "Parallax Test",
+  "numPlayers": 1,
+  "skinType": "parallax",
+  "tags": ["test", "parallax"],
+  "textColour": "#ffffffcc"
+}
