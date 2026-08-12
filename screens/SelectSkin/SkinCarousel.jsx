@@ -1,13 +1,13 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
   Image,
   TouchableOpacity,
   ImageBackground,
-  Dimensions
+  Dimensions,
+  FlatList
 } from 'react-native';
-import Carousel from 'react-native-snap-carousel';
 import { useNavigation } from '@react-navigation/native';
 import Animated, { FadeOut, FadeIn } from 'react-native-reanimated';
 
@@ -42,12 +42,12 @@ export default function SkinCarousel({
     }, 200); // Delay allows fade-out before state update
   }, [numPlayers, allSkins]);
 
-  const carouselRef = useRef(null);
   const navigation = useNavigation();
   const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
   const artSize = 0.5 * SCREEN_WIDTH;
   const frameSize = 0.75 * SCREEN_WIDTH;
+  const itemWidth = 0.7 * SCREEN_WIDTH;
 
   const styles = {
     slide: {
@@ -127,12 +127,22 @@ export default function SkinCarousel({
           overflow: 'visible',
           paddingBottom: 50
         }}>
-        <Carousel
-          ref={carouselRef}
+        <FlatList
           data={skinsToDisplay}
           renderItem={renderItem}
-          sliderWidth={SCREEN_WIDTH}
-          itemWidth={0.7 * SCREEN_WIDTH}
+          keyExtractor={(item) => item.data.id}
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          snapToInterval={itemWidth}
+          decelerationRate="fast"
+          contentContainerStyle={{
+            paddingHorizontal: (SCREEN_WIDTH - itemWidth) / 2
+          }}
+          getItemLayout={(_, index) => ({
+            length: itemWidth,
+            offset: itemWidth * index,
+            index
+          })}
           style={{
             justifyContent: 'center',
             alignItems: 'center',
