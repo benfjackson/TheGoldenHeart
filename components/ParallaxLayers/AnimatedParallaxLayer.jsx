@@ -69,8 +69,8 @@ export default function AnimatedParallaxLayer({
   }, [layer.pulse?.durationMs, pulseProgress]);
 
   const animatedStyle = useAnimatedStyle(() => {
-    const parallaxX = tilt.x.value * maxOffset * layer.depth;
-    const parallaxY = tilt.y.value * maxOffset * layer.depth;
+    const parallaxX = -tilt.x.value * maxOffset * layer.depth;
+    const parallaxY = -tilt.y.value * maxOffset * layer.depth;
     const driftDistance =
       (layer.drift?.axis === 'x' ? viewport.width : viewport.height) *
       (layer.drift?.distance ?? 0);
