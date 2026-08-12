@@ -1,16 +1,13 @@
 import { createClient } from '@supabase/supabase-js';
 import 'react-native-url-polyfill/auto';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
 import { Alert } from 'react-native';
 
-//Following
-//https://supabase.com/docs/guides/auth/quickstarts/react-native
+import { logError, logInfo } from '../utils/logger';
 
 const supabaseUrl = 'https://eixiuqvoidxhxlnjnkfg.supabase.co';
-// With RLS enabled, this is ok to push
 const supabaseAnonKey =
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVpeGl1cXZvaWR4aHhsbmpua2ZnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDEzMTc3MTMsImV4cCI6MjA1Njg5MzcxM30.SPeM3XKvDnZvgvg-YjhqAIyb1ffr-YPJjD5YdyVnENw'; // process.env.SUPABASE_KEY;
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVpeGl1cXZvaWR4aHhsbmpua2ZnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDEzMTc3MTMsImV4cCI6MjA1Njg5MzcxM30.SPeM3XKvDnZvgvg-YjhqAIyb1ffr-YPJjD5YdyVnENw';
 
 export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
   auth: {
@@ -21,62 +18,82 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
   }
 });
 
-// // Tells Supabase Auth to continuously refresh the session automatically
-// // if the app is in the foreground. When this is added, you will continue
-// // to receive `onAuthStateChange` events with the `TOKEN_REFRESHED` or
-// // `SIGNED_OUT` event if the user's session is terminated. This should
-// // only be registered once.
-// AppState.addEventListener('change', (state) => {
-//   if (state === 'active') {
-//     supabase.auth.startAutoRefresh();
-//   } else {
-//     supabase.auth.stopAutoRefresh();
-//   }
-// });
-
 export async function signInWithEmail(email, password) {
-  const {
-    data: { session },
-    error
-  } = await supabase.auth.signInWithPassword({
-    email: email,
-    password: password
-  });
+  try {
+    const {
+      data: { session },
+      error
+    } = await supabase.auth.signInWithPassword({
+      email,
+      password
+    });
 
-  if (error) Alert.alert(error.message);
-  console.log(session);
+    if (error) {
+      logError('Auth', 'Sign in failed', error, { email });
+      Alert.alert(error.message);
+      return { session: null, error };
+    }
 
-  if (!session) {
-    console.error('No session:', e);
+    if (!session) {
+      const noSessionError = new Error(
+        'Sign in succeeded but no session was returned'
+      );
+      logError('Auth', 'Missing session after sign in', noSessionError, {
+        email
+      });
+      return { session: null, error: noSessionError };
+    }
+
+    logInfo('Auth', 'Sign in succeeded', { userId: session.user?.id });
+    return { session, error: null };
+  } catch (error) {
+    logError('Auth', 'Sign in threw an unexpected error', error, { email });
+    return { session: null, error };
   }
-
-  return session;
 }
 
 export async function signUpWithEmail(email, password) {
-  const {
-    data: { session },
-    error
-  } = await supabase.auth.signUp({
-    email: email,
-    password: password
-  });
+  try {
+    const {
+      data: { session },
+      error
+    } = await supabase.auth.signUp({
+      email,
+      password
+    });
 
-  if (error) Alert.alert(error.message);
-  if (!session) {
-    Alert.alert('Please check your inbox for email verification!');
-    return null;
-  } else {
-    saveSession(session);
-    return session;
+    if (error) {
+      logError('Auth', 'Sign up failed', error, { email });
+      Alert.alert(error.message);
+      return { session: null, error };
+    }
+
+    if (!session) {
+      logInfo('Auth', 'Sign up pending email verification', { email });
+      Alert.alert('Please check your inbox for email verification!');
+      return { session: null, error: null };
+    }
+
+    logInfo('Auth', 'Sign up succeeded', { userId: session.user?.id });
+    return { session, error: null };
+  } catch (error) {
+    logError('Auth', 'Sign up threw an unexpected error', error, { email });
+    return { session: null, error };
   }
 }
 
 export async function signOut() {
-  const { error } = await supabase.auth.signOut();
-  if (error) {
-    console.error('Logout error:', error.message);
-  } else {
-    console.log('User logged out.');
+  try {
+    const { error } = await supabase.auth.signOut();
+    if (error) {
+      logError('Auth', 'Sign out failed', error);
+      return { error };
+    }
+
+    logInfo('Auth', 'Sign out succeeded');
+    return { error: null };
+  } catch (error) {
+    logError('Auth', 'Sign out threw an unexpected error', error);
+    return { error };
   }
 }

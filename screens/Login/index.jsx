@@ -1,44 +1,60 @@
-import React, { useState, useEffect } from 'react';
-import { View, Alert } from 'react-native';
-import { Input } from '@rneui/themed';
-import { StyleSheet } from 'react-native';
+import React, { useState, useEffect, useRef } from 'react';
+import { View, Alert, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
-import { colors } from '../../styles';
 import BasicButton from '../../components/BasicButton';
+import AuthInput from '../../components/AuthInput';
 import {
   signInWithEmail,
   signUpWithEmail,
   signOut
 } from '../../auth/supabaseClient';
-import { useAuth } from '../../auth/AuthContext'; // Use the global auth state
+import { useAuth } from '../../auth/AuthContext';
+import { logError } from '../../utils/logger';
 
 export default function Login({ route }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigation = useNavigation();
-  const { session } = useAuth(); // Get the current auth session
+  const { session } = useAuth();
+  const hasRedirected = useRef(false);
 
-  // Redirect user once they're logged in
   useEffect(() => {
-    if (session) {
-      navigation.goBack(); // Go back to previous screen
+    if (!session || hasRedirected.current) {
+      return undefined;
     }
+
+    hasRedirected.current = true;
+    const timeoutId = setTimeout(() => {
+      if (navigation.canGoBack()) {
+        navigation.goBack();
+      }
+    }, 0);
+
+    return () => clearTimeout(timeoutId);
   }, [session, navigation]);
 
-  // Handles login
   const handleSignIn = async () => {
-    const { error } = await signInWithEmail(email, password);
-    if (error) {
-      Alert.alert('Login Error', error.message);
+    try {
+      const { error } = await signInWithEmail(email, password);
+      if (error) {
+        Alert.alert('Login Error', error.message);
+      }
+    } catch (error) {
+      logError('Login', 'Sign in handler failed', error, { email });
+      Alert.alert('Login Error', 'Something went wrong. Please try again.');
     }
   };
 
-  // Handles signup
   const handleSignUp = async () => {
-    const { error } = await signUpWithEmail(email, password);
-    if (error) {
-      Alert.alert('Signup Error', error.message);
+    try {
+      const { error } = await signUpWithEmail(email, password);
+      if (error) {
+        Alert.alert('Signup Error', error.message);
+      }
+    } catch (error) {
+      logError('Login', 'Sign up handler failed', error, { email });
+      Alert.alert('Signup Error', 'Something went wrong. Please try again.');
     }
   };
 
@@ -46,36 +62,20 @@ export default function Login({ route }) {
     <View style={{ flex: 1, justifyContent: 'center' }}>
       <View style={styles.container}>
         <View style={[styles.verticallySpaced, styles.mt20]}>
-          <Input
-            style={{ color: colors.gold }}
-            labelStyle={{ color: colors.gold }}
+          <AuthInput
             label="Email"
-            leftIcon={{
-              type: 'font-awesome',
-              name: 'envelope',
-              color: colors.gold
-            }}
             onChangeText={setEmail}
             value={email}
             placeholder="email@address.com"
-            autoCapitalize="none"
           />
         </View>
         <View style={styles.verticallySpaced}>
-          <Input
-            style={{ color: colors.gold }}
+          <AuthInput
             label="Password"
-            labelStyle={{ color: colors.gold }}
-            leftIcon={{
-              type: 'font-awesome',
-              name: 'lock',
-              color: colors.gold
-            }}
             onChangeText={setPassword}
             value={password}
             secureTextEntry
             placeholder="Password"
-            autoCapitalize="none"
           />
         </View>
         <View style={[styles.verticallySpaced, styles.mt20]}>

@@ -6,7 +6,7 @@ import { getFavourites, addToFavourites } from '../../services/appStorage';
 
 import { useNavigation } from '@react-navigation/native';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import { View } from 'react-native';
 import BackButton from '../../components/BackButton';
@@ -21,7 +21,7 @@ export default function SelectSkin() {
 
   const navigation = useNavigation();
 
-  if (!loaded) {
+  useEffect(() => {
     getFavourites().then((favourites) => {
       console.log(favourites);
       // setFavourites(favourites);
@@ -42,7 +42,7 @@ export default function SelectSkin() {
 
       setLoaded(true);
     });
-  }
+  }, []);
 
   return (
     <View
@@ -65,11 +65,10 @@ export default function SelectSkin() {
       <View
         style={{
           flex: 1,
-          justifyContent: 'center',
-          alignItems: 'center',
+          width: '100%',
           paddingTop: '20%'
         }}>
-        <View style={{ flex: 1, paddingTop: '10%', overflow: 'visible' }}>
+        <View style={{ flex: 1, width: '100%' }}>
           <SkinCarousel
             startingHealth={startingHealth}
             favourites={favourites}
@@ -78,9 +77,12 @@ export default function SelectSkin() {
         </View>
         <View
           style={{
-            flex: 1,
+            flexDirection: 'row',
             alignItems: 'center',
-            flexDirection: 'row'
+            justifyContent: 'center',
+            paddingTop: 8,
+            paddingBottom: 24,
+            width: '100%'
           }}>
           <NumPlayersPicker
             numPlayers={numPlayers}

@@ -1,0 +1,16 @@
+I want to have 3d skins.
+It should be layers of 2d images, that move laterally as my phones orientation changes (as I tilt it in the air) to create a 3d effect.
+I dont want the layers to have a tilt effect, they should just move to create the illusion of depth.
+Lets try this out with 3 layers of plain colour to see what its like.
+
+---
+
+I want to switch to a pattern where I serve the skins from the backend.
+This is so I can add new skins to the app without needing users to update it.
+They would only need to update when theres a new type of skin.
+whats this design pattern called?
+Can we use supabase for it?
+
+---
+
+clean up the logs in this project please

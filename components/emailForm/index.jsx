@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, Text } from 'react-native';
-import { Input } from '@rneui/themed';
+import { StyleSheet, View } from 'react-native';
 
-import { colors } from '../../styles';
 import BasicButton from '../BasicButton';
+import AuthInput from '../AuthInput';
 
 import {
   signInWithEmail,
@@ -18,37 +17,20 @@ export default function EmailForm() {
   return (
     <View style={styles.container}>
       <View style={[styles.verticallySpaced, styles.mt20]}>
-        <Input
-          style={{ color: colors.gold }}
-          labelStyle={{ color: colors.gold }}
+        <AuthInput
           label="Email"
-          leftIcon={{
-            type: 'font-awesome',
-            name: 'envelope',
-            color: colors.gold
-          }}
-          onChangeText={(text) => setEmail(text)}
+          onChangeText={setEmail}
           value={email}
           placeholder="email@address.com"
-          autoCapitalize={'none'}
         />
       </View>
       <View style={styles.verticallySpaced}>
-        <Input
-          style={{
-            color: colors.gold
-          }}
+        <AuthInput
           label="Password"
-          labelStyle={{
-            color: colors.gold
-          }}
-          leftIcon={{ type: 'font-awesome', name: 'lock', color: colors.gold }}
-          onChangeText={(text) => setPassword(text)}
+          onChangeText={setPassword}
           value={password}
-          secureTextEntry={true}
+          secureTextEntry
           placeholder="Password"
-          autoCapitalize={'none'}
-          underlineColorAndroid={colors.gold}
         />
       </View>
       <View style={[styles.verticallySpaced, styles.mt20]}>

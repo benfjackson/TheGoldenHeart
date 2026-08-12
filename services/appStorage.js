@@ -1,11 +1,18 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+import { logError } from '../utils/logger';
+
+function logStorageError(operation, error, details = {}) {
+  logError('Storage', `${operation} failed`, error, details);
+}
+
 // Storing a token
 export async function storeToken(token, tokenName) {
   try {
     await AsyncStorage.setItem(tokenName, token);
     return 'success';
   } catch (error) {
+    logStorageError('storeToken', error, { tokenName });
     return `error: ${error}`;
   }
 }
@@ -20,6 +27,7 @@ export async function retrieveToken(tokenName) {
       return 'not found';
     }
   } catch (error) {
+    logStorageError('retrieveToken', error, { tokenName });
     return `error: ${error}`;
   }
 }
@@ -30,6 +38,7 @@ export async function removeToken(tokenName) {
     await AsyncStorage.removeItem(tokenName);
     return 'success';
   } catch (error) {
+    logStorageError('removeToken', error, { tokenName });
     return `error: ${error}`;
   }
 }
@@ -45,6 +54,7 @@ export async function saveGameState(gameState) {
     await AsyncStorage.setItem('gameState', JSON.stringify(stampedState));
     return 'success';
   } catch (error) {
+    logStorageError('saveGameState', error);
     return `error: ${error}`;
   }
 }
@@ -70,6 +80,7 @@ export async function loadGameState() {
       return null;
     }
   } catch (error) {
+    logStorageError('loadGameState', error);
     return `error: ${error}`;
   }
 }
@@ -79,6 +90,7 @@ export async function clearGameState() {
     await AsyncStorage.removeItem('gameState');
     return 'success';
   } catch (error) {
+    logStorageError('clearGameState', error);
     return `error: ${error}`;
   }
 }
@@ -96,16 +108,17 @@ export async function checkHasCompletedTutorial() {
       return false;
     }
   } catch (error) {
+    logStorageError('checkHasCompletedTutorial', error);
     return `error: ${error}`;
   }
 }
 
-// Is JSONification needed?
 export async function completeTutorial() {
   try {
     await AsyncStorage.setItem('completedTutorial', 'true');
     return 'success';
   } catch (error) {
+    logStorageError('completeTutorial', error);
     return `error: ${error}`;
   }
 }
@@ -137,6 +150,7 @@ export async function getFavourites() {
       return initialFavourites;
     }
   } catch (error) {
+    logStorageError('getFavourites', error);
     return `error: ${error}`;
   }
 }
@@ -153,6 +167,7 @@ export async function addToFavourites(skinName) {
       return 'success';
     }
   } catch (error) {
+    logStorageError('addToFavourites', error, { skinName });
     return `error: ${error}`;
   }
 }
@@ -173,6 +188,7 @@ export async function removeFromFavourites(skinName) {
       return 'not found';
     }
   } catch (error) {
+    logStorageError('removeFromFavourites', error, { skinName });
     return `error: ${error}`;
   }
 }

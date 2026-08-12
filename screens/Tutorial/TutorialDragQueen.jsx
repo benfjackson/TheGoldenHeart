@@ -1,5 +1,5 @@
-import React, { useCallback, useEffect } from 'react';
-import { View, Text, Image, StyleSheet, Animated } from 'react-native';
+import React, { useCallback } from 'react';
+import { View, Text, Image, StyleSheet } from 'react-native';
 
 import Sparkles from '../../components/Sparkle/Sparkles';
 import skullIcon from '../../icons/skullWhite.png';
@@ -18,7 +18,7 @@ export default function TutorialDragQueen({
   setTutorialState
 }) {
   const autoFade = !TRACKER_HOLD_STEPS.includes(tutorialState);
-  const { adjustmentTotal, fadeAnim, recordChange, holdVisible } =
+  const { adjustmentTotal, trackerOpacity, recordChange, holdVisible } =
     useAdjustmentTracker({ fadeDelayMs: 3000, autoFade });
 
   const advanceTutorial = useCallback(
@@ -61,16 +61,6 @@ export default function TutorialDragQueen({
     onGestureStart: holdVisible
   });
 
-  useEffect(() => {
-    if (tutorialState === 'trackingNumber') {
-      Animated.timing(fadeAnim, {
-        toValue: 1,
-        duration: 200,
-        useNativeDriver: true
-      }).start();
-    }
-  }, [fadeAnim, tutorialState]);
-
   const displayLife = life + previewDelta;
   const trackerValue = adjustmentTotal + previewDelta;
   const showSkull = life <= 0 && previewDelta <= 0;
@@ -96,12 +86,9 @@ export default function TutorialDragQueen({
           )}
         </View>
 
-        <Animated.View
+        <View
           pointerEvents={trackerVisible ? 'auto' : 'none'}
-          style={[
-            styles.trackerOverlay,
-            { opacity: trackerVisible ? fadeAnim : 0 }
-          ]}
+          style={[styles.trackerOverlay, { opacity: trackerOpacity }]}
         >
           <Sparkles
             on={['trackingNumber', 'again', 'swipeUp'].includes(tutorialState)}
@@ -120,7 +107,7 @@ export default function TutorialDragQueen({
               </Text>
             </View>
           </Sparkles>
-        </Animated.View>
+        </View>
       </View>
     </View>
   );

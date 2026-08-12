@@ -2,25 +2,23 @@ import {
   View,
   Text,
   StyleSheet,
-  Animated,
   Pressable,
   Image,
   ImageBackground
 } from 'react-native';
-import { useState, useRef, useEffect } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import DragQueen from './TutorialDragQueen';
 import Sparkles from '../../components/Sparkle/Sparkles';
 import PopupMenu from './TutorialMenu';
 import ScreenFrame from '../../components/ScreenFrame';
 import { fonts } from '../../styles';
+import { logInfo } from '../../utils/logger';
 
 export default function Tutorial() {
   const [life, setLife] = useState(20);
-
   const [menuOpen, setMenuOpen] = useState(false);
-
   const [currentStep, setCurrentStep] = useState('tapUp');
-  const fadeAnim = useRef(new Animated.Value(1)).current;
+  const autoAdvanceRef = useRef(null);
 
   const tutorialStages = {
     lifeTotal: {
@@ -71,41 +69,41 @@ export default function Tutorial() {
     menu: {
       text: 'Tap up here for the menu',
       styling: { justifyContent: 'flex-start', paddingTop: '10%' },
-      next: null // No next step; tutorial ends
+      next: null
     }
   };
   const menuButton = require('../../images/popupButton.png');
 
-  const nextStep = (passedNextKey) => {
-    console.log(currentStep, ' currStep');
-    console.log(passedNextKey, ' passedNextKey');
+  const nextStep = useCallback(
+    (passedNextKey) => {
+      const nextKey = passedNextKey || tutorialStages[currentStep].next;
+      if (!nextKey) {
+        return;
+      }
 
-    const nextKey = passedNextKey || tutorialStages[currentStep].next;
-    if (!nextKey) {
-      return;
-    }
-    console.log('nextKey', nextKey);
-
-    Animated.timing(fadeAnim, {
-      toValue: 0,
-      duration: 300,
-      useNativeDriver: true
-    }).start(() => {
+      logInfo('Tutorial', 'Advancing step', { from: currentStep, to: nextKey });
       setCurrentStep(nextKey);
-      Animated.timing(fadeAnim, {
-        toValue: 1,
-        duration: 300,
-        useNativeDriver: true
-      }).start();
-    });
-  };
+    },
+    [currentStep]
+  );
 
-  // To be used for timeout progressions
   useEffect(() => {
-    if (['trackingNumber', 'lifeTotal'].includes(currentStep)) {
-      setTimeout(nextStep, 5000);
+    if (autoAdvanceRef.current) {
+      clearTimeout(autoAdvanceRef.current);
+      autoAdvanceRef.current = null;
     }
-  }, [currentStep]);
+
+    if (['trackingNumber', 'lifeTotal'].includes(currentStep)) {
+      autoAdvanceRef.current = setTimeout(() => nextStep(), 5000);
+    }
+
+    return () => {
+      if (autoAdvanceRef.current) {
+        clearTimeout(autoAdvanceRef.current);
+        autoAdvanceRef.current = null;
+      }
+    };
+  }, [currentStep, nextStep]);
 
   return (
     <>
@@ -118,9 +116,7 @@ export default function Tutorial() {
         <ScreenFrame>
           <View
             style={[styles.textContainer, tutorialStages[currentStep].styling]}>
-            <Animated.Text style={[styles.text, { opacity: fadeAnim }]}>
-              {tutorialStages[currentStep].text}
-            </Animated.Text>
+            <Text style={styles.text}>{tutorialStages[currentStep].text}</Text>
           </View>
           <Pressable
             style={{
@@ -173,6 +169,5 @@ const styles = StyleSheet.create({
     position: 'absolute',
     alignItems: 'center',
     zIndex: -1
-    // alignSelf: 'center'
   }
 });

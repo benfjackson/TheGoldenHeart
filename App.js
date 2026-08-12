@@ -9,9 +9,13 @@ import * as SplashScreen from 'expo-splash-screen';
 
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
-SplashScreen.preventAutoHideAsync();
-
+import ErrorBoundary from './components/ErrorBoundary';
 import ScreenStack from './screens/ScreenStack';
+import { installGlobalErrorHandlers, logError } from './utils/logger';
+
+SplashScreen.preventAutoHideAsync();
+installGlobalErrorHandlers();
+
 export default function App() {
   const [fontsLoaded] = useFonts({
     Endor: require('./assets/fonts/endor/ENDOR___.ttf'),
@@ -31,14 +35,20 @@ export default function App() {
         backgroundColor="transparent"
       />
       <SafeAreaProvider>
-        <AuthProvider>
-          <View style={styles.container}>
-            {/* <StatusBar style="auto" /> */}
-            <NavigationContainer>
-              <ScreenStack />
-            </NavigationContainer>
-          </View>
-        </AuthProvider>
+        <ErrorBoundary>
+          <AuthProvider>
+            <View style={styles.container}>
+              <NavigationContainer
+                onUnhandledAction={(action) => {
+                  logError('Navigation', 'Unhandled navigation action', action.type, {
+                    payload: action.payload
+                  });
+                }}>
+                <ScreenStack />
+              </NavigationContainer>
+            </View>
+          </AuthProvider>
+        </ErrorBoundary>
       </SafeAreaProvider>
     </>
   );

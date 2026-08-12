@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { View, Text, Image, StyleSheet, Animated } from 'react-native';
+import { View, Text, Image, StyleSheet } from 'react-native';
 
 import skullIcon from '../icons/skullWhite.png';
 import useAdjustmentTracker from '../hooks/useAdjustmentTracker';
@@ -18,7 +18,7 @@ export default function LifeCounter({
   autoFade = true,
   onCommit
 }) {
-  const { adjustmentTotal, fadeAnim, recordChange, holdVisible } =
+  const { adjustmentTotal, trackerOpacity, recordChange, holdVisible } =
     useAdjustmentTracker({ fadeDelayMs, autoFade });
 
   const commitChange = useCallback(
@@ -70,12 +70,9 @@ export default function LifeCounter({
         ]}
       >
         {lifeDisplay}
-        <Animated.View
+        <View
           pointerEvents={trackerVisible ? 'auto' : 'none'}
-          style={[
-            styles.trackerOverlay,
-            { opacity: trackerVisible ? fadeAnim : 0 }
-          ]}
+          style={[styles.trackerOverlay, { opacity: trackerOpacity }]}
         >
           <Text style={[trackerSignStyle, { color: textColour }]}>
             {trackerValue > 0 ? '+' : ''}
@@ -88,7 +85,7 @@ export default function LifeCounter({
           >
             {trackerValue}
           </Text>
-        </Animated.View>
+        </View>
       </View>
     </View>
   );

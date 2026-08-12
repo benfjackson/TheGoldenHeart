@@ -1,9 +1,8 @@
-import { NavigationContainer } from '@react-navigation/native';
 import {
   createStackNavigator,
-  TransitionPresets
+  CardStyleInterpolators,
+  TransitionSpecs
 } from '@react-navigation/stack';
-import { Easing, Animated, View } from 'react-native';
 import * as SplashScreen from 'expo-splash-screen';
 import Login from './Login';
 
@@ -21,54 +20,21 @@ import {
   checkHasCompletedTutorial,
   loadGameState
 } from '../services/appStorage';
+import { logError } from '../utils/logger';
+
+const Stack = createStackNavigator();
+
+const screenOptions = {
+  headerShown: false,
+  cardStyle: { backgroundColor: 'transparent' },
+  cardStyleInterpolator: CardStyleInterpolators.forFadeFromCenter,
+  transitionSpec: {
+    open: TransitionSpecs.FadeInFromBottomAndroidSpec,
+    close: TransitionSpecs.FadeOutToBottomAndroidSpec
+  }
+};
 
 export default function ScreenStack() {
-  const Stack = createStackNavigator();
-
-  useEffect(() => {
-    setTimeout(() => {
-      // Code to navigate to the next screen
-    }, 1000); // Delay in milliseconds
-  }, []);
-
-  const transitionConfig = {
-    transitionSpec: {
-      open: {
-        animation: 'timing',
-        config: {
-          duration: 1000,
-          easing: Easing.inOut(Easing.ease)
-        }
-      },
-      close: {
-        animation: 'timing',
-        config: {
-          duration: 1000,
-          easing: Easing.inOut(Easing.ease)
-        }
-      }
-    },
-
-    cardStyleInterpolator: ({ current, layouts }) => {
-      return {
-        cardStyle: {
-          opacity: current.progress.interpolate({
-            inputRange: [0, 1],
-            outputRange: [0, 1]
-          }),
-          backgroundColor: 'black'
-        },
-        overlayStyle: {
-          opacity: current.progress.interpolate({
-            inputRange: [0, 1],
-            outputRange: [0, 1]
-          }),
-          backgroundColor: 'black'
-        }
-      };
-    }
-  };
-
   const [initialRoute, setInitialRoute] = useState(null);
 
   useEffect(() => {
@@ -84,11 +50,11 @@ export default function ScreenStack() {
         } else if (gameState) {
           setInitialRoute('ResumeGame');
         } else {
-          setInitialRoute('HomeScreen'); // Default route
+          setInitialRoute('HomeScreen');
         }
       } catch (error) {
-        console.error('Error loading app state:', error);
-        setInitialRoute('HomeScreen'); // Fallback route
+        logError('ScreenStack', 'Failed to load initial route', error);
+        setInitialRoute('HomeScreen');
       }
     };
 
@@ -104,20 +70,12 @@ export default function ScreenStack() {
   if (!initialRoute) return null;
 
   return (
-    <Stack.Navigator
-      initialRouteName={initialRoute}
-      screenOptions={{
-        headerShown: false,
-        cardStyle: { backgroundColor: 'transparent' },
-        cardStyleInterpolator: transitionConfig.cardStyleInterpolator,
-        transitionSpec: transitionConfig.transitionSpec
-      }}>
+    <Stack.Navigator initialRouteName={initialRoute} screenOptions={screenOptions}>
       <Stack.Screen name="HomeScreen" component={HomeScreen} />
       <Stack.Screen name="Tutorial" component={Tutorial} />
       <Stack.Screen name="ResumeGame" component={ResumeGame} />
       <Stack.Screen name="Login" component={Login} />
       <Stack.Screen name="Gallery" component={Gallery} />
-
       <Stack.Screen name="SelectSkin" component={SelectSkin} />
       <Stack.Screen name="InGame" component={InGame} />
     </Stack.Navigator>
