@@ -112,7 +112,7 @@ export default function Tutorial() {
         setIsOpen={setMenuOpen}
         tutorialStep={currentStep}
       />
-      <View style={{ flex: 1, width: '100%', height: '100%' }}>
+      <View style={{ flex: 1, width: '100%', height: '100%', backgroundColor: 'black' }}>
         <ScreenFrame>
           <View
             style={[styles.textContainer, tutorialStages[currentStep].styling]}>

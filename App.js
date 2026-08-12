@@ -3,7 +3,15 @@ import { Platform, StyleSheet, View, StatusBar } from 'react-native';
 import { NavigationBar } from 'expo-navigation-bar';
 // import MainMenu from './screens/MainMenu';
 import 'react-native-gesture-handler';
-import { NavigationContainer } from '@react-navigation/native';
+import { DarkTheme, NavigationContainer } from '@react-navigation/native';
+
+const navigationTheme = {
+  ...DarkTheme,
+  colors: {
+    ...DarkTheme.colors,
+    background: '#000000'
+  }
+};
 import { useFonts } from 'expo-font';
 import { AuthProvider } from './auth/AuthContext';
 import * as SplashScreen from 'expo-splash-screen';
@@ -38,6 +46,7 @@ function AppShell() {
             }
           ]}>
           <NavigationContainer
+            theme={navigationTheme}
             onUnhandledAction={(action) => {
               logError('Navigation', 'Unhandled navigation action', action.type, {
                 payload: action.payload

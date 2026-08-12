@@ -15,6 +15,7 @@ export default function ScreenFrame({ children, frameStyle = '4' }) {
       resizeMode="stretch"
       style={{
         flex: 1,
+        backgroundColor: 'black',
         // width: windowWidth,
         // height: windowHeight,
         width: '102%',
