@@ -1,0 +1,8 @@
+{
+  "id": "IslandParallax",
+  "title": "Azure Isles",
+  "numPlayers": 1,
+  "skinType": "parallax",
+  "tags": ["island", "blue", "parallax", "fantasy"],
+  "textColour": "#dff8ffff"
+}

@@ -10,3 +10,4 @@ This is so I can add new skins to the app without needing users to update it.
 They would only need to update when theres a new type of skin.
 whats this design pattern called?
 Can we use supabase for it?
+Skins should cache

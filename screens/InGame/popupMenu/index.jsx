@@ -32,28 +32,30 @@ export default function PopupMenu({
       animationType="fade"
       onRequestClose={closeMenu}>
       <Pressable style={styles.backdrop} onPress={closeMenu}>
-        <Pressable style={styles.dialog} onPress={(event) => event.stopPropagation()}>
-          <ImageBackground
-            imageStyle={styles.popupImage}
-            style={styles.popupBackground}
-            source={bg}>
-            <View style={styles.content}>
-              {menuState === 'main' && (
-                <Main
-                  setMenuState={setMenuState}
-                  setPopupMenuIsOpen={setIsOpen}
-                  resetGame={resetGame}
-                />
-              )}
-              {menuState === 'counters' && (
-                <CountersSelection
-                  setMenuState={setMenuState}
-                  counterControl={counterControl}
-                />
-              )}
-            </View>
-          </ImageBackground>
-        </Pressable>
+        <View style={styles.centerWrapper} pointerEvents="box-none">
+          <Pressable onPress={(event) => event.stopPropagation()}>
+            <ImageBackground
+              imageStyle={styles.popupImage}
+              style={styles.popupBackground}
+              source={bg}>
+              <View style={styles.content}>
+                {menuState === 'main' && (
+                  <Main
+                    setMenuState={setMenuState}
+                    setPopupMenuIsOpen={setIsOpen}
+                    resetGame={resetGame}
+                  />
+                )}
+                {menuState === 'counters' && (
+                  <CountersSelection
+                    setMenuState={setMenuState}
+                    counterControl={counterControl}
+                  />
+                )}
+              </View>
+            </ImageBackground>
+          </Pressable>
+        </View>
       </Pressable>
     </Modal>
   );
@@ -62,10 +64,9 @@ export default function PopupMenu({
 const styles = StyleSheet.create({
   backdrop: {
     flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.7)',
-    justifyContent: 'center'
+    backgroundColor: 'rgba(0, 0, 0, 0.7)'
   },
-  dialog: {
+  centerWrapper: {
     flex: 1,
     justifyContent: 'center'
   },

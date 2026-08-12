@@ -1,6 +1,7 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { Platform } from 'react-native';
 import { Accelerometer, DeviceMotion } from 'expo-sensors';
+import { useSharedValue } from 'react-native-reanimated';
 
 const MAX_TILT_G = 0.35;
 const SMOOTHING = 0.2;
@@ -24,7 +25,8 @@ async function ensureMotionPermission() {
 }
 
 export default function useDeviceTilt() {
-  const [tilt, setTilt] = useState({ x: 0, y: 0 });
+  const tiltX = useSharedValue(0);
+  const tiltY = useSharedValue(0);
   const neutralRef = useRef(null);
   const smoothRef = useRef({ x: 0, y: 0 });
 
@@ -44,25 +46,29 @@ export default function useDeviceTilt() {
       }
 
       Accelerometer.setUpdateInterval(16);
-
       subscription = Accelerometer.addListener(({ x, y }) => {
         if (!neutralRef.current) {
           neutralRef.current = { x, y };
         }
 
-        const { x: neutralX, y: neutralY } = neutralRef.current;
-        const targetX = clamp((x - neutralX) / MAX_TILT_G, -1, 1);
-        const targetY = clamp((y - neutralY) / MAX_TILT_G, -1, 1);
+        const targetX = clamp(
+          (x - neutralRef.current.x) / MAX_TILT_G,
+          -1,
+          1
+        );
+        const targetY = clamp(
+          (y - neutralRef.current.y) / MAX_TILT_G,
+          -1,
+          1
+        );
 
         smoothRef.current.x +=
           (targetX - smoothRef.current.x) * SMOOTHING;
         smoothRef.current.y +=
           (targetY - smoothRef.current.y) * SMOOTHING;
 
-        setTilt({
-          x: smoothRef.current.x,
-          y: smoothRef.current.y
-        });
+        tiltX.value = smoothRef.current.x;
+        tiltY.value = smoothRef.current.y;
       });
     };
 
@@ -71,8 +77,10 @@ export default function useDeviceTilt() {
     return () => {
       active = false;
       subscription?.remove();
+      tiltX.value = 0;
+      tiltY.value = 0;
     };
-  }, []);
+  }, [tiltX, tiltY]);
 
-  return tilt;
+  return { x: tiltX, y: tiltY };
 }
