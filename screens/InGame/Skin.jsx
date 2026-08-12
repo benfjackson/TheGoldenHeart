@@ -4,6 +4,7 @@ import BasicTwoPlayer from '../../skins/two_player/basic/BasicTwoPlayer';
 import BasicThreePlayer from '../../skins/three_player/basic/BasicThreePlayer';
 import BasicFourPlayer from '../../skins/four_player/basic/BasicFourPlayer';
 import ParallaxSkin from '../../skins/parallax/ParallaxSkin';
+import HolographicSkin from '../../skins/holographic/HolographicSkin';
 import { getSkinData } from '../../services/getSkinInfo';
 
 export default function Skin({ skinID, lives, setLives }) {
@@ -23,6 +24,12 @@ export function GetSkin({ skinID, lives, setLives }) {
   if (skinData.skinType === 'parallax') {
     return (
       <ParallaxSkin skinID={skinID} lives={lives} setLives={setLives} />
+    );
+  }
+
+  if (skinData.skinType === 'holographic') {
+    return (
+      <HolographicSkin skinID={skinID} lives={lives} setLives={setLives} />
     );
   }
 

@@ -24,7 +24,10 @@ async function ensureMotionPermission() {
   return requested.granted;
 }
 
-export default function useDeviceTilt() {
+export default function useDeviceTilt({
+  updateIntervalMs = 16,
+  quantizeStep = 0
+} = {}) {
   const tiltX = useSharedValue(0);
   const tiltY = useSharedValue(0);
   const neutralRef = useRef(null);
@@ -45,7 +48,7 @@ export default function useDeviceTilt() {
         return;
       }
 
-      Accelerometer.setUpdateInterval(16);
+      Accelerometer.setUpdateInterval(updateIntervalMs);
       subscription = Accelerometer.addListener(({ x, y }) => {
         if (!neutralRef.current) {
           neutralRef.current = { x, y };
@@ -67,8 +70,20 @@ export default function useDeviceTilt() {
         smoothRef.current.y +=
           (targetY - smoothRef.current.y) * SMOOTHING;
 
-        tiltX.value = smoothRef.current.x;
-        tiltY.value = smoothRef.current.y;
+        let nextX = smoothRef.current.x;
+        let nextY = smoothRef.current.y;
+
+        if (quantizeStep > 0) {
+          nextX = Math.round(nextX / quantizeStep) * quantizeStep;
+          nextY = Math.round(nextY / quantizeStep) * quantizeStep;
+        }
+
+        if (nextX === tiltX.value && nextY === tiltY.value) {
+          return;
+        }
+
+        tiltX.value = nextX;
+        tiltY.value = nextY;
       });
     };
 
@@ -80,7 +95,7 @@ export default function useDeviceTilt() {
       tiltX.value = 0;
       tiltY.value = 0;
     };
-  }, [tiltX, tiltY]);
+  }, [tiltX, tiltY, updateIntervalMs, quantizeStep]);
 
   return { x: tiltX, y: tiltY };
 }

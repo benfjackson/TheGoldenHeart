@@ -1,0 +1,8 @@
+{
+  "id": "HolographicKnight",
+  "title": "Holographic Knight",
+  "numPlayers": 1,
+  "skinType": "holographic",
+  "tags": ["holographic", "knight", "poc"],
+  "textColour": "#ffffffcc"
+}

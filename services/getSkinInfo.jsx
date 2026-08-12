@@ -21,6 +21,7 @@ export function getMiniImage(skinID) {
     Forest: require('../skins/Basic/Forest/image.png'),
     ParallaxTest: require('../skins/parallax/mini.png'),
     IslandParallax: require('../skins/parallax/IslandParallax/mini.png'),
+    HolographicKnight: require('../sparkles/knight.png'),
 
     // 2 Players
     Waves: require('../skins/two_player/basic/Waves/mini.png'),
@@ -60,6 +61,7 @@ export function getSkinData(skinID) {
     Forest: require('../skins/Basic/Forest/data.json'),
     ParallaxTest: require('../skins/parallax/data.json'),
     IslandParallax: require('../skins/parallax/IslandParallax/data.json'),
+    HolographicKnight: require('../skins/holographic/HolographicKnight/data.json'),
 
     // 2 Players
     Waves: require('../skins/two_player/basic/Waves/data.json'),
