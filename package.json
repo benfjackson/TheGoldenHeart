@@ -52,6 +52,7 @@
   "name": "LIFE",
   "private": true,
   "scripts": {
+    "test": "node --experimental-default-type=module --test tests/*.test.mjs",
     "android": "expo run:android",
     "ios": "expo run:ios",
     "start": "expo start -c",

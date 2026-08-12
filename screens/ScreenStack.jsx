@@ -3,7 +3,8 @@ import {
   createStackNavigator,
   TransitionPresets
 } from '@react-navigation/stack';
-import { Easing, Animated, View, Text } from 'react-native';
+import { Easing, Animated, View } from 'react-native';
+import * as SplashScreen from 'expo-splash-screen';
 import Login from './Login';
 
 import SelectSkin from './SelectSkin';
@@ -87,19 +88,20 @@ export default function ScreenStack() {
         }
       } catch (error) {
         console.error('Error loading app state:', error);
-        setInitialRoute('Home'); // Fallback route
+        setInitialRoute('HomeScreen'); // Fallback route
       }
     };
 
     fetchData();
   }, []);
 
-  if (!initialRoute)
-    return (
-      <View>
-        <Text>Beans</Text>
-      </View>
-    );
+  useEffect(() => {
+    if (initialRoute) {
+      SplashScreen.hideAsync();
+    }
+  }, [initialRoute]);
+
+  if (!initialRoute) return null;
 
   return (
     <Stack.Navigator

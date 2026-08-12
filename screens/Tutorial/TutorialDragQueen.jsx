@@ -1,4 +1,4 @@
-import React, { useRef, useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { View, Text, Image, StyleSheet, Animated } from 'react-native';
 
 import Sparkles from '../../components/Sparkle/Sparkles';
@@ -17,7 +17,6 @@ export default function TutorialDragQueen({
   tutorialState,
   setTutorialState
 }) {
-  const containerRef = useRef(null);
   const autoFade = !TRACKER_HOLD_STEPS.includes(tutorialState);
   const { adjustmentTotal, fadeAnim, recordChange, holdVisible } =
     useAdjustmentTracker({ fadeDelayMs: 3000, autoFade });
@@ -55,12 +54,11 @@ export default function TutorialDragQueen({
     [advanceTutorial, recordChange, setLife]
   );
 
-  const { previewDelta, panHandlers } = useLifeCounterGesture({
+  const { previewDelta, panHandlers, onLayout } = useLifeCounterGesture({
     axis: 'vertical',
     rotation,
-    containerRef,
     onCommit: commitChange,
-    onSwipeStart: holdVisible
+    onGestureStart: holdVisible
   });
 
   useEffect(() => {
@@ -80,10 +78,11 @@ export default function TutorialDragQueen({
 
   return (
     <View
-      ref={containerRef}
+      onLayout={onLayout}
       style={[styles.container, { transform: [{ rotate: rotation }] }]}
       pointerEvents="box-only"
-      {...panHandlers}>
+      {...panHandlers}
+    >
       <View style={styles.centerAnchor}>
         <View style={styles.lifeContainer}>
           {showSkull ? (
@@ -102,9 +101,11 @@ export default function TutorialDragQueen({
           style={[
             styles.trackerOverlay,
             { opacity: trackerVisible ? fadeAnim : 0 }
-          ]}>
+          ]}
+        >
           <Sparkles
-            on={['trackingNumber', 'again', 'swipeUp'].includes(tutorialState)}>
+            on={['trackingNumber', 'again', 'swipeUp'].includes(tutorialState)}
+          >
             <View style={styles.trackerRow}>
               <Text style={[styles.trackerSign, { color: textColour }]}>
                 {trackerValue > 0 ? '+' : ''}
@@ -113,7 +114,8 @@ export default function TutorialDragQueen({
                 style={[
                   styles.trackerValue,
                   { color: textColour, fontFamily: 'Immortal' }
-                ]}>
+                ]}
+              >
                 {trackerValue}
               </Text>
             </View>

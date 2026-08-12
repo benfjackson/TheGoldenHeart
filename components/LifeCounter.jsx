@@ -1,11 +1,5 @@
-import React, { useRef, useCallback } from 'react';
-import {
-  View,
-  Text,
-  Image,
-  StyleSheet,
-  Animated
-} from 'react-native';
+import React, { useCallback } from 'react';
+import { View, Text, Image, StyleSheet, Animated } from 'react-native';
 
 import skullIcon from '../icons/skullWhite.png';
 import useAdjustmentTracker from '../hooks/useAdjustmentTracker';
@@ -24,7 +18,6 @@ export default function LifeCounter({
   autoFade = true,
   onCommit
 }) {
-  const containerRef = useRef(null);
   const { adjustmentTotal, fadeAnim, recordChange, holdVisible } =
     useAdjustmentTracker({ fadeDelayMs, autoFade });
 
@@ -40,12 +33,11 @@ export default function LifeCounter({
     [onCommit, recordChange, setLife]
   );
 
-  const { previewDelta, panHandlers } = useLifeCounterGesture({
+  const { previewDelta, panHandlers, onLayout } = useLifeCounterGesture({
     axis,
     rotation,
-    containerRef,
     onCommit: commitChange,
-    onSwipeStart: holdVisible
+    onGestureStart: holdVisible
   });
 
   const displayLife = life + previewDelta;
@@ -54,10 +46,7 @@ export default function LifeCounter({
   const trackerVisible = trackerValue !== 0;
 
   const lifeDisplay = showSkull ? (
-    <Image
-      style={styles.skull}
-      source={skullIcon}
-    />
+    <Image style={styles.skull} source={skullIcon} />
   ) : (
     <Text style={[styles.lifeText, { color: textColour }]}>{displayLife}</Text>
   );
@@ -69,25 +58,25 @@ export default function LifeCounter({
 
   return (
     <View
-      ref={containerRef}
-      style={[
-        styles.container,
-        { transform: [{ rotate: rotation }] }
-      ]}
+      onLayout={onLayout}
+      style={[styles.container, { transform: [{ rotate: rotation }] }]}
       pointerEvents="box-only"
-      {...panHandlers}>
+      {...panHandlers}
+    >
       <View
         style={[
           styles.centerAnchor,
           layout === 'rotated-column' && styles.rotatedColumnInner
-        ]}>
+        ]}
+      >
         {lifeDisplay}
         <Animated.View
           pointerEvents={trackerVisible ? 'auto' : 'none'}
           style={[
             styles.trackerOverlay,
             { opacity: trackerVisible ? fadeAnim : 0 }
-          ]}>
+          ]}
+        >
           <Text style={[trackerSignStyle, { color: textColour }]}>
             {trackerValue > 0 ? '+' : ''}
           </Text>
@@ -95,7 +84,8 @@ export default function LifeCounter({
             style={[
               styles.trackerValue,
               { color: textColour, fontFamily: 'Immortal' }
-            ]}>
+            ]}
+          >
             {trackerValue}
           </Text>
         </Animated.View>

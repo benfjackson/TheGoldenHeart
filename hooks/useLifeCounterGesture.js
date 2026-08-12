@@ -1,8 +1,18 @@
 import { useState, useRef, useMemo, useEffect, useCallback } from 'react';
 import { PanResponder, Dimensions } from 'react-native';
+import {
+  beginGesture,
+  finishGesture,
+  getTapDelta,
+  moveGesture
+} from './lifeCounterGestureState';
 
 const SWIPE_THRESHOLD = 0.05;
-const TAP_THRESHOLD = 5;
+const IDLE_GESTURE = {
+  mode: 'idle',
+  tapDelta: 0,
+  previewDelta: 0
+};
 
 function computeSwipeDelta(primaryDelta, screenDimension, axis, isRotated) {
   const normalized = Math.abs(primaryDelta / screenDimension);
@@ -24,15 +34,14 @@ function computeSwipeDelta(primaryDelta, screenDimension, axis, isRotated) {
 export default function useLifeCounterGesture({
   axis = 'vertical',
   rotation = '0deg',
-  containerRef,
   onCommit,
-  onSwipeStart
+  onGestureStart
 }) {
   const [previewDelta, setPreviewDelta] = useState(0);
-  const gestureRef = useRef({ mode: 'idle' });
-  const previewDeltaRef = useRef(0);
+  const gestureRef = useRef(IDLE_GESTURE);
+  const layoutRef = useRef({ width: 0, height: 0 });
   const onCommitRef = useRef(onCommit);
-  const onSwipeStartRef = useRef(onSwipeStart);
+  const onGestureStartRef = useRef(onGestureStart);
   const screenDimensionRef = useRef(
     axis === 'vertical'
       ? Dimensions.get('window').height
@@ -46,115 +55,82 @@ export default function useLifeCounterGesture({
   }, [onCommit]);
 
   useEffect(() => {
-    onSwipeStartRef.current = onSwipeStart;
-  }, [onSwipeStart]);
+    onGestureStartRef.current = onGestureStart;
+  }, [onGestureStart]);
 
-  const commitPreview = useCallback(() => {
-    const delta = previewDeltaRef.current;
+  const resetGesture = useCallback(() => {
+    gestureRef.current = IDLE_GESTURE;
+    setPreviewDelta(0);
+  }, []);
+
+  const commitGesture = useCallback(() => {
+    const delta = finishGesture(gestureRef.current);
     if (delta !== 0) {
       onCommitRef.current(delta);
     }
-    gestureRef.current.mode = 'idle';
-    previewDeltaRef.current = 0;
-    setPreviewDelta(0);
+    resetGesture();
+  }, [resetGesture]);
+
+  const onLayout = useCallback((event) => {
+    const { width, height } = event.nativeEvent.layout;
+    layoutRef.current = { width, height };
   }, []);
-
-  const resetPreview = useCallback(() => {
-    gestureRef.current.mode = 'idle';
-    previewDeltaRef.current = 0;
-    setPreviewDelta(0);
-  }, []);
-
-  const handleTap = useCallback(
-    (gestureState) => {
-      const node = containerRef.current;
-      if (!node) {
-        return;
-      }
-
-      node.measureInWindow((x, y, width, height) => {
-        let delta;
-        if (axis === 'vertical') {
-          const center = y + height / 2;
-          delta = gestureState.y0 < center ? 1 : -1;
-          if (isRotated) {
-            delta *= -1;
-          }
-        } else {
-          const center = x + width / 2;
-          delta = gestureState.x0 < center ? 1 : -1;
-        }
-        onCommitRef.current(delta);
-      });
-    },
-    [axis, containerRef, isRotated]
-  );
 
   const panHandlers = useMemo(() => {
     return PanResponder.create({
       onStartShouldSetPanResponder: () => true,
       onMoveShouldSetPanResponder: () => true,
+      onPanResponderGrant: (event) => {
+        const { width, height } = layoutRef.current;
+        if (width === 0 || height === 0) {
+          resetGesture();
+          return;
+        }
+
+        const { locationX, locationY } = event.nativeEvent;
+        const tapDelta = getTapDelta({
+          axis,
+          isRotated,
+          locationX,
+          locationY,
+          width,
+          height
+        });
+        const gesture = beginGesture(tapDelta);
+        gestureRef.current = gesture;
+        setPreviewDelta(gesture.previewDelta);
+        onGestureStartRef.current?.();
+      },
       onPanResponderMove: (_, gestureState) => {
         const primaryDelta =
           axis === 'vertical' ? gestureState.dy : gestureState.dx;
-        const delta = computeSwipeDelta(
+        const swipeDelta = computeSwipeDelta(
           primaryDelta,
           screenDimensionRef.current,
           axis,
           isRotated
         );
+        const gesture = moveGesture(gestureRef.current, {
+          dx: gestureState.dx,
+          dy: gestureState.dy,
+          swipeDelta
+        });
 
-        if (delta !== null) {
-          if (gestureRef.current.mode !== 'swiping') {
-            gestureRef.current.mode = 'swiping';
-            onSwipeStartRef.current?.();
-          }
-          previewDeltaRef.current = delta;
-          setPreviewDelta(delta);
-          return;
-        }
-
-        if (gestureRef.current.mode === 'swiping') {
-          const pending = previewDeltaRef.current;
-          if (pending !== 0) {
-            onCommitRef.current(pending);
-          }
-          gestureRef.current.mode = 'idle';
-          previewDeltaRef.current = 0;
-          setPreviewDelta(0);
-        }
+        gestureRef.current = gesture;
+        setPreviewDelta(gesture.previewDelta);
       },
-      onPanResponderRelease: (_, gestureState) => {
-        const primaryMovement =
-          axis === 'vertical'
-            ? Math.abs(gestureState.dy)
-            : Math.abs(gestureState.dx);
-
-        if (
-          primaryMovement < TAP_THRESHOLD &&
-          gestureRef.current.mode === 'idle'
-        ) {
-          handleTap(gestureState);
-          resetPreview();
-          return;
-        }
-
-        if (gestureRef.current.mode === 'swiping') {
-          commitPreview();
-          return;
-        }
-
-        resetPreview();
+      onPanResponderRelease: () => {
+        commitGesture();
       },
       onPanResponderTerminate: () => {
         if (gestureRef.current.mode === 'swiping') {
-          commitPreview();
+          commitGesture();
           return;
         }
-        resetPreview();
+        resetGesture();
       }
     }).panHandlers;
-  }, [axis, commitPreview, handleTap, isRotated, resetPreview]);
+  }, [axis, commitGesture, isRotated, resetGesture]);
 
-  return { previewDelta, panHandlers };
+  return { previewDelta, panHandlers, onLayout };
 }
