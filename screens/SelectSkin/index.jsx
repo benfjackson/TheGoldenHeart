@@ -23,7 +23,6 @@ export default function SelectSkin() {
 
   useEffect(() => {
     getFavourites().then((favourites) => {
-      console.log(favourites);
       // setFavourites(favourites);
       setFavourites([
         'Island',

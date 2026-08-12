@@ -106,15 +106,12 @@ export default function Count({ textColour = '#000', life, setLife }) {
     [countBoxTop, countBoxBottom, countBoxLeft, countBoxRight]
   );
 
-  // console.log(`width of entire screen ${window.outerWidth}`);
-  // console.log(`height of entire screen ${window.innerHeight}`);
 
   return (
     <View
       ref={counterRef}
       onLayout={() => {
         countBoxRef.current.measure((x, y, width, height, pageX, pageY) => {
-          console.log('setting counter height to be ', height);
           setCounterHeight(height);
         });
       }}

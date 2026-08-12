@@ -5,7 +5,7 @@ import Tapper from '../components/Tapper';
 
 export default function GuestSkin({
   life = 20,
-  setLife = () => console.log('setLife guest not defined in guest')
+  setLife = () => {}
 }) {
   //Black velvet
   const img = null;

@@ -8,20 +8,15 @@ export default function History({ setMenuState, histories, numPlayers }) {
   //deep copy history
   const { player1History, player2History, player3History, player4History } =
     histories;
-  console.log(histories);
   const historyList = [
     player1History,
     player2History,
     player3History,
     player4History
   ];
-  console.log('historyList');
-  console.log(historyList);
   const historiesToUse = historyList
     .slice(0, numPlayers)
     .map((history) => [...history].reverse());
-  console.log('historiesToUse');
-  console.log(historiesToUse);
   return (
     <View
       style={{
